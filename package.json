@@ -1,0 +1,70 @@
+{
+  "name": "react-webpack",
+  "version": "1.0.0",
+  "description": "Готовая сборка для создания приложения на react",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode=development --hot --open",
+    "build": "webpack --mode=production"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/git/commitizen.js"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './config/git/commitlint.js'"
+    }
+  },
+  "author": "Dmitriy Minaev",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "@commitlint/cli": "^7.2.1",
+    "autoprefixer": "^9.4.2",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^1.0.0",
+    "cz-customizable": "^5.3.0",
+    "file-loader": "^2.0.0",
+    "glob": "^7.1.3",
+    "husky": "^1.2.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-cli": "^6.0.1",
+    "postcss-loader": "^3.0.0",
+    "react-hot-loader": "^4.3.12",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "connected-react-router": "^6.0.0-beta.1",
+    "css-loader": "^2.0.0",
+    "history": "^4.7.2",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "muicss": "^0.9.41",
+    "node-sass": "^4.10.0",
+    "normalize.css": "^8.0.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-inlinesvg": "^0.8.3",
+    "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.7",
+    "redux-thunk": "^2.3.0",
+    "rmwc": "^4.0.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1"
+  }
+}
