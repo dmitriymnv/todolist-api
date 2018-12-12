@@ -4,6 +4,7 @@
   "description": "Готовая сборка для создания приложения на react",
   "main": "index.js",
   "scripts": {
+		"start": "npm run dev",
     "dev": "webpack-dev-server --mode=development --hot --open",
     "build": "webpack --mode=production"
   },

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import './css/main.sass';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -11,7 +11,11 @@ import {
   TopAppBarTitle
 } from '@rmwc/top-app-bar';
 import { Button } from '@rmwc/button';
-import { Menu, MenuItem, MenuSurfaceAnchor } from '@rmwc/menu';
+
+const Dialog  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.Dialog })) );
+const DialogTitle  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogTitle })) );
+const DialogContent  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogContent })) );
+const LoginForm = lazy(() => import('../forms/LoginForm'));
 
 export class TopNavigation extends Component {
 
@@ -23,12 +27,56 @@ export class TopNavigation extends Component {
 		date: {
 			username: ""
 		},
-		auth: this.props.isAuth,
-		menuIsOpen: false
+		auth: this.props.isAuth,	
+		menuIsOpen: false,
+		dialogLoginOpen: false
+	};
+
+	profileAuth = auth => {
+		const { menuIsOpen } = this.state;		
+		if(auth) {
+			return (
+				<MenuSurfaceAnchor>
+
+					<Menu
+						open={menuIsOpen}
+						onClose={() => this.setState({menuIsOpen: false})}
+						anchorCorner='bottomLeft'
+					>
+						<MenuItem>Выйти</MenuItem>
+					</Menu>
+
+					<TopAppBarActionItem icon={
+						<IconAccount width='24' height='24' />} onClick={() => this.setState({menuIsOpen: !menuIsOpen})}
+					/>
+
+				</MenuSurfaceAnchor>
+			)	
+		} else {
+			return <Button onClick={() => this.setState({dialogLoginOpen: true})}>Авторизация</Button>
+		}
+	};
+
+	authorization = () => {
+		return (
+			<Suspense fallback={<></>}>
+				<Dialog
+					open={this.state.dialogLoginOpen}
+					onClose={evt => this.setState({dialogLoginOpen: false})}
+				>    
+					<DialogTitle>Авторизация</DialogTitle>
+					<DialogContent><LoginForm submit={this.submit}/></DialogContent>
+				</Dialog>
+			</Suspense>
+		)
+	};
+
+	submit = (data) => {
+		console.log(data);
 	}
 
 	render() {
-		const { auth, date } = this.state;
+		const { auth, dialogLoginOpen } = this.state;
 		return (
 			<TopAppBar>
 				<TopAppBarRow className="container-fluid">
@@ -41,35 +89,12 @@ export class TopNavigation extends Component {
 						{this.profileAuth(auth)}
 					</TopAppBarSection>
 
+					{dialogLoginOpen && this.authorization()}
+
 				</TopAppBarRow>
 			</TopAppBar>
 		)
-	}
-
-	profileAuth = auth => {
-		const { menuIsOpen } = this.state;
-		if(auth) {
-			return (
-				<MenuSurfaceAnchor>
-
-					<Menu
-						open={menuIsOpen}
-						onClose={evt => this.setState({menuIsOpen: false})}
-						anchorCorner='bottomLeft'
-					>
-						<MenuItem>Выйти</MenuItem>
-					</Menu>
-
-					<TopAppBarActionItem icon={
-						<IconAccount width='24' height='24' />} onClick={evt => this.setState({menuIsOpen: !menuIsOpen})}
-					/>
-
-				</MenuSurfaceAnchor>
-			)
-		} else {
-			return <Button>Авторизация</Button>
-		}
-	}
+	};
 
 }
 

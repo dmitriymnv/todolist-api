@@ -1,5 +1,5 @@
 const initialState = {
-	token: 'sd231kndfmkpdfsdsd23321'
+	token: undefined
 }
 
 export default (state = initialState, { type, payload }) => {
