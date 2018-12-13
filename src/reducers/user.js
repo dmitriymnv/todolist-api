@@ -1,12 +1,13 @@
+import { USER_LOGGED_IN } from "../constans";
+
 const initialState = {
-	token: undefined
 }
 
 export default (state = initialState, { type, payload }) => {
 	switch (type) {
 
-	// case typeName:
-	// 	return { ...state, ...payload }
+	case USER_LOGGED_IN:
+		return { ...state, ...payload.user };
 
 	default:
 		return state

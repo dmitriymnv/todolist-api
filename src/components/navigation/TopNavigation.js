@@ -11,30 +11,31 @@ import {
   TopAppBarTitle
 } from '@rmwc/top-app-bar';
 import { Button } from '@rmwc/button';
-
+import { Menu, MenuItem, MenuSurfaceAnchor } from '@rmwc/menu';
 const Dialog  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.Dialog })) );
 const DialogTitle  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogTitle })) );
 const DialogContent  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogContent })) );
 const LoginForm = lazy(() => import('../forms/LoginForm'));
+import { login } from '../../ac/auth';
 
 export class TopNavigation extends Component {
 
 	static propTypes = {
-		isAuth: PropTypes.bool.isRequired,
+		auth: PropTypes.bool.isRequired,
+		login: PropTypes.func.isRequired,
 	}
 
 	state = {
 		date: {
 			username: ""
 		},
-		auth: this.props.isAuth,	
 		menuIsOpen: false,
 		dialogLoginOpen: false
 	};
 
 	profileAuth = auth => {
 		const { menuIsOpen } = this.state;		
-		if(auth) {
+		if(this.props.auth) {
 			return (
 				<MenuSurfaceAnchor>
 
@@ -62,7 +63,7 @@ export class TopNavigation extends Component {
 			<Suspense fallback={<></>}>
 				<Dialog
 					open={this.state.dialogLoginOpen}
-					onClose={evt => this.setState({dialogLoginOpen: false})}
+					onClose={() => this.setState({dialogLoginOpen: false})}
 				>    
 					<DialogTitle>Авторизация</DialogTitle>
 					<DialogContent><LoginForm submit={this.submit}/></DialogContent>
@@ -71,25 +72,24 @@ export class TopNavigation extends Component {
 		)
 	};
 
-	submit = (data) => {
-		console.log(data);
-	}
+	submit = (data) =>
+		this.props.login(data)
+			.then(() => this.setState({ dialogLoginOpen: false }));
 
 	render() {
-		const { auth, dialogLoginOpen } = this.state;
 		return (
 			<TopAppBar>
 				<TopAppBarRow className="container-fluid">
 
 					<TopAppBarSection alignStart>
-						<TopAppBarTitle>Todolist</TopAppBarTitle>
+						<TopAppBarTitle>Todolist</TopAppBarTitle>	
 					</TopAppBarSection>
 
 					<TopAppBarSection alignEnd>
-						{this.profileAuth(auth)}
+						{this.profileAuth()}
 					</TopAppBarSection>
 
-					{dialogLoginOpen && this.authorization()}
+					{this.state.dialogLoginOpen && this.authorization()}
 
 				</TopAppBarRow>
 			</TopAppBar>
@@ -100,8 +100,8 @@ export class TopNavigation extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		isAuth: !!state.user.token
+		auth: !!state.user.token
 	}
 }
 
-export default connect(mapStateToProps)(TopNavigation);
+export default connect(mapStateToProps, { login })(TopNavigation);

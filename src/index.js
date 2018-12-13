@@ -7,6 +7,14 @@ import store from './store';
 import history from './store/history';
 import App from './components/App';
 import './other/css/main.sass';
+import decode from 'jwt-decode';
+import { userLoggedIn } from './ac/auth';
+
+if(localStorage.todoJWT) {
+	const payload = decode(localStorage.todoJWT);
+	const user = { token: localStorage.todoJWT, email: payload.email, confirmed: payload.confirmed };
+	store.dispatch(userLoggedIn(user));
+};
 
 const renderDOM = (() => 
 	render(
