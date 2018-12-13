@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './css/homepage.sass';
+import './css/homepage';
+
 export class Homepage extends Component {
 	static propTypes = {
 
@@ -8,7 +9,8 @@ export class Homepage extends Component {
 
 	render() {
 		return (
-			<div className="homepage__container">
+			<div className="taskspage">
+				TasksPage
 			</div>
 		)
 	}

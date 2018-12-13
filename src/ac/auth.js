@@ -16,7 +16,7 @@ export const login = (data) => (dispatch) => {
 		api(['/api/auth', 'POST'], { data }).then(({ user }) => {
 			localStorage.todoJWT = user.token;
 			dispatch(userLoggedIn(user))
-			dispatch(push('/home'))
+			dispatch(push('/tasks'))
 		})
 	)
 };

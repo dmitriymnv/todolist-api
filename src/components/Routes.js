@@ -1,16 +1,21 @@
 import React, { lazy, Suspense } from 'react';
-import { Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Loader from './loader';
+import AuthRoute from './routes/AuthRoute';
 
-const HomePage = lazy(() => import('./page/Homepage'));
+const TasksPage = lazy(() => import('./page/TasksPage'));
+const InitialPage = lazy(() => import('./page/InitialPage'));
+const SignupPage = lazy(() => import('./page/SignupPage'));
 
-const Routes = () => {
+const Routes = () => { 
 	return (
-		<div className="routes container-fluid">
 		<Suspense fallback={<Loader />}>
-			<Route path="/" component={ HomePage }></Route>
+			<Switch>
+				<AuthRoute path="/" to="/tasks" exact component={ InitialPage } />
+				<AuthRoute path="/tasks" to="/signup" user exact component={ TasksPage } />
+				<AuthRoute path="/signup" to="tasks" exact component={ SignupPage } />
+			</Switch>
 		</Suspense>
-		</div>
 	)
 }
 

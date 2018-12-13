@@ -13,7 +13,9 @@ export class App extends Component {
 		return (
 			<ThemeProvider options={themeOptions}>
 				<TopNavigation />
-				<Routes />
+				<div className="routes container-fluid">
+					<Routes />
+				</div>
 			</ThemeProvider>
 		)
 	}

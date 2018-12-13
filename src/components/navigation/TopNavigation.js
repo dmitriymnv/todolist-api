@@ -2,6 +2,7 @@ import React, { Component, lazy, Suspense } from 'react';
 import './css/main.sass';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import IconAccount from './account.svg';
 import {
   TopAppBar,
@@ -94,7 +95,9 @@ export class TopNavigation extends Component {
 				<TopAppBarRow className="container-fluid">
 
 					<TopAppBarSection alignStart>
-						<TopAppBarTitle>Todolist</TopAppBarTitle>	
+						<TopAppBarTitle>
+							{<Link to={this.props.auth ? '/tasks' : '/'}>Todolist</Link>}
+						</TopAppBarTitle>	
 					</TopAppBarSection>
 
 					<TopAppBarSection alignEnd>
