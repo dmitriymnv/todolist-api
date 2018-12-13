@@ -1,16 +1,28 @@
-import { USER_LOGGED_IN } from "../constans";
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../constans";
 import api from './api';
 import { push } from 'connected-react-router';
 
-export const userLoggedIn = user => ({
+export const userLoggedIn = (user) => ({
 	type: USER_LOGGED_IN,
 	payload: { user }
 });
 
-export const login = data => dispatch => {
-	return api(['/api/auth', 'POST'], { data }).then(({ user }) => {
-		localStorage.todoJWT = user.token;
-		dispatch(userLoggedIn(user))
-		dispatch(push('/home'))
-	})
+export const userLoggedOut = () => ({
+	type: USER_LOGGED_OUT
+})
+
+export const login = (data) => (dispatch) => {
+	return (
+		api(['/api/auth', 'POST'], { data }).then(({ user }) => {
+			localStorage.todoJWT = user.token;
+			dispatch(userLoggedIn(user))
+			dispatch(push('/home'))
+		})
+	)
+};
+
+export const logout = () => (dispatch) => {
+	localStorage.removeItem('todoJWT');
+	dispatch(userLoggedOut());
+	dispatch(push('/'))
 };

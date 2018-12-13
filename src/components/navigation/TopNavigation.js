@@ -17,24 +17,26 @@ const DialogTitle  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.D
 const DialogContent  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogContent })) );
 const LoginForm = lazy(() => import('../forms/LoginForm'));
 import { login } from '../../ac/auth';
+import { logout } from '../../ac/auth';
 
 export class TopNavigation extends Component {
 
 	static propTypes = {
 		auth: PropTypes.bool.isRequired,
 		login: PropTypes.func.isRequired,
-	}
+		logout: PropTypes.func.isRequired,
+	};
 
 	state = {
-		date: {
-			username: ""
+		data: {
+			username: "dmitriymnv"
 		},
 		menuIsOpen: false,
 		dialogLoginOpen: false
 	};
 
-	profileAuth = auth => {
-		const { menuIsOpen } = this.state;		
+	profileAuth = () => {
+		const { menuIsOpen, data } = this.state;		
 		if(this.props.auth) {
 			return (
 				<MenuSurfaceAnchor>
@@ -42,9 +44,16 @@ export class TopNavigation extends Component {
 					<Menu
 						open={menuIsOpen}
 						onClose={() => this.setState({menuIsOpen: false})}
+						className='navigation-menu'
 						anchorCorner='bottomLeft'
 					>
-						<MenuItem>Выйти</MenuItem>
+						<MenuItem 
+							disabled={true} 
+							className='signed-item'
+						>
+							Авторизованы как: <span>{data.username}</span>
+						</MenuItem>
+						<MenuItem onClick={this.props.logout}>Выйти</MenuItem>
 					</Menu>
 
 					<TopAppBarActionItem icon={
@@ -72,9 +81,12 @@ export class TopNavigation extends Component {
 		)
 	};
 
-	submit = (data) =>
-		this.props.login(data)
-			.then(() => this.setState({ dialogLoginOpen: false }));
+	submit = (data) => {
+		return (
+			this.props.login(data)
+			.then(() => this.setState({ dialogLoginOpen: false }))
+		)
+	};
 
 	render() {
 		return (
@@ -104,4 +116,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { login })(TopNavigation);
+export default connect(mapStateToProps, { login, logout })(TopNavigation);
