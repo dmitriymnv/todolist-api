@@ -1,6 +1,8 @@
 @import 'normalize.css/normalize'
 // material
-@import '~@material/button/dist/mdc.button.css'
+@import '~@material/button/dist/mdc.button'
+@import '~@material/typography/dist/mdc.typography'
+@import '~@material/textfield/dist/mdc.textfield'
 
 *
 	box-sizing: border-box
@@ -15,3 +17,11 @@ body
 
 .routes.container-fluid
 	padding-top: 64px
+
+.center-container
+	margin: 0 auto
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	height: calc(100vh - 64px)

@@ -36,11 +36,11 @@ export class LoginForm extends Component {
 		const { data, loading } = this.state;
 		return (
 			<Loader loading={loading}>
-				<form onSubmit={this.onSubmit}>
+				<form className="login-form" onSubmit={this.onSubmit}>
 					<TextField 
 						value={data.email} 
 						onChange={this.onChange}
-						required={true}
+						required
 						type="email"
 						name="email" 
 						label="Ваш E-Mail" 
@@ -49,7 +49,7 @@ export class LoginForm extends Component {
 					<TextField 
 						value={data.password}
 						onChange={this.onChange}
-						required={true}
+						required
 						type="password"
 						name="password" 
 						label="Ваш пароль" 

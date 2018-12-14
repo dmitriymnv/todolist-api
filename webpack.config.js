@@ -27,13 +27,13 @@ const config = {
     extensions: ['.js', '.sass', '.css', 'scss']
   },
 
-	optimization: {
-		splitChunks: {
-			chunks: 'all',
-			name: 'main',
-			minChunks: 4
-		}
-	},
+	// optimization: {
+	// 	splitChunks: {
+	// 		chunks: 'all',
+	// 		name: 'main',
+	// 		minChunks: 4
+	// 	}
+	// },
 
 	module: {
 		rules: [

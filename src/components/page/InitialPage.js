@@ -13,7 +13,7 @@ export class Initialpage extends Component {
 
 	render() {
 		return (
-			<div className="initialpage">
+			<div className="initialpage center-container">
 				<div className="initialpage__bg"></div>
 				<h1><Typography use="headline1">Todolist-Api</Typography></h1>
 				<Button onClick={() => this.props.push('/signup')} raised>Зарегистрироваться</Button>
