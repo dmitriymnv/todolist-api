@@ -6,7 +6,7 @@ import { ThemeProvider } from '@rmwc/theme';
 const themeOptions = {
 	primary: '#303030',
 	secondary: '#6200ee'
-};
+}
 
 export class App extends Component {
 	render() {
@@ -21,4 +21,4 @@ export class App extends Component {
 	}
 }
 
-export default App;
+export default App

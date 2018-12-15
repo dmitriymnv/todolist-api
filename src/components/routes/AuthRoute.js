@@ -10,7 +10,7 @@ const QuestRoute = ({ auth, component: Component, to, user, ...rest}) => {
 			render={props => auth === (user || false) ? <Component {...props} /> : <Redirect to={to}/>} 
 		/>
 	)
-};
+}
 
 QuestRoute.propTypes = {
 	auth: PropTypes.bool.isRequired,

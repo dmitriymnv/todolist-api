@@ -13,8 +13,8 @@ import {
 } from '@rmwc/top-app-bar';
 import { Button } from '@rmwc/button';
 import { Menu, MenuItem, MenuSurfaceAnchor } from '@rmwc/menu';
+import { Typography } from '@rmwc/typography';
 const Dialog  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.Dialog })) );
-const DialogTitle  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogTitle })) );
 const DialogContent  = lazy(() => import('@rmwc/dialog').then(e => ({ default: e.DialogContent })) );
 const LoginForm = lazy(() => import('../forms/LoginForm'));
 import { login } from '../../ac/auth';
@@ -26,25 +26,22 @@ export class TopNavigation extends Component {
 		auth: PropTypes.bool.isRequired,
 		login: PropTypes.func.isRequired,
 		logout: PropTypes.func.isRequired,
-	};
+	}
 
 	state = {
-		data: {
-			username: "dmitriymnv"
-		},
+		data: {},
 		menuIsOpen: false,
 		dialogLoginOpen: false
-	};
+	}
 
 	profileAuth = () => {
-		const { menuIsOpen, data } = this.state;		
+		const { menuIsOpen, data } = this.state;				
 		if(this.props.auth) {
 			return (
 				<MenuSurfaceAnchor>
-
 					<Menu
 						open={menuIsOpen}
-						onClose={() => this.setState({menuIsOpen: false})}
+						onClose={() => this.setState({ menuIsOpen: false })}
 						className='navigation-menu'
 						anchorCorner='bottomLeft'
 					>
@@ -54,40 +51,48 @@ export class TopNavigation extends Component {
 						>
 							Авторизованы как: <span>{data.username}</span>
 						</MenuItem>
-						<MenuItem onClick={this.props.logout}>Выйти</MenuItem>
+						<MenuItem onClick={() => {
+							this.props.logout()
+							this.setState({ menuIsOpen: false })
+						}}>Выйти</MenuItem>
 					</Menu>
 
-					<TopAppBarActionItem icon={
-						<IconAccount width='24' height='24' />} onClick={() => this.setState({menuIsOpen: !menuIsOpen})}
+					<TopAppBarActionItem
+						icon={<IconAccount width='24' height='24' />} 
+						onClick={() => this.setState({ menuIsOpen: !menuIsOpen })}
 					/>
-
 				</MenuSurfaceAnchor>
 			)	
 		} else {
-			return <Button onClick={() => this.setState({dialogLoginOpen: true})}>Авторизация</Button>
+			return (
+				<Button
+					onClick={() => this.setState({ dialogLoginOpen: true })}
+				>
+					Авторизация
+				</Button>
+			)
 		}
-	};
+	}
 
 	authorization = () => {
 		return (
 			<Suspense fallback={<></>}>
 				<Dialog
 					open={this.state.dialogLoginOpen}
-					onClose={() => this.setState({dialogLoginOpen: false})}
-				>    
-					<DialogTitle>Авторизация</DialogTitle>
+					onClose={() => this.setState({ dialogLoginOpen: false })}
+				>   
 					<DialogContent><LoginForm submit={this.submit}/></DialogContent>
 				</Dialog>
 			</Suspense>
 		)
-	};
+	}
 
 	submit = (data) => {
 		return (
 			this.props.login(data)
 			.then(() => this.setState({ dialogLoginOpen: false }))
 		)
-	};
+	}
 
 	render() {
 		return (
@@ -95,9 +100,9 @@ export class TopNavigation extends Component {
 				<TopAppBarRow className="container-fluid">
 
 					<TopAppBarSection alignStart>
-						<TopAppBarTitle>
+						<Typography use="headline6" className="navigation-title">
 							{<Link to={this.props.auth ? '/tasks' : '/'}>Todolist</Link>}
-						</TopAppBarTitle>	
+						</Typography>
 					</TopAppBarSection>
 
 					<TopAppBarSection alignEnd>
@@ -109,7 +114,7 @@ export class TopNavigation extends Component {
 				</TopAppBarRow>
 			</TopAppBar>
 		)
-	};
+	}
 
 }
 

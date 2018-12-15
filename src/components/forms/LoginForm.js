@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './css/login.sass';
+import './css/main';
 import Loader from '../loader';
+import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
 
@@ -33,10 +34,16 @@ export class LoginForm extends Component {
 	}
 
 	render() {
-		const { data, loading } = this.state;
+		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
 				<form className="login-form" onSubmit={this.onSubmit}>
+					<Typography use="headline5" className="headline-form">Авторизация</Typography>
+					
+					{ errors.global && 
+						<div className="errors-form global">{errors.global}</div>
+					}
+					
 					<TextField 
 						value={data.email} 
 						onChange={this.onChange}
