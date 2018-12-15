@@ -29,7 +29,7 @@ export class LoginForm extends Component {
 		e.preventDefault();
 		this.setState({ loading: true });	
 		this.props.submit(this.state.data)
-			.catch(err => {this.setState({ errors: err, loading: false })} );
+			.catch(err => this.setState({ errors: err, loading: false }));
 	}
 
 	render() {

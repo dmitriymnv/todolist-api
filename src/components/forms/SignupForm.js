@@ -10,7 +10,7 @@ import { Icon } from '@rmwc/icon';
 
 export class SignupForm extends Component {
 	static propTypes = {
-
+		submit: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -20,7 +20,8 @@ export class SignupForm extends Component {
 			password: '',
 			confirmationPassword: ''
 		},
-		showPassword: false
+		showPassword: false,
+		errors: {}
 	}
 
 	onChange = e => {
@@ -29,13 +30,60 @@ export class SignupForm extends Component {
 		})
 	}
 
+	onSubmit = e => {
+		e.preventDefault();
+		const errors = this.validate(this.state.data);
+
+		if(Object.keys(errors).length === 0) {
+			this.setState({ loading: true });
+			this.props.submit(this.state.data)
+				// .catch(err => this.setState({ errors: err, loading: false }));
+		} else {
+			this.setState({ errors })
+		}
+	
+	}
+
+	validate = data => {
+		let errors = {};
+		let password = data.password;
+
+		let reg = password.match(
+			/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/
+		);
+
+		if(password.match(/\s/)) {
+			errors.global = 'Пароль не может содержать пробелов';
+			return errors;
+		} else if(!reg || reg[0] !== password) {
+			errors.global = 'Пароль должен содержать не менее восьми знаков, включать буквы, цифры и специальные символы'
+			return errors;
+		}
+
+		if(data.username.length < 5) {
+			errors.global = "Имя пользователя должно содержать не менее пяти знаков";
+			return errors;
+		}
+
+		if(password !== data.confirmationPassword) {
+			errors.confirmationPassword = "Ваши пароли не совпадают"
+			return errors;
+		}
+
+		return errors;
+	}
+
 	render() {
-		const { data, showPassword } = this.state;
+		const { data, showPassword, errors } = this.state;
 		return (
-			<form className="signup-form">
+			<form onSubmit={this.onSubmit} className="signup-form">
 				<header>
 					<Typography use="headline5">Регистрация</Typography>
 				</header>
+
+				{ errors.global && 
+					<div className="errors-form global">{errors.global}</div>
+				}
 
 				<div className="signup-form__item">
 					<TextField
@@ -64,6 +112,7 @@ export class SignupForm extends Component {
 						onChange={this.onChange}
 						required
 						className="signup-form__field customfield-icon"
+						onBlur={this.onBlurPassword}
 						withTrailingIcon={
 							<Icon 
 								onClick={() => this.setState({ showPassword: !this.state.showPassword})} 
@@ -72,7 +121,7 @@ export class SignupForm extends Component {
 								} 
 							/>
 						}
-						type="password" 
+						type={showPassword ? "text" : "password"}
 						name="password"
 						label="Пароль"
 					/>
@@ -81,14 +130,18 @@ export class SignupForm extends Component {
 						onChange={this.onChange}
 						className="signup-form__field"
 						required
-						type="password"
+						type={showPassword ? "text" : "password"}
 						name="confirmationPassword" 
 						label="Повторите пароль"
 					/>
+					{errors.confirmationPassword && 
+						<div className="errors-form global">
+							{errors.confirmationPassword}
+						</div>
+					}
 				</div>
 
 				<div className="signup-form__item signup-form__button">
-					<Button>Войти</Button>
 					<Button raised>Зарегистрироваться</Button>
 				</div>
 			</form>

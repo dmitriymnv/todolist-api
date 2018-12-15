@@ -8,12 +8,17 @@ export class SignupPage extends Component {
 
 	}
 
+	submit = (data) => {
+		console.log(data);
+		
+	}
+
 	render() {
 		return (
 			<div className="signupage center-container">
 				<div className="signuppage--widow">
 					
-					<SignupForm />
+					<SignupForm submit={this.submit} />
 
 				</div>
 			</div>
