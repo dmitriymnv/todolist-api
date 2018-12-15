@@ -37,7 +37,7 @@ export class SignupForm extends Component {
 		if(Object.keys(errors).length === 0) {
 			this.setState({ loading: true });
 			this.props.submit(this.state.data)
-				// .catch(err => this.setState({ errors: err, loading: false }));
+				.catch(err => this.setState({ errors: err, loading: false }));
 		} else {
 			this.setState({ errors })
 		}
@@ -115,7 +115,8 @@ export class SignupForm extends Component {
 						onBlur={this.onBlurPassword}
 						withTrailingIcon={
 							<Icon 
-								onClick={() => this.setState({ showPassword: !this.state.showPassword})} 
+								onClick={() => this.setState({ showPassword: !this.state.showPassword})}
+								className="field-icon" 
 								icon={showPassword ?
 									<SvgEyeClose width={18} height={18} /> : <SvgEyeOpen width={18} height={18}  />
 								} 

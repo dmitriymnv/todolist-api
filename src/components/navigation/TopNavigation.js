@@ -91,7 +91,7 @@ export class TopNavigation extends Component {
 
 	render() {
 		return (
-			<TopAppBar>
+			<TopAppBar fixed>
 				<TopAppBarRow className="container-fluid">
 
 					<TopAppBarSection alignStart>
