@@ -40,10 +40,18 @@ schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
 	return `${process.env.HOST}/confirmation/${this.confirmationToken}`
 }
 
+schema.methods.fieldCheck = function fieldCheck(field) {
+	if(!field) {
+		return field;
+	}
+	return;
+}
+
 schema.methods.toAuthJSON = function toAuthJSON() {
   return {
     email: this.email,
-    username: this.username,
+		username: this.username,
+		confirmed: this.fieldCheck(this.confirmed),
     token: this.generateJWT()
   };
 };
@@ -66,7 +74,8 @@ schema.methods.generateJWT = function generateJWT() {
   return jwt.sign(
     {
 			email: this.email,
-			username: this.username
+			username: this.username,
+			confirmed: this.fieldCheck(this.confirmed)
     },
 		'secretkeyhere'
   );

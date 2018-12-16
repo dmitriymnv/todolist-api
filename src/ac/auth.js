@@ -15,6 +15,7 @@ export const login = (data) => (dispatch) => {
 	return (
 		api(['/api/auth', 'POST'], { data }).then(({ user }) => {
 			localStorage.todoJWT = user.token;
+			if(!user.confirmed) localStorage.showConfirmationEmail = true;
 			dispatch(userLoggedIn(user));
 			dispatch(push('/tasks'));
 		})

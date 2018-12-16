@@ -6,6 +6,7 @@ export const signup = (data) => (dispatch) => {
 	return (
 		api(['/api/users', 'POST'], { data }).then(({ user }) => {
 			localStorage.todoJWT = user.token;
+			localStorage.showConfirmationEmail = true;
 			dispatch(userLoggedIn(user));
 			dispatch(push('/tasks'));
 		})

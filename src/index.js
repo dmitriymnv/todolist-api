@@ -12,7 +12,12 @@ import { userLoggedIn } from './ac/auth';
 
 if(localStorage.todoJWT) {
 	const payload = decode(localStorage.todoJWT);
-	const user = { token: localStorage.todoJWT, email: payload.email, username: payload.username };
+	const user = { 
+		token: localStorage.todoJWT,
+		email: payload.email, 
+		username: payload.username, 
+		confirmed: payload.confirmed 
+	};
 	store.dispatch(userLoggedIn(user));
 };
 
