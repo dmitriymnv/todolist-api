@@ -8,8 +8,7 @@ import {
   TopAppBar,
   TopAppBarRow,
   TopAppBarSection,
-  TopAppBarActionItem,
-  TopAppBarTitle
+  TopAppBarActionItem
 } from '@rmwc/top-app-bar';
 import { Button } from '@rmwc/button';
 import { Menu, MenuItem, MenuSurfaceAnchor } from '@rmwc/menu';
@@ -23,20 +22,28 @@ import { logout } from '../../ac/auth';
 export class TopNavigation extends Component {
 
 	static propTypes = {
-		auth: PropTypes.bool.isRequired,
 		login: PropTypes.func.isRequired,
 		logout: PropTypes.func.isRequired,
+		username: PropTypes.string,
 	}
 
 	state = {
-		data: {},
+		data: {
+			username: this.props.username,
+		},
 		menuIsOpen: false,
 		dialogLoginOpen: false
 	}
 
+	componentWillReceiveProps(props) {
+		this.setState({
+			data: { username: props.username },
+		})
+	}
+
 	profileAuth = () => {
-		const { menuIsOpen, data } = this.state;				
-		if(this.props.auth) {
+		const { menuIsOpen, data } = this.state;	
+		if(data.username) {
 			return (
 				<MenuSurfaceAnchor>
 					<Menu
@@ -120,7 +127,7 @@ export class TopNavigation extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: !!state.user.token
+		username: state.user.username,
 	}
 }
 

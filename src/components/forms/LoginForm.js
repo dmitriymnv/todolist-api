@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './css/main';
 import Loader from '../loader';
+import ParseError from '../utils/ParseError';
 import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
@@ -30,7 +31,7 @@ export class LoginForm extends Component {
 		e.preventDefault();
 		this.setState({ loading: true });	
 		this.props.submit(this.state.data)
-			.catch(err => this.setState({ errors: err, loading: false }));
+			.catch(errors => this.setState({ errors, loading: false }));
 	}
 
 	render() {
@@ -39,10 +40,8 @@ export class LoginForm extends Component {
 			<Loader loading={loading}>
 				<form className="login-form" onSubmit={this.onSubmit}>
 					<Typography use="headline5" className="headline-form">Авторизация</Typography>
-					
-					{ errors.global && 
-						<div className="errors-form global">{errors.global}</div>
-					}
+
+					{ParseError(errors.global)}
 					
 					<TextField 
 						value={data.email} 

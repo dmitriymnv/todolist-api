@@ -15,8 +15,8 @@ export const login = (data) => (dispatch) => {
 	return (
 		api(['/api/auth', 'POST'], { data }).then(({ user }) => {
 			localStorage.todoJWT = user.token;
-			dispatch(userLoggedIn(user))
-			dispatch(push('/tasks'))
+			dispatch(userLoggedIn(user));
+			dispatch(push('/tasks'));
 		})
 	)
 }
@@ -24,5 +24,5 @@ export const login = (data) => (dispatch) => {
 export const logout = () => (dispatch) => {
 	localStorage.removeItem('todoJWT');
 	dispatch(userLoggedOut());
-	dispatch(push('/'))
+	dispatch(push('/'));
 }

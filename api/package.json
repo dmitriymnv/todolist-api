@@ -1,0 +1,31 @@
+{
+  "name": "simple_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "author": "Dmitriy Minaev",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "bcrypt": "^3.0.2",
+    "bluebird": "^3.5.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.16",
+    "mongoose-unique-validator": "^2.0.2",
+    "request-promise": "^4.2.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.2.0",
+    "dotenv": "^6.2.0",
+    "nodemailer": "^4.7.0",
+    "xml2js": "^0.4.19"
+  }
+}

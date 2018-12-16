@@ -4,6 +4,7 @@ import './css/main';
 import Loader from '../loader';
 import SvgEyeOpen from '../../other/img/eye-solid.svg';
 import SvgEyeClose from '../../other/img/eye-slash-solid.svg';
+import ParseError from '../utils/ParseError';
 import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
@@ -39,7 +40,7 @@ export class SignupForm extends Component {
 		if(Object.keys(errors).length === 0) {
 			this.setState({ loading: true });
 			this.props.submit(this.state.data)
-				.catch(err => this.setState({ errors: err, loading: false }));
+				.catch(errors => this.setState({ errors, loading: false }));
 		} else {
 			this.setState({ errors })
 		}
@@ -82,9 +83,9 @@ export class SignupForm extends Component {
 				<form onSubmit={this.onSubmit} className="signup-form">
 					<Typography use="headline5" className="headline-form">Регистрация</Typography>
 
-					{ errors.global && 
-						<div className="errors-form global">{errors.global}</div>
-					}
+					{ParseError(errors.global)}
+					{ParseError(errors.email)}
+					{ParseError(errors.username)}
 
 					<div className="signup-form__item">
 						<TextField
@@ -136,11 +137,7 @@ export class SignupForm extends Component {
 							name="confirmationPassword" 
 							label="Повторите пароль"
 						/>
-						{errors.confirmationPassword && 
-							<div className="errors-form global">
-								{errors.confirmationPassword}
-							</div>
-						}
+						{ParseError(errors.confirmationPassword)}
 					</div>
 
 					<div className="signup-form__item signup-form__button">

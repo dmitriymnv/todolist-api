@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './css/signuppage';
 import SignupForm from '../forms/SignupForm';
+import { signup } from '../../ac/user.js'
 
 export class SignupPage extends Component {
 	static propTypes = {
-
+		signup: PropTypes.func.isRequired
 	}
 
 	submit = (data) => {
-		console.log(data);
-		
+		return (
+			this.props.signup(data)
+		)
 	}
 
 	render() {
@@ -22,4 +25,4 @@ export class SignupPage extends Component {
 	}
 }
 
-export default SignupPage
+export default connect(null, { signup })(SignupPage)
