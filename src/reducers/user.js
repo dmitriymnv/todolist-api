@@ -7,7 +7,7 @@ export default (state = initialState, { type, payload }) => {
 	switch (type) {
 
 	case USER_LOGGED_IN:
-		return { ...state, ...payload.user };
+		return { ...payload.user };
 	
 	case USER_LOGGED_OUT:
 		return { ...initialState };

@@ -14,8 +14,8 @@ export const userLoggedOut = () => ({
 export const login = (data) => (dispatch) => {
 	return (
 		api(['/api/auth', 'POST'], { data }).then(({ user }) => {
-			localStorage.todoJWT = user.token;
-			if(!user.confirmed) localStorage.showConfirmationEmail = true;
+			localStorage.setItem('todoJWT', user.token);
+			if(user.confirmed === false) localStorage.setItem('showConfirmationEmail', true);
 			dispatch(userLoggedIn(user));
 			dispatch(push('/tasks'));
 		})
@@ -23,7 +23,17 @@ export const login = (data) => (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-	localStorage.removeItem('todoJWT');
+	localStorage.clear();
 	dispatch(userLoggedOut());
 	dispatch(push('/'));
+}
+
+export const confirm = (token) => (dispatch) => {
+	return (
+		api(['/api/auth/confirmation', 'POST'], { token }).then(({ user }) => {
+			localStorage.todoJWT = user.token;
+			localStorage.removeItem('showConfirmationEmail');
+			dispatch(userLoggedIn(user));
+		})
+	)
 }

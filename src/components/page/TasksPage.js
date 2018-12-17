@@ -32,6 +32,7 @@ export class TasksPage extends Component {
 				{showConfirmationEmail && 
 					<ShowConfirmEmail delMessage={this.delConfirmationEmail} />
 				}
+				TaskPage
 			</div>
 		)
 	}

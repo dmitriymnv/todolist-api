@@ -7,10 +7,10 @@ function setup() {
 		host: "smtp.mailtrap.io",
 		port: 2525,
 		auth: {
-			user: "054d29891dc155",
-			pass: "c678785d6391d5"
+			user: "ff3cd1e4c2ff5a",
+			pass: "6cdab0a9dd3366"
 		}
-	});
+	})
 }
 
 module.exports.sendConfirmationEmail = function sendConfirmationEmail(user) {
@@ -18,9 +18,9 @@ module.exports.sendConfirmationEmail = function sendConfirmationEmail(user) {
   const email = {
     from,
     to: user.email,
-    subject: "Welcome to Bookworm",
+    subject: "Добро пожаловать на TodoList",
     text: `
-    Welcome to Bookworm. Please, confirm your email.
+    Добро пожаловать на TodoList. Пожалуйста подтвердите вашу почту.
     ${user.generateConfirmationUrl()}
     `
   };

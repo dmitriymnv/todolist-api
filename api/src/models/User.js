@@ -17,7 +17,8 @@ const schema = new mongoose.Schema(
 			required: true, 
 			unique: true
 		},
-    passwordHash: { type: String, required: true },
+		passwordHash: { type: String, required: true },
+		confirmationToken: { type: String },
     confirmed: { type: Boolean, default: false }
 	},
 	
@@ -70,6 +71,7 @@ schema.methods.generateResetPasswordToken = function generateResetPasswordToken(
   );
 };
 
+
 schema.methods.generateJWT = function generateJWT() {
   return jwt.sign(
     {
@@ -77,7 +79,7 @@ schema.methods.generateJWT = function generateJWT() {
 			username: this.username,
 			confirmed: this.fieldCheck(this.confirmed)
     },
-		'secretkeyhere'
+		process.env.JWT_SECRET
   );
 };
 
