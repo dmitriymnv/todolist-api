@@ -18,7 +18,7 @@ class ConfirmationPage extends Component {
 
 	componentDidMount() {
 		this.props.confirm(this.props.match.params.token)
-			.then(() => this.props.push('/tasks'))
+			.then(() => this.props.push('/tasks', { confirmedEmail: true }))
 			.catch(() => this.setState({ loading: false, success: false }));
 	}
 
