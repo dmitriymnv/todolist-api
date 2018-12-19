@@ -32,7 +32,7 @@ export class ConfirmEmail extends Component {
 					</span>
 				</div>
 			);
-		} else if(show && confirmed) {
+		} else if(show && !confirmed) {
 			return (
 				<div className="show-message">
 					<span>На электронную почту, указанную при регистрации, отправлено письмо для подтверждения вашего аккаунт</span>

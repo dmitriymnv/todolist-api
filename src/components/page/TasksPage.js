@@ -2,6 +2,7 @@ import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import './css/taskspage';
 import { connect } from 'react-redux';
+import Tasks from '../tasks';
 const ConfirmEmail = lazy(() => import('../messages/ConfirmEmail'));
 
 export class TasksPage extends Component {
@@ -18,12 +19,12 @@ export class TasksPage extends Component {
 		const { confirmedEmail } = this.props.router.state ? this.props.router.state : false;
 
 		return (
-			<div className="taskspage">
-				{showConfirmationEmail || confirmedEmail && 
+			<div className="taskspage flex-container">
+				{(showConfirmationEmail || confirmedEmail) && 
 					<ConfirmEmail confirmed={confirmedEmail} />
 				}
 				
-				TaskPage
+				<Tasks className />
 			</div>
 		)
 	}

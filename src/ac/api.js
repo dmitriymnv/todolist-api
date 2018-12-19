@@ -3,7 +3,10 @@ export default (callAPI, data) => {
 		fetch(callAPI[0], {
 		method: callAPI[1],
 		body: JSON.stringify(data),
-		headers: { "Content-Type": "application/json" }
+		headers: {
+			"Content-Type": "application/json",
+			"authorization": localStorage.getItem('todoJWT')
+		}
 		})
 			.then(parseJSON)
 			.then((response) => {

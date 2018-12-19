@@ -10,8 +10,10 @@ import './other/css/main.sass';
 import decode from 'jwt-decode';
 import { userLoggedIn } from './ac/auth';
 
-if(localStorage.todoJWT) {
-	const payload = decode(localStorage.todoJWT);
+const token = localStorage.getItem('todoJWT');
+
+if(token) {
+	const payload = decode(token);
 	const user = { 
 		token: localStorage.todoJWT,
 		email: payload.email, 
