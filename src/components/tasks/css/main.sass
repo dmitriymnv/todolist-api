@@ -1,8 +1,47 @@
 @import '~@rmwc/data-table/data-table'
 @import '~@material/checkbox/dist/mdc.checkbox'
 
-.checkbox-task
-	text-align: center
-	.mdc-checkbox
-		margin-right: 0
-		margin-left: 0
+.task-tables
+	table
+		width: 700px
+	.task-tables-zero
+		text-align: center
+		font-size: 20px
+		padding: 30px 40px
+	.task-tables__title
+		white-space: normal
+		width: 400px
+		max-width: 400px
+		word-wrap: break-word	
+	.checkbox-task
+		text-align: center
+		.mdc-checkbox
+			margin-right: 0
+			margin-left: 0
+
+.red
+	.rmwc-data-table__cell
+		&::before
+			background-color: red
+			opacity: 0.1
+
+.green
+	.rmwc-data-table__cell
+		&::before
+			background-color: green
+			opacity: 0.1
+.blue
+	.rmwc-data-table__cell
+		&::before
+			background-color: blue
+			opacity: 0.1
+
+.rmwc-data-table__row--selected
+	.rmwc-data-table__cell:before
+		background-color: black
+
+.task-title
+	font-family: 'Pacifico', cursive
+	font-size: 60px
+	margin: 30px
+	text-transform: capitalize

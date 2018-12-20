@@ -6,8 +6,6 @@ const authenticate = (req, res, next) => {
 
 	if(token !== "null") {
 		jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-			console.log(decoded);
-			
 			if(err) {
 				res.status(401).json({ errors: { global: 'Invalid token'} });
 			} else {

@@ -17,6 +17,9 @@ const schema = new mongoose.Schema(
 			required: true, 
 			unique: true
 		},
+		tasks: {
+			type: Array
+		},
 		passwordHash: { type: String, required: true },
 		confirmationToken: { type: String },
     confirmed: { type: Boolean, default: false }
