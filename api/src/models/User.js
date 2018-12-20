@@ -32,6 +32,10 @@ schema.methods.isValidPassword = function isValidPassword(password) {
   return bcrypt.compareSync(password, this.passwordHash);
 };
 
+schema.methods.addTask = function addTask(data) {
+	this.tasks.push(data);
+};
+
 schema.methods.setPassword = function setPassword(password) {
   this.passwordHash = bcrypt.hashSync(password, 10);
 };

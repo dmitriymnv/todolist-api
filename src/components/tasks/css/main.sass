@@ -1,13 +1,22 @@
 @import '~@rmwc/data-table/data-table'
 @import '~@material/checkbox/dist/mdc.checkbox'
+@import '~@material/fab/dist/mdc.fab'
 
 .task-tables
+	position: relative
 	table
 		width: 700px
 	.task-tables-zero
 		text-align: center
+		overflow: hidden
 		font-size: 20px
 		padding: 30px 40px
+		min-height: 145px
+		.mdc-fab
+			position: absolute
+			left: 50%
+			bottom: 30px
+			transform: translate(-50%, 0)
 	.task-tables__title
 		white-space: normal
 		width: 400px

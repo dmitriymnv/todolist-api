@@ -38,7 +38,7 @@ export class LoginForm extends Component {
 		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
-				<form className="login-form" onSubmit={this.onSubmit}>
+				<form className="inline-form" onSubmit={this.onSubmit}>
 					<Typography use="headline5" className="headline-form">Авторизация</Typography>
 
 					{ParseError(errors.global)}
