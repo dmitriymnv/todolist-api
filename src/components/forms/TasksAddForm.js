@@ -30,6 +30,7 @@ export class TasksAddForm extends Component {
 		e.preventDefault();
 		this.setState({ loading: true });	
 		this.props.submit(this.state.data)
+			.then(() => this.setState({ data: {title: '', color: ''}, loading: false }))
 			.catch(errors => this.setState({ errors, loading: false }));
 	}
 

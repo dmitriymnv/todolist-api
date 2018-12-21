@@ -7,13 +7,6 @@ const TaskAdding = ({ dialogAddTaskOpen }) => {
 	return (
 		<div className="task-tables-zero">
 			Добавьте свою первую задачу прямо сейчас!
-			<Fab
-				mini
-				onClick={dialogAddTaskOpen}
-				icon={
-					<SVGplus width="15" height="15" />
-				} 
-			/>
 		</div>
 	)
 }

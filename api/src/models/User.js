@@ -33,7 +33,7 @@ schema.methods.isValidPassword = function isValidPassword(password) {
 };
 
 schema.methods.addTask = function addTask(data) {
-	this.tasks.push(data);
+	this.tasks.unshift(data);
 };
 
 schema.methods.setPassword = function setPassword(password) {
