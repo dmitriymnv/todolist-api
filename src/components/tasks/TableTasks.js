@@ -12,7 +12,7 @@ import {
 import { Checkbox } from '@rmwc/checkbox';
 import TaskAdding from '../messages/TaskAdding';
 
-const BodyTasks = ({ tasks, dialogAddTaskOpen }) => {
+const BodyTasks = ({ tasks, successTask, dialogAddTaskOpen }) => {
 	const options = {
 		year: '2-digit',
 		month: '2-digit',
@@ -35,8 +35,6 @@ const BodyTasks = ({ tasks, dialogAddTaskOpen }) => {
 					</DataTableHead>
 					<DataTableBody>
 						{tasks.map((task, i) => {
-							const date = new Date(task.dateCreate);
-							
 							return (
 								<DataTableRow
 									key={i}
@@ -47,15 +45,18 @@ const BodyTasks = ({ tasks, dialogAddTaskOpen }) => {
 										<Checkbox
 											checked={task.success}
 											onChange={evt => {
-												this.onSuccess(i);
+												successTask(task._id);
 											}}
 										/>
 									</DataTableCell>
 									<DataTableCell className="task-tables__title">{task.title}</DataTableCell>
-									<DataTableCell>{
-										date.toLocaleString('ru', options)
-									}</DataTableCell>
-									<DataTableCell>{task.dateCompletion}</DataTableCell>
+									<DataTableCell>
+										{new Date(task.dateCreate).toLocaleString('ru', options)}</DataTableCell>
+									<DataTableCell>
+										{task.dateCompletion ? 
+											new Date(task.dateCompletion).toLocaleString('ru', options): '-'
+										}
+								</DataTableCell>
 								</DataTableRow>
 							)}
 						)}

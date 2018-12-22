@@ -1,7 +1,7 @@
 import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadingTasks, addTask } from '../../ac/tasks';
+import { loadingTasks, addTask, successTask } from '../../ac/tasks';
 import './css/main';
 import { Dialog, DialogContent } from '@rmwc/dialog';
 import TasksAddForm from '../forms/TasksAddForm';
@@ -14,21 +14,31 @@ export class index extends Component {
 	static propTypes = {
 		loadingTasks: PropTypes.func.isRequired,
 		addTask: PropTypes.func.isRequired,
+		successTask: PropTypes.func.isRequired,
 	}
 
 	state = {
 		tasks: [],
 		dialogAddTaskOpen: false,
-		loading: false
+		total: 0,
+		loading: true
 	}
 
 	componentDidMount() {
 		this.props.loadingTasks(0)
-			.then(res => this.setState({ tasks: res.tasks, ...res.total }))
+			.then(res => {
+				this.setState({ tasks: res.tasks, total: res.total, loading: false })
+			})
 	}
 
-	onSuccess = (i) => {
-		this.setState({ ...this.state.tasks, ...this.state.tasks[i].success = !this.state.tasks[i].success })
+	success = (id) => {
+		const task = this.state.tasks.find((task) => task._id == id);
+		const completion = task.dateCompletion ? '': new Date();		
+		this.setState({ ...this.state.tasks [
+			task.success = !task.success,
+			task.dateCompletion = completion ]
+		 });
+		this.props.successTask(id)
 	}
 
 	dialogAddTaskOpen = () => {
@@ -68,6 +78,7 @@ export class index extends Component {
 
 				<TableTasks 
 					tasks={tasks}
+					successTask={this.success}
 					dialogAddTaskOpen={this.dialogAddTaskOpen}
 				/>
 
@@ -83,4 +94,4 @@ export class index extends Component {
 	}
 }
 
-export default connect(null, { loadingTasks, addTask })(index)
+export default connect(null, { loadingTasks, addTask, successTask })(index)

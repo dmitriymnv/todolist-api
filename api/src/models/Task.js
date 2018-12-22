@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
 	color: { type: String, default: '' },
 	success: { type: Boolean, default: false },
 	dateCreate: { type: String, required: true },
-	dateCompletion: { type: String, default: '-' },
+	dateCompletion: { type: String, default: '' },
 })
 
 module.exports = mongoose.model("Book", schema)

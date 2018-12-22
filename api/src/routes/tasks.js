@@ -1,5 +1,6 @@
 const express = require("express");
 const Task = require('../models/Task');
+const User = require('../models/User');
 const authenticate = require('../middlewares/authenticate');
 const parseErrors = require('../utils/ParseError');
 
@@ -28,6 +29,30 @@ router.post("/add", (req, res) => {
 			res.json({ task })
 		})
 		.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+
+});
+
+router.post("/success", (req, res) => {
+	const { id } = req.body;
+	const user = req.currentUser;
+
+	User.findOne({ email: user.email }, function(err, user){
+		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
+		
+		user.tasks.forEach(function (item) {
+			if(item._id == id) {
+				item.success = !item.success;
+				item.success ? 
+					item.dateCompletion = new Date() : item.dateCompletion = ''
+			}
+		});
+
+		user.tasks.success = 'changed';
+		user.markModified('tasks');
+		user.save()
+			.then(() => res.json({ }))
+			.catch((err) => console.log(err))
+ });
 
 });
 
