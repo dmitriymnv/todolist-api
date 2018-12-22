@@ -21,13 +21,14 @@ export class index extends Component {
 		tasks: [],
 		dialogAddTaskOpen: false,
 		total: 0,
+		loaded: 0,
 		loading: true
 	}
 
 	componentDidMount() {
 		this.props.loadingTasks(0)
 			.then(res => {
-				this.setState({ tasks: res.tasks, total: res.total, loading: false })
+				this.setState({ tasks: res.tasks, total: res.total, loaded: 15, loading: false })
 			})
 	}
 
@@ -52,7 +53,9 @@ export class index extends Component {
 			.then(({ task }) => 
 				this.setState({ 
 					tasks: [task, ...this.state.tasks], 
-					dialogAddTaskOpen: false, 
+					dialogAddTaskOpen: false,
+					total: this.state.total + 1,
+					loaded: this.state.loaded + 1,
 					loading: false 
 				})
 			)
@@ -63,7 +66,7 @@ export class index extends Component {
 		const { tasks, loading } = this.state;
 		const date = new Date();
 		return (
-			<Loader className="flex-container" loading={loading}>
+			<div className="flex-container">
 				<span className="task-title">
 					{`${date.toLocaleString('ru', {weekday: 'long'})} , ${date.getDate()}`}
 
@@ -80,6 +83,7 @@ export class index extends Component {
 					tasks={tasks}
 					successTask={this.success}
 					dialogAddTaskOpen={this.dialogAddTaskOpen}
+					loading={loading}
 				/>
 
 				<Dialog
@@ -89,7 +93,7 @@ export class index extends Component {
 					<DialogContent><TasksAddForm submit={this.onSubmit} /></DialogContent>
 				</Dialog>
 
-			</Loader>
+			</div>
 		)
 	}
 }

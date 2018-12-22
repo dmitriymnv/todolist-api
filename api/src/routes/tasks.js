@@ -9,12 +9,17 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const tasks = req.currentUser.tasks;
+	
+	// .sort((a, b) => {
+	// 	return a.success === b.success
+	// })
+
 	if(tasks.length <= 10) {
-		res.status(200).json({ tasks, total: tasks.length });
+		res.json({ tasks, total: tasks.length})
 	} else {
-		const value = req.body.value;
-		const tenTasks = tasks.slice(value, value + 10);
-		res.status(200).json({ tasks: tenTasks, total: tasks.length });
+		const { value } = req.body;
+		const needTasks = tasks.slice(value, value + 15);
+		res.status(200).json({ tasks: needTasks, total: tasks.length });
 	}
 });
 
@@ -44,6 +49,7 @@ router.post("/success", (req, res) => {
 				item.success = !item.success;
 				item.success ? 
 					item.dateCompletion = new Date() : item.dateCompletion = ''
+				return;
 			}
 		});
 
