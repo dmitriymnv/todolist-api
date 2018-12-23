@@ -1,9 +1,6 @@
 import React from 'react';
-import SVGplus from '../../other/img/plus-solid.svg';
-import { Fab } from '@rmwc/fab';
 
-const TaskAdding = ({ dialogAddTaskOpen }) => {
-	
+const TaskAdding = () => {
 	return (
 		<div className="task-tables-zero">
 			Добавьте свою первую задачу прямо сейчас!

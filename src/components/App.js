@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Routes from './Routes';
-import TopNavigation from './navigation/TopNavigation';
+import Routes from './routes';
+import TopNavigation from './navigation';
 import { ThemeProvider } from '@rmwc/theme';
 
 const themeOptions = {

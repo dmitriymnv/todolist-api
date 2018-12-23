@@ -8,7 +8,7 @@ import { Button } from '@rmwc/button';
 
 export class Initialpage extends Component {
 	static propTypes = {
-
+		push: PropTypes.func.isRequired
 	}
 
 	render() {

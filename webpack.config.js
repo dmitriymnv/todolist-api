@@ -24,7 +24,7 @@ const config = {
 	},
 
 	resolve: {
-    extensions: ['.js', '.sass', '.css', 'scss']
+    extensions: ['.js', '.sass', '.css', '.scss', '.svg']
   },
 
 	// optimization: {
@@ -82,7 +82,7 @@ const config = {
 					{
 						loader: "react-svg-loader",
 						options: {
-							jsx: true // true outputs JSX tags
+							jsx: true
 						}
 					}
 				]
@@ -110,10 +110,6 @@ const config = {
         },
 			},
 
-			// {
-      //   test: /\.svg$/,
-      //   loader: 'svg-inline-loader'
-  	  // }
 		]
 	},
 
@@ -142,7 +138,9 @@ const config = {
 		historyApiFallback: {
       disableDotRule: true
     }
-	}
+	},
+
+	devtool: devMode ? 'eval-cheap-module-source-map' : 'source-map'
 }
 
 module.exports = (env, options) => {

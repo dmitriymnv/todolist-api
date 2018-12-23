@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import store from './store';
 import history from './store/history';
 import App from './components/App';
-import './other/css/main.sass';
+import './other/css/main';
 import decode from 'jwt-decode';
 import { userLoggedIn } from './ac/auth';
 

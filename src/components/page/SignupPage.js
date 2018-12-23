@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './css/signuppage';
 import SignupForm from '../forms/SignupForm';
-import { signup } from '../../ac/user.js'
+import { signup } from '../../ac/user'
 
 export class SignupPage extends Component {
 	static propTypes = {

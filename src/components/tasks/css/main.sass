@@ -1,6 +1,6 @@
-@import '~@rmwc/data-table/data-table'
-@import '~@material/checkbox/dist/mdc.checkbox'
-@import '~@material/fab/dist/mdc.fab'
+@import url(~@rmwc/data-table/data-table.css)
+@import url(~@material/checkbox/dist/mdc.checkbox.css)
+@import url(~@material/fab/dist/mdc.fab.css)
 
 .task-tables
 	position: relative
@@ -45,8 +45,8 @@
 			background-color: blue
 			opacity: 0.1
 
-.rmwc-data-table__row--selected
-	.rmwc-data-table__cell:before
+.rmwc-data-table__row--selected .rmwc-data-table__cell
+	&::before
 		background-color: black
 
 .task-title

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SvgCross from '../../other/img/times-solid.svg';
+import SvgCross from '../../other/img/times-solid';
 
 export class ConfirmEmail extends Component {
-
 	static propTypes = {
 		confirmed: PropTypes.bool.isRequired,
 	}
@@ -31,7 +30,7 @@ export class ConfirmEmail extends Component {
 						<SvgCross width="15" height="15" />
 					</span>
 				</div>
-			);
+			)
 		} else if(show && !confirmed) {
 			return (
 				<div className="show-message">
@@ -45,7 +44,7 @@ export class ConfirmEmail extends Component {
 				</div>
 			)
 		} else {
-			return null;
+			return null
 		}
 	}
 }

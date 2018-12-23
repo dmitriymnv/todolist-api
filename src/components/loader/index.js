@@ -8,7 +8,6 @@ export default ({ children, loading, className }) => {
 			<div className={`${className} ${loading ? 'loader-enabled': undefined}`}>
 				{children} 
 			</div>
-			
 			{loading && <CircularProgress className="loader" size={72} />}
 		</>
 	)

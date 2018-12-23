@@ -1,16 +1,15 @@
-import React, { Component, lazy } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadingTasks, addTask, successTask } from '../../ac/tasks';
 import './css/main';
 import { Dialog, DialogContent } from '@rmwc/dialog';
 import TasksAddForm from '../forms/TasksAddForm';
-import Loader from '../loader';
 import { Fab } from '@rmwc/fab';
 import SVGplus from '../../other/img/plus.svg';
 import TableTasks from './TableTasks';
 
-export class index extends Component {
+export class Tasks extends Component {
 	static propTypes = {
 		loadingTasks: PropTypes.func.isRequired,
 		addTask: PropTypes.func.isRequired,
@@ -34,7 +33,7 @@ export class index extends Component {
 
 	success = (id) => {
 		const task = this.state.tasks.find((task) => task._id == id);
-		const completion = task.dateCompletion ? '': new Date();		
+		const completion = task.dateCompletion ? '' : new Date();		
 		this.setState({ ...this.state.tasks [
 			task.success = !task.success,
 			task.dateCompletion = completion ]
@@ -92,10 +91,9 @@ export class index extends Component {
 				>   
 					<DialogContent><TasksAddForm submit={this.onSubmit} /></DialogContent>
 				</Dialog>
-
 			</div>
 		)
 	}
 }
 
-export default connect(null, { loadingTasks, addTask, successTask })(index)
+export default connect(null, { loadingTasks, addTask, successTask })(Tasks)
