@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --mode=development --hot --open",
-		"build": "webpack --mode=production",
-		"api": "node api/src/index.js"
+    "build": "webpack --mode=production",
+    "api": "node api/src/index.js"
   },
   "config": {
     "commitizen": {

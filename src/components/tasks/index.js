@@ -27,7 +27,11 @@ export class Tasks extends Component {
 	componentDidMount() {
 		this.props.loadingTasks(0)
 			.then(res => {
-				this.setState({ tasks: res.tasks, total: res.total, loaded: 15, loading: false })
+				this.setState({ 
+					tasks: res.tasks, 
+					total: res.total, 
+					loaded: 15, 
+					loading: false })
 			})
 	}
 
@@ -61,6 +65,17 @@ export class Tasks extends Component {
 		)
 	}
 
+	loadingNewTasks = () => {
+		return (
+			this.props.loadingTasks(this.state.loaded)
+			.then((res) => {
+				this.setState({
+					tasks: [...this.state.tasks, ...res.tasks]
+				})
+			})
+		)
+	}
+
 	render() {
 		const { tasks, loading } = this.state;
 		const date = new Date();
@@ -82,6 +97,7 @@ export class Tasks extends Component {
 					tasks={tasks}
 					successTask={this.success}
 					dialogAddTaskOpen={this.dialogAddTaskOpen}
+					loadingNewTasks={this.loadingNewTasks}
 					loading={loading}
 				/>
 
