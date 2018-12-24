@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@rmwc/checkbox';
 import TaskAdding from '../messages/TaskAdding';
+import Loader from '../loader';
 
 const options = {
 	year: '2-digit',
@@ -41,6 +42,7 @@ class TableTasks extends Component {
 
 	render() {
 		const { tasks, successTask, dialogAddTaskOpen } = this.props;
+		const { loading } = this.state;
 		return (
 			<>
 				{tasks.length === 0 ?
@@ -81,6 +83,11 @@ class TableTasks extends Component {
 									</tr>
 								)
 							})}
+							{loading &&
+								<tr className="tr-loader">
+									<td><Loader loading size={35} /></td>
+								</tr>
+							}
 						</tbody>
 					</table>
 				}

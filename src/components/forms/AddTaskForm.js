@@ -7,7 +7,7 @@ import { TextField } from '@rmwc/textfield';
 import { Select } from '@rmwc/select';
 import { Button } from '@rmwc/button';
 
-export class TasksAddForm extends Component {
+export class AddTaskForm extends Component {
 	static propTypes = {
 		submit: PropTypes.func.isRequired,
 	}
@@ -85,4 +85,4 @@ export class TasksAddForm extends Component {
 	}
 }
 
-export default TasksAddForm
+export default AddTaskForm

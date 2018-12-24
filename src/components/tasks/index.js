@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { loadingTasks, addTask, successTask } from '../../ac/tasks';
 import './css/main';
 import { Dialog, DialogContent } from '@rmwc/dialog';
-import TasksAddForm from '../forms/TasksAddForm';
+import AddTaskForm from '../forms/AddTaskForm';
 import { Fab } from '@rmwc/fab';
 import SVGplus from '../../other/img/plus.svg';
 import TableTasks from './TableTasks';
@@ -111,7 +111,7 @@ export class Tasks extends Component {
 					open={this.state.dialogAddTaskOpen}
 					onClose={() => this.setState({ dialogAddTaskOpen: false })}
 				>   
-					<DialogContent><TasksAddForm submit={this.onSubmit} /></DialogContent>
+					<DialogContent><AddTaskForm submit={this.onSubmit} /></DialogContent>
 				</Dialog>
 			</div>
 		)

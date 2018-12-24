@@ -1,14 +1,31 @@
 import React from 'react'
 import { CircularProgress } from '@rmwc/circular-progress';
 import './css/main';
+import PropTypes from 'prop-types';
 
-export default ({ children, loading, className }) => {
+const Loader = ({ children, loading = 'false', className, size = 72 }) => {
 	return (
 		<>
-			<div className={`${className} ${loading ? 'loader-enabled': undefined}`}>
-				{children} 
-			</div>
-			{loading && <CircularProgress className="loader" size={72} />}
+			{children ?
+				<>
+					<div className={`${className} ${loading ? 'loader-enabled': ''}`}>
+						{children} 
+					</div> 
+					{loading && <CircularProgress className="loader" size={size} />}
+				</> :
+				<>
+					{loading && <CircularProgress className="loader" size={size} />}
+				</>
+		 	}
 		</>
 	)
 }
+
+Loader.propTypes = {
+	children: PropTypes.element,
+	loading: PropTypes.bool,
+	className: PropTypes.string,
+	size: PropTypes.number
+}
+
+export default Loader

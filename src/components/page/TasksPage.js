@@ -22,7 +22,7 @@ export class TasksPage extends Component {
 				{(showConfirmationEmail || confirmedEmail) && 
 					<ConfirmEmail confirmed={confirmedEmail} />
 				}
-				<Tasks className />
+				<Tasks />
 			</div>
 		)
 	}
