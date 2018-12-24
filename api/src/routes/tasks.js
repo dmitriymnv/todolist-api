@@ -15,7 +15,7 @@ router.post("/", (req, res) => {
 	} else {
 		const { start } = req.body;
 		const needTasks = tasks.slice(start, start + 15);
-		res.status(200).json({ tasks: needTasks, total: tasks.length });
+		res.status(200).json({ tasks: needTasks, value: needTasks.length, total: tasks.length });
 	}
 });
 

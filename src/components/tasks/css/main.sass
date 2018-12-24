@@ -2,9 +2,15 @@
 @import url(~@material/checkbox/dist/mdc.checkbox.css)
 @import url(~@material/fab/dist/mdc.fab.css)
 
+.tasks-zero
+	border: 1px solid rgba(0, 0, 0, 0.12)
+	font-weight: 300
+	padding: 15px 30px
+	font-size: 20px
+
 .task-title
 	width: 100%
-	margin: 30px
+	margin: 0 0 40px
 	display: flex
 	align-items: center
 	justify-content: space-around
@@ -25,6 +31,7 @@
 			width: 100%
 			table-layout: fixed
 			border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+			border-collapse: collapse
 			th, td
 				padding: 12px 15px
 		.task-tables__title
@@ -39,22 +46,25 @@
 				padding-right: 2rem
 	tbody
 		display: block
-		height: 600px
+		max-height: 	600px
 		overflow: auto
-	tr
-		transition: all .25s
-		&.yellow
-			background-color: rgba(yellow, .15)
-			border-color: rgba(black, .15)
-		&.blue
-			background-color: rgba(blue, .15)
-			border-color: rgba(blue, .15)
-		&.red
-			background-color: rgba(red, .15)
-			border-color: rgba(red, .15)
-		&.success
-			background-color: rgba(black, .13)
-			border-color: rgba(black, .13)
-		&:hover
-			background-color: rgba(black, .1)
-			border-color: rgba(black, .1)
+			// Цвета задач
+		tr
+			&.yellow
+				background-color: rgba(yellow, .15)
+				border-color: rgba(black, .15)
+			&.blue
+				background-color: rgba(blue, .15)
+				border-color: rgba(blue, .15)
+			&.red
+				background-color: rgba(red, .15)
+				border-color: rgba(red, .15)
+			&.success
+				background-color: rgba(black, .13)
+				border-color: rgba(black, .13)
+			&:hover
+				transition: all .25s
+				background-color: rgba(black, .1)
+				border-color: rgba(black, .1)
+			&:last-child
+				border: none

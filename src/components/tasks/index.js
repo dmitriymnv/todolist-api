@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadingTasks, addTask, successTask } from '../../ac/tasks';
@@ -66,18 +66,25 @@ export class Tasks extends Component {
 	}
 
 	loadingNewTasks = () => {
-		return (
-			this.props.loadingTasks(this.state.loaded)
-			.then((res) => {
-				this.setState({
-					tasks: [...this.state.tasks, ...res.tasks]
-				})
-			})
-		)
+		return new Promise((resolve, reject) => {
+			const { total, loaded } = this.state;
+			if(total > loaded) {
+				this.props.loadingTasks(this.state.loaded)
+					.then((res) => {
+						this.setState({
+							tasks: [...this.state.tasks, ...res.tasks],
+							loaded: this.state.loaded + res.value
+						})
+						return resolve(false)
+					})
+			}	else {
+				return resolve(true)
+			}
+		})
 	}
 
 	render() {
-		const { tasks, loading } = this.state;
+		const { tasks } = this.state;
 		const date = new Date();
 		return (
 			<div className="flex-container">
@@ -98,7 +105,6 @@ export class Tasks extends Component {
 					successTask={this.success}
 					dialogAddTaskOpen={this.dialogAddTaskOpen}
 					loadingNewTasks={this.loadingNewTasks}
-					loading={loading}
 				/>
 
 				<Dialog
