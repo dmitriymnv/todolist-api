@@ -2,58 +2,9 @@
 @import url(~@material/checkbox/dist/mdc.checkbox.css)
 @import url(~@material/fab/dist/mdc.fab.css)
 
-.task-tables
-	position: relative
-	max-height: 600px
-	margin-bottom: 100px
-	display: block
-	table
-		width: 700px
-	.task-tables-zero
-		text-align: center
-		overflow: hidden
-		font-size: 20px
-		padding: 30px 40px
-		.mdc-fab
-			position: absolute
-			left: 50%
-			bottom: 30px
-			transform: translate(-50%, 0)
-	.task-tables__title
-		white-space: normal
-		width: 400px
-		max-width: 400px
-		word-wrap: break-word	
-	.checkbox-task
-		text-align: center
-		.mdc-checkbox
-			margin-right: 0
-			margin-left: 0
-
-.red
-	.rmwc-data-table__cell
-		&::before
-			background-color: red
-			opacity: 0.1
-
-.green
-	.rmwc-data-table__cell
-		&::before
-			background-color: green
-			opacity: 0.1
-.blue
-	.rmwc-data-table__cell
-		&::before
-			background-color: blue
-			opacity: 0.1
-
-.rmwc-data-table__row--selected .rmwc-data-table__cell
-	&::before
-		background-color: black
-
 .task-title
 	width: 100%
-	margin: 30pxx
+	margin: 30px
 	display: flex
 	align-items: center
 	justify-content: space-around
@@ -62,3 +13,48 @@
 	text-transform: capitalize
 	button
 		margin-top: 17px
+
+.task-tables
+	max-width: 800px
+	border: 1px solid rgba(0, 0, 0, 0.12)
+	border-collapse: collapse
+	text-align: left
+	thead, tbody
+		tr
+			display: table
+			width: 100%
+			table-layout: fixed
+			border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+			th, td
+				padding: 12px 15px
+		.task-tables__title
+			width: 400px	
+	thead
+		th
+			color: darken(#fff, 50%)
+			line-height: 12px
+			font-size: 12px
+			font-weight: 400
+			&:last-child
+				padding-right: 2rem
+	tbody
+		display: block
+		height: 600px
+		overflow: auto
+	tr
+		transition: all .25s
+		&.yellow
+			background-color: rgba(yellow, .15)
+			border-color: rgba(black, .15)
+		&.blue
+			background-color: rgba(blue, .15)
+			border-color: rgba(blue, .15)
+		&.red
+			background-color: rgba(red, .15)
+			border-color: rgba(red, .15)
+		&.success
+			background-color: rgba(black, .13)
+			border-color: rgba(black, .13)
+		&:hover
+			background-color: rgba(black, .1)
+			border-color: rgba(black, .1)
