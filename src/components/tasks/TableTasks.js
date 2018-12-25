@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Checkbox } from '@rmwc/checkbox';
 import TaskAdding from '../messages/TaskAdding';
 import Loader from '../loader';
+import SvgCog from '../../other/img/cog-solid'
 
 const options = {
 	year: '2-digit',
@@ -16,7 +17,7 @@ class TableTasks extends Component {
 	static propTypes = {
 		tasks: PropTypes.array.isRequired,
 		successTask: PropTypes.func.isRequired,
-		dialogAddTaskOpen: PropTypes.func.isRequired,
+		dialogOpen: PropTypes.func.isRequired,
 		loadingNewTasks: PropTypes.func.isRequired,
 	}
 
@@ -41,12 +42,12 @@ class TableTasks extends Component {
   }
 
 	render() {
-		const { tasks, successTask, dialogAddTaskOpen } = this.props;
+		const { tasks, successTask, dialogOpen } = this.props;
 		const { loading } = this.state;
 		return (
 			<>
 				{tasks.length === 0 ?
-					<TaskAdding dialogAddTaskOpen={dialogAddTaskOpen} /> :
+					<TaskAdding /> :
 					<table className="task-tables">
 						<thead>
 							<tr>
@@ -63,13 +64,24 @@ class TableTasks extends Component {
 										key={i}
 										className={`${task.success? 'success ' : ''}${task.color}`}
 									>
-										<td>
+										<td className="td-perform">
 											<Checkbox
 												checked={task.success}
 												onChange={() => {
 													successTask(task._id);
 												}}
 											/>
+											
+											<span 
+												className="svg-cog"
+												onClick={() => dialogOpen('edit', i)}
+											>
+												<SvgCog 
+													width='16' 
+													height='16'
+													alt="Изменение задачи"
+												/>
+											</span>
 										</td>
 										<td className="task-tables__title">{task.title}</td>
 										<td>

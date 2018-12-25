@@ -12,6 +12,12 @@ export const addTask = (data) => () => {
 	)
 }
 
+export const editTask = (data) => () => {
+	return (
+		api(['/api/tasks/edit', 'POST'], { data })
+	)
+}
+
 export const successTask = (id) => () => {
 	return (
 		api(['/api/tasks/success', 'POST'], { id })

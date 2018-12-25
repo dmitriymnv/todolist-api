@@ -7,15 +7,21 @@ import { TextField } from '@rmwc/textfield';
 import { Select } from '@rmwc/select';
 import { Button } from '@rmwc/button';
 
-export class AddTaskForm extends Component {
+export class EditTaskForm extends Component {
 	static propTypes = {
 		submit: PropTypes.func.isRequired,
+		task: PropTypes.shape({
+			title: PropTypes.string.isRequired,
+			color: PropTypes.string.isRequired,
+			_id: PropTypes.string.isRequired
+		}).isRequired
 	}
 
 	state = {
 		data: {
-			title: '',
-			color: ''
+			title: this.props.task.title,
+			color: this.props.task.color,
+			id: this.props.task._id
 		},
 		loading: false
 	}
@@ -29,7 +35,7 @@ export class AddTaskForm extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ loading: true });	
-		this.props.submit(this.state.data, 'add')
+		this.props.submit(this.state.data, 'edit')
 			.catch(errors => this.setState({ errors, loading: false }));
 	}
 
@@ -38,7 +44,9 @@ export class AddTaskForm extends Component {
 		return (
 			<Loader loading={loading}>
 				<form className="inline-form" onSubmit={this.onSubmit}>
-					<Typography use="headline5" className="headline-form">Добавление задачи</Typography>
+					<Typography use="headline5" className="headline-form">
+						Изменение задачи
+					</Typography>
 					
 					<TextField
 						value={data.title}
@@ -77,11 +85,11 @@ export class AddTaskForm extends Component {
 						]}
 					/>
 
-					<Button raised>Добавить</Button>
+					<Button raised>Изменить</Button>
 				</form>
 			</Loader>
 		)
 	}
 }
 
-export default AddTaskForm
+export default EditTaskForm

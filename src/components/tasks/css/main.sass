@@ -47,9 +47,20 @@
 				padding-right: 2rem
 	tbody
 		display: block
-		max-height: 	600px
+		max-height:	600px
 		overflow: auto
-			// Цвета задач
+		.td-perform
+			display: flex
+			align-items: center
+			span.svg-cog
+				padding: 0 40px 0 10px
+				height: 16px
+				cursor: pointer
+				opacity: 0
+				transition: all .25s
+				&:hover
+					opacity: .8
+		// Цвета задач
 		tr
 			&.yellow
 				background-color: rgba(yellow, .15)
@@ -67,6 +78,8 @@
 				transition: all .25s
 				background-color: rgba(black, .1)
 				border-color: rgba(black, .1)
+				span.svg-cog
+					opacity: .5
 			&:last-child
 				border: none
 

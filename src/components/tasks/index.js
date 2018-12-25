@@ -1,10 +1,11 @@
 import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadingTasks, addTask, successTask } from '../../ac/tasks';
+import { loadingTasks, addTask, successTask, editTask } from '../../ac/tasks';
 import './css/main';
 import { Dialog, DialogContent } from '@rmwc/dialog';
-import AddTaskForm from '../forms/AddTaskForm';
+const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
+const EditTaskForm = lazy(() => import('../forms/EditTaskForm'));
 import { Fab } from '@rmwc/fab';
 import SVGplus from '../../other/img/plus.svg';
 import TableTasks from './TableTasks';
@@ -14,11 +15,15 @@ export class Tasks extends Component {
 		loadingTasks: PropTypes.func.isRequired,
 		addTask: PropTypes.func.isRequired,
 		successTask: PropTypes.func.isRequired,
+		editTask: PropTypes.func.isRequired,
 	}
 
 	state = {
 		tasks: [],
-		dialogAddTaskOpen: false,
+		dialog: {
+			open: false,
+			purpose: undefined
+		},
 		total: 0,
 		loaded: 0,
 		loading: true
@@ -45,24 +50,44 @@ export class Tasks extends Component {
 		this.props.successTask(id)
 	}
 
-	dialogAddTaskOpen = () => {
-		this.setState({ dialogAddTaskOpen: true });
+	dialogOpen = (purpose, number = undefined) => {
+		this.setState({ 
+			dialog: {
+				open: true,
+				purpose,
+				data: number
+			}
+		});
 	}
 
-	onSubmit = (data) => {
+	onSubmit = (data, purpose) => {
 		this.setState({ loading: true });
-		return (
-			this.props.addTask(data)
-			.then(({ task }) => 
-				this.setState({ 
-					tasks: [task, ...this.state.tasks], 
-					dialogAddTaskOpen: false,
-					total: this.state.total + 1,
-					loaded: this.state.loaded + 1,
-					loading: false 
-				})
+		if(purpose == 'add') {
+			return (
+				this.props.addTask(data)
+				.then(({ task }) => 
+					this.setState({ 
+						tasks: [task, ...this.state.tasks], 
+						dialog: { open: false, purpose: undefined },
+						total: this.state.total + 1,
+						loaded: this.state.loaded + 1,
+						loading: false 
+					})
+				)
 			)
-		)
+		} else if(purpose == 'edit') {
+			return (
+				this.props.editTask(data)
+				.then(({ task }) => 
+					this.setState({ 
+						tasks: [task, ...this.state.tasks], 
+						dialogAddTaskOpen: false,
+						total: this.state.total + 1,
+						loaded: this.state.loaded + 1,
+						loading: false 
+					})
+				))
+		}
 	}
 
 	loadingNewTasks = () => {
@@ -84,7 +109,7 @@ export class Tasks extends Component {
 	}
 
 	render() {
-		const { tasks } = this.state;
+		const { tasks, dialog } = this.state;
 		const date = new Date();
 		return (
 			<div className="flex-container">
@@ -92,7 +117,7 @@ export class Tasks extends Component {
 					{`${date.toLocaleString('ru', {weekday: 'long'})} , ${date.getDate()}`}
 
 					<Fab
-						onClick={() => this.setState({ dialogAddTaskOpen: true })}
+						onClick={() => this.setState({ dialog: { open: true, purpose: 'add' } })}
 						icon={
 							<SVGplus width="30" height="30" />
 						} 
@@ -103,19 +128,31 @@ export class Tasks extends Component {
 				<TableTasks 
 					tasks={tasks}
 					successTask={this.success}
-					dialogAddTaskOpen={this.dialogAddTaskOpen}
+					dialogOpen={this.dialogOpen}
 					loadingNewTasks={this.loadingNewTasks}
 				/>
 
 				<Dialog
-					open={this.state.dialogAddTaskOpen}
-					onClose={() => this.setState({ dialogAddTaskOpen: false })}
+					open={dialog.open}
+					onClose={() => 
+						this.setState({ dialog: { open: false, purpose: undefined } })
+					}
 				>   
-					<DialogContent><AddTaskForm submit={this.onSubmit} /></DialogContent>
+					<DialogContent>
+						{dialog.purpose == 'add' && <AddTaskForm submit={this.onSubmit} />}
+						{dialog.purpose == 'edit' && 
+							<EditTaskForm
+								task={tasks[dialog.data]}
+								submit={this.onSubmit} 
+							/>
+						}
+					</DialogContent>
 				</Dialog>
 			</div>
 		)
 	}
 }
 
-export default connect(null, { loadingTasks, addTask, successTask })(Tasks)
+export default connect(null, {
+	 loadingTasks, addTask, successTask, editTask 
+})(Tasks)
