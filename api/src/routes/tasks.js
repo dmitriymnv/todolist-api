@@ -33,6 +33,29 @@ router.post("/add", (req, res) => {
 
 });
 
+router.post("/edit", (req, res) => {
+	const { data } = req.body;
+	const user = req.currentUser;
+
+	User.findOne({ email: user.email }, function(err, user){
+		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
+		
+		user.tasks.forEach(function (item) {
+			if(item._id == data.id) {
+				item.title = data.title;
+				item.color = data.color;
+				return;
+			}
+		});
+
+		user.tasks.success = 'changed';
+		user.markModified('tasks');
+		user.save()
+			.then(() => res.json({ }))
+			.catch((err) => console.log(err))
+ 	});
+});
+
 router.post("/success", (req, res) => {
 	const { id } = req.body;
 	const user = req.currentUser;

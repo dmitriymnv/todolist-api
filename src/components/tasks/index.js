@@ -40,8 +40,12 @@ export class Tasks extends Component {
 			})
 	}
 
+	find = (id) => {
+		return this.state.tasks.find((task) => task._id == id);
+	}
+
 	success = (id) => {
-		const task = this.state.tasks.find((task) => task._id == id);
+		const task = this.find(id);
 		const completion = task.dateCompletion ? '' : new Date();		
 		this.setState({ ...this.state.tasks [
 			task.success = !task.success,
@@ -65,28 +69,29 @@ export class Tasks extends Component {
 		if(purpose == 'add') {
 			return (
 				this.props.addTask(data)
-				.then(({ task }) => 
-					this.setState({ 
-						tasks: [task, ...this.state.tasks], 
-						dialog: { open: false, purpose: undefined },
-						total: this.state.total + 1,
-						loaded: this.state.loaded + 1,
-						loading: false 
-					})
+					.then(({ task }) => 
+						this.setState({ 
+							tasks: [task, ...this.state.tasks],
+							dialog: { open: false, purpose: undefined },
+							total: this.state.total + 1,
+							loaded: this.state.loaded + 1,
+							loading: false 
+						})
 				)
 			)
 		} else if(purpose == 'edit') {
+			const task = this.find(data.id);	
+			this.setState({ 
+				...this.state.tasks [
+					task.title = data.title,
+					task.color = data.color
+				],
+				dialog: { open: false, purpose: undefined },
+				loading: false
+			});
 			return (
 				this.props.editTask(data)
-				.then(({ task }) => 
-					this.setState({ 
-						tasks: [task, ...this.state.tasks], 
-						dialogAddTaskOpen: false,
-						total: this.state.total + 1,
-						loaded: this.state.loaded + 1,
-						loading: false 
-					})
-				))
+			)
 		}
 	}
 
@@ -109,7 +114,7 @@ export class Tasks extends Component {
 	}
 
 	render() {
-		const { tasks, dialog } = this.state;
+		const { tasks, dialog, loading } = this.state;
 		const date = new Date();
 		return (
 			<div className="flex-container">
@@ -129,6 +134,7 @@ export class Tasks extends Component {
 					tasks={tasks}
 					successTask={this.success}
 					dialogOpen={this.dialogOpen}
+					pageLoading={loading}
 					loadingNewTasks={this.loadingNewTasks}
 				/>
 

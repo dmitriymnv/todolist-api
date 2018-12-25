@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@rmwc/checkbox';
 import TaskAdding from '../messages/TaskAdding';
+import SvgCog from '../../other/img/cog-solid';
 import Loader from '../loader';
-import SvgCog from '../../other/img/cog-solid'
 
 const options = {
 	year: '2-digit',
@@ -19,6 +19,7 @@ class TableTasks extends Component {
 		successTask: PropTypes.func.isRequired,
 		dialogOpen: PropTypes.func.isRequired,
 		loadingNewTasks: PropTypes.func.isRequired,
+		pageLoading: PropTypes.bool.isRequired
 	}
 
 	state = {
@@ -42,10 +43,10 @@ class TableTasks extends Component {
   }
 
 	render() {
-		const { tasks, successTask, dialogOpen } = this.props;
+		const { tasks, successTask, dialogOpen, pageLoading } = this.props;
 		const { loading } = this.state;
 		return (
-			<>
+			<Loader opacity='0' loading={pageLoading}>
 				{tasks.length === 0 ?
 					<TaskAdding /> :
 					<table className="task-tables">
@@ -103,7 +104,7 @@ class TableTasks extends Component {
 						</tbody>
 					</table>
 				}
-			</>
+			</Loader>
 		)
 	}
 }
