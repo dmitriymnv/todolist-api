@@ -4,7 +4,6 @@ import './css/main';
 import PropTypes from 'prop-types';
 
 const Loader = ({ children, loading = 'false', className = '', size = 72, opacity = 0.25 }) => {
-	const te = 11;
 	return (
 		<>
 			{children ?

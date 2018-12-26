@@ -69,7 +69,7 @@ class TableTasks extends Component {
 											<Checkbox
 												checked={task.success}
 												onChange={() => {
-													successTask(task._id);
+													successTask(task._id, i);
 												}}
 											/>
 											

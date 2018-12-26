@@ -36,14 +36,15 @@ router.post("/add", (req, res) => {
 router.post("/edit", (req, res) => {
 	const { data } = req.body;
 	const user = req.currentUser;
-
+	let i;
 	User.findOne({ email: user.email }, function(err, user){
 		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
 		
-		user.tasks.forEach(function (item) {
+		user.tasks.forEach(function (item, num) {
 			if(item._id == data.id) {
 				item.title = data.title;
 				item.color = data.color;
+				i = num;
 				return;
 			}
 		});
@@ -51,8 +52,8 @@ router.post("/edit", (req, res) => {
 		user.tasks.success = 'changed';
 		user.markModified('tasks');
 		user.save()
-			.then(() => res.json({ }))
-			.catch((err) => console.log(err))
+			.then(() => res.json({ i }))
+			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
  	});
 });
 

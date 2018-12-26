@@ -40,12 +40,8 @@ export class Tasks extends Component {
 			})
 	}
 
-	find = (id) => {
-		return this.state.tasks.find((task) => task._id == id);
-	}
-
-	success = (id) => {
-		const task = this.find(id);
+	success = (id, i) => {
+		const task = this.state.tasks[i];
 		const completion = task.dateCompletion ? '' : new Date();		
 		this.setState({ ...this.state.tasks [
 			task.success = !task.success,
@@ -66,32 +62,41 @@ export class Tasks extends Component {
 
 	onSubmit = (data, purpose) => {
 		this.setState({ loading: true });
-		if(purpose == 'add') {
-			return (
-				this.props.addTask(data)
-					.then(({ task }) => 
-						this.setState({ 
-							tasks: [task, ...this.state.tasks],
-							dialog: { open: false, purpose: undefined },
-							total: this.state.total + 1,
-							loaded: this.state.loaded + 1,
-							loading: false 
+
+		switch (purpose) {
+			case 'add':
+				return (
+					this.props.addTask(data)
+						.then(({ task }) => {
+							this.setState({
+								tasks: [task, ...this.state.tasks],
+								total: this.state.total + 1,
+								loaded: this.state.loaded + 1,
+								dialog: { open: false },
+								loading: false
+							})
 						})
 				)
-			)
-		} else if(purpose == 'edit') {
-			const task = this.find(data.id);	
-			this.setState({ 
-				...this.state.tasks [
-					task.title = data.title,
-					task.color = data.color
-				],
-				dialog: { open: false, purpose: undefined },
-				loading: false
-			});
-			return (
-				this.props.editTask(data)
-			)
+
+			case 'edit':
+				return (
+					this.props.editTask(data)
+						.then(({ i }) => {
+							const task = this.state.tasks[i];
+							this.setState({
+								tasks: [
+									...this.state.tasks, 
+									task.title = data.title,
+									task.color = data.color,
+								],
+								dialog: { open: false },
+								loading: false
+							});
+						})
+				)
+		
+			default:
+				break;
 		}
 	}
 
@@ -141,18 +146,19 @@ export class Tasks extends Component {
 				<Dialog
 					open={dialog.open}
 					onClose={() => 
-						this.setState({ dialog: { open: false, purpose: undefined } })
+						this.setState({ dialog: { open: false } })
 					}
-				>   
-					<DialogContent>
-						{dialog.purpose == 'add' && <AddTaskForm submit={this.onSubmit} />}
-						{dialog.purpose == 'edit' && 
-							<EditTaskForm
-								task={tasks[dialog.data]}
-								submit={this.onSubmit} 
-							/>
-						}
-					</DialogContent>
+				>  
+					{dialog.purpose &&
+						<DialogContent>
+							{dialog.purpose == 'add' ? <AddTaskForm submit={this.onSubmit} /> :
+								<EditTaskForm
+									task={tasks[dialog.data]}
+									submit={this.onSubmit} 
+								/>
+							}
+						</DialogContent>
+					}
 				</Dialog>
 			</div>
 		)

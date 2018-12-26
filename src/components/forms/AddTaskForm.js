@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loader from '../loader';
 import './css/main';
+import ParseError from '../utils/ParseError';
 import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Select } from '@rmwc/select';
@@ -17,7 +18,8 @@ export class AddTaskForm extends Component {
 			title: '',
 			color: ''
 		},
-		loading: false
+		loading: false,
+		errors: {}
 	}
 
 	onChange = e => {
@@ -34,11 +36,13 @@ export class AddTaskForm extends Component {
 	}
 
 	render() {
-		const { data, loading } = this.state;
+		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
 				<form className="inline-form" onSubmit={this.onSubmit}>
 					<Typography use="headline5" className="headline-form">Добавление задачи</Typography>
+
+					{ParseError(errors.global)}
 					
 					<TextField
 						value={data.title}
