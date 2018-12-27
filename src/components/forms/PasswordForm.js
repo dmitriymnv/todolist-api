@@ -68,7 +68,7 @@ export class PasswordForm extends Component {
 		return (
 			<Loader loading={loading}>
 				<form onSubmit={this.onSubmit} className="default-form password-form">
-					<Typography use="headline5" className="headline-form">Измение пароля</Typography>
+					<Typography use="headline5" tag="h1" className="headline-form">Измение пароля</Typography>
 
 					{ParseError(errors.global)}
 

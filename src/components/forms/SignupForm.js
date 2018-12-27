@@ -81,7 +81,7 @@ export class SignupForm extends Component {
 		return (
 			<Loader loading={loading}>
 				<form onSubmit={this.onSubmit} className="default-form">
-					<Typography use="headline5" className="headline-form">Регистрация</Typography>
+					<Typography use="headline5" tag="h1" className="headline-form">Регистрация</Typography>
 
 					{ParseError(errors.global)}
 					{ParseError(errors.email)}

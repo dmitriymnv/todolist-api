@@ -7,7 +7,8 @@ import { setPassword } from '../../ac/auth'
 
 export class SignupPage extends Component {
 	static propTypes = {
-		signup: PropTypes.func.isRequired
+		signup: PropTypes.func.isRequired,
+		push: PropTypes.func.isRequired,
 	}
 
 	submit = (data) => {

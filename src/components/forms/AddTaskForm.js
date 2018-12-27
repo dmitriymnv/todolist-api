@@ -40,7 +40,7 @@ export class AddTaskForm extends Component {
 		return (
 			<Loader loading={loading}>
 				<form className="inline-form" onSubmit={this.onSubmit}>
-					<Typography use="headline5" className="headline-form">Добавление задачи</Typography>
+					<Typography use="headline5" tag="h1" className="headline-form">Добавление задачи</Typography>
 
 					{ParseError(errors.global)}
 					

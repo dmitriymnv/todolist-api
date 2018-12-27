@@ -15,7 +15,7 @@ export class Initialpage extends Component {
 		return (
 			<div className="flex-container">
 				<div className="initialpage__bg"></div>
-				<h1><Typography use="headline1">Todolist-Api</Typography></h1>
+				<Typography tag="h1" use="headline1">Todolist-Api</Typography>
 				<Button onClick={() => this.props.push('/signup')} raised>Зарегистрироваться</Button>
 			</div>
 		)

@@ -6,9 +6,7 @@ import './css/profilepage';
 import { Typography } from '@rmwc/typography';
 import { Button } from '@rmwc/button';
 import { 
-	Card,
-	CardAction, 
-	CardActions, 
+	Card, 
 	CardActionButtons } from '@rmwc/card';
 import { ListDivider } from '@rmwc/list';
 
