@@ -6,6 +6,7 @@ import { login } from '../../ac/auth';
 import { logout } from '../../ac/auth';
 import './css/main';
 import SvgAccount from '../../other/img/account';
+import { push } from 'connected-react-router';
 import {
   TopAppBar,
   TopAppBarRow,
@@ -28,6 +29,7 @@ export class TopNavigation extends Component {
 		login: PropTypes.func.isRequired,
 		logout: PropTypes.func.isRequired,
 		username: PropTypes.string,
+		push: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -62,6 +64,10 @@ export class TopNavigation extends Component {
 							>
 								Авторизованы как: <span>{data.username}</span>
 							</MenuItem>
+							<MenuItem onClick={() => {
+								this.props.push('/profile')
+								this.setState({ menuIsOpen: false })
+							}}>Личный кабинет</MenuItem>
 							<MenuItem onClick={() => {
 								this.props.logout()
 								this.setState({ menuIsOpen: false })
@@ -138,4 +144,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { login, logout })(TopNavigation)
+export default connect(mapStateToProps, { login, logout, push })(TopNavigation)

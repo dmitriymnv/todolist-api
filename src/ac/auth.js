@@ -37,3 +37,11 @@ export const confirm = (token) => (dispatch) => {
 		})
 	)
 }
+
+export const resetPassword = (data) => (dispatch) => {
+	return (
+		api(['/api/auth/resetPassword', 'POST'], { data }).then(({ user }) => {
+			console.log(user)
+		})
+	)
+}

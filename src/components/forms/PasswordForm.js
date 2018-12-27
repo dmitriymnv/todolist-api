@@ -10,20 +10,18 @@ import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
 import { Icon } from '@rmwc/icon';
 
-export class SignupForm extends Component {
+export class PasswordForm extends Component {
 	static propTypes = {
 		submit: PropTypes.func.isRequired,
 	}
 
 	state = {
 		data: {
-			email: '',
-			username: '',
-			password: '',
+			oldPassword: '',
+			newPassword: '',
 			confirmationPassword: ''
 		},
 		loading: false,
-		showPassword: false,
 		errors: {}
 	}
 
@@ -49,7 +47,7 @@ export class SignupForm extends Component {
 
 	validate = data => {
 		let errors = {};
-		let password = data.password;
+		let password = data.newPassword;
 
 		let reg = password.match(
 			/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/
@@ -63,84 +61,57 @@ export class SignupForm extends Component {
 			return errors;
 		}
 
-		if(data.username.length < 5) {
-			errors.global = "Имя пользователя должно содержать не менее пяти знаков";
-			return errors;
-		}
-
-		if(password !== data.confirmationPassword) {
-			errors.confirmationPassword = "Ваши пароли не совпадают"
-			return errors;
-		}
-
 		return errors;
 	}
 
 	render() {
-		const { data, showPassword, loading, errors } = this.state;
+		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
-				<form onSubmit={this.onSubmit} className="default-form">
-					<Typography use="headline5" className="headline-form">Регистрация</Typography>
+				<form onSubmit={this.onSubmit} className="default-form password-form">
+					<Typography use="headline5" className="headline-form">Измение пароля</Typography>
 
 					{ParseError(errors.global)}
-					{ParseError(errors.email)}
-					{ParseError(errors.username)}
 
 					<div className="default-form__item">
 						<TextField
-							value={data.email}
+							value={data.oldPassword}
 							onChange={this.onChange}
 							className="default-form__field"
 							required
-							type="email"
-							name="email"
-							label="Ваш E-mail"
+							type="password"
+							name="oldPassword"
+							label="Ваш текущий пароль"
 						/>
-						<TextField
-							value={data.username}	
-							onChange={this.onChange}
-							required
-							type="text"
-							name="username"
-							label="Имя пользователя"
-						/>
-					
 					</div>
 
 					<div className="default-form__item">
 						<TextField
-							value={data.password}
+							value={data.newPassword}
 							onChange={this.onChange}
 							required
 							className="default-form__field customfield-icon"
-							withTrailingIcon={
-								<Icon 
-									onClick={() => this.setState({ showPassword: !this.state.showPassword})}
-									className="field-icon" 
-									icon={showPassword ?
-										<SvgEyeClose width={18} height={18} /> : <SvgEyeOpen width={18} height={18}  />
-									} 
-								/>
-							}
-							type={showPassword ? "text" : "password"}
-							name="password"
-							label="Пароль"
+							type="text"
+							name="newPassword"
+							label="Ваш новый пароль"
 						/>
+					</div>
+
+					<div className="default-form__item">
 						<TextField
 							value={data.confirmationPassword}
 							onChange={this.onChange}
 							className="default-form__field"
 							required
-							type={showPassword ? "text" : "password"}
+							type="text"
 							name="confirmationPassword" 
-							label="Повторите пароль"
+							label="Повторите ваш новый пароль"
 						/>
 						{ParseError(errors.confirmationPassword)}
 					</div>
 
 					<div className="default-form__item default-form__button">
-						<Button raised>Зарегистрироваться</Button>
+						<Button raised>Изменить пароль</Button>
 					</div>
 				</form>
 			</Loader>
@@ -148,4 +119,4 @@ export class SignupForm extends Component {
 	}
 }
 
-export default SignupForm
+export default PasswordForm

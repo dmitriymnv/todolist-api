@@ -22,14 +22,14 @@
 .mdc-select
 	width: 100%
 
-.signup-form
+.default-form
 	padding: 48px 40px 36px
 	max-width: 600px
 	border: 1px solid #dadce0
 	border-radius: 8px
-	.signup-form__button
+	.default-form__button
 		text-align: right
-	.signup-form__item
+	.default-form__item
 		display: block
 		margin-bottom: 30px
 		&:last-child
@@ -37,3 +37,8 @@
 		.mdc-text-field
 			&:nth-child(1)
 				margin-right: 30px
+	&.password-form
+		.mdc-text-field
+			&:nth-child(1)
+				margin-right: 0
+				width: 320px

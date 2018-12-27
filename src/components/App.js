@@ -13,7 +13,7 @@ export class App extends Component {
 		return (
 			<ThemeProvider options={themeOptions}>
 				<TopNavigation />
-				<div className="routes container-fluid flex-container">
+				<div className="routes container-fluid">
 					<Routes />
 				</div>
 			</ThemeProvider>
