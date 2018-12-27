@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const auth = require("./routes/auth");
 const users = require("./routes/users");
 const tasks = require("./routes/tasks");
+const profile = require("./routes/profile");
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ mongoose.connect('mongodb://localhost/todolist', { useNewUrlParser: true });
 app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/tasks", tasks);
+app.use("/api/profile", profile);
 
 
 app.listen(3030, () => console.log("Сервер запущен localhost:3030"));

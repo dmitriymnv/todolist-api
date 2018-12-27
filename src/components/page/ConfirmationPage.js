@@ -18,7 +18,9 @@ class ConfirmationPage extends Component {
 
 	componentDidMount() {
 		this.props.confirm(this.props.match.params.token)
-			.then(() => this.props.push('/tasks', { confirmedEmail: true }))
+			.then(() => this.props.push(
+				'/tasks', { alertText: 'Вы успешно подтвердили свою электронную почту' }
+			))
 			.catch(() => this.setState({ loading: false, success: false }));
 	}
 

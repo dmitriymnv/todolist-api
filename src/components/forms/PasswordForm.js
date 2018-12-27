@@ -34,7 +34,6 @@ export class PasswordForm extends Component {
 	onSubmit = e => {
 		e.preventDefault();
 		const errors = this.validate(this.state.data);
-
 		if(Object.keys(errors).length === 0) {
 			this.setState({ loading: true });
 			this.props.submit(this.state.data)

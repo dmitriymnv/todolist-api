@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import PasswordForm from '../forms/PasswordForm';
-import { resetPassword } from '../../ac/auth'
+import { setPassword } from '../../ac/auth'
 
 export class SignupPage extends Component {
 	static propTypes = {
@@ -11,7 +12,10 @@ export class SignupPage extends Component {
 
 	submit = (data) => {
 		return (
-			this.props.resetPassword(data)
+			this.props.setPassword(data)
+				.then(() => this.props.push(
+					'/tasks', { alertText: 'Вы успешно сменили свой пароль на новый!'}
+				))
 		)
 	}
 
@@ -24,4 +28,4 @@ export class SignupPage extends Component {
 	}
 }
 
-export default connect(null, { resetPassword })(SignupPage)
+export default connect(null, { push, setPassword })(SignupPage)

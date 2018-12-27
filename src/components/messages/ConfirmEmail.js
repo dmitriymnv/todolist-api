@@ -4,12 +4,12 @@ import SvgCross from '../../other/img/times-solid';
 
 export class ConfirmEmail extends Component {
 	static propTypes = {
-		confirmed: PropTypes.bool.isRequired,
+		alertText: PropTypes.string,
 	}
 
 	state = {
 		show: true,
-		confirmed: this.props.confirmed
+		alertText: this.props.alertText
 	}
 
 	delConfirmationEmail = () => {
@@ -18,11 +18,11 @@ export class ConfirmEmail extends Component {
 	}
 
 	render() {
-		const { show, confirmed } = this.state;
-		if(show && confirmed) {
+		const { show, alertText } = this.state;
+		if(show && alertText) {
 			return (
 				<div className="show-message">
-					<span>Вы успешно подтвердили свою электронную почту</span>
+					<span>{alertText}</span>
 					<span
 						onClick={() => this.setState({ show: false })} 
 						className="icon"
@@ -31,7 +31,7 @@ export class ConfirmEmail extends Component {
 					</span>
 				</div>
 			)
-		} else if(show && !confirmed) {
+		} else if(show && !alertText) {
 			return (
 				<div className="show-message">
 					<span>На электронную почту, указанную при регистрации, отправлено письмо для подтверждения вашего аккаунт</span>

@@ -1,7 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const mail = require('../mailer');
 
 const router = express.Router();
 
@@ -29,6 +28,5 @@ router.post("/confirmation", (req, res) => {
 	)
 
 })
-
 
 module.exports = router;

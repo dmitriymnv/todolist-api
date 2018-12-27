@@ -1,6 +1,6 @@
+import { hot } from 'react-hot-loader';
 import React from 'react';
 import { render } from 'react-dom';
-import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import store from './store';

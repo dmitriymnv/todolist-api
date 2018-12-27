@@ -16,11 +16,11 @@ export class TasksPage extends Component {
 
 	render() {
 		const showConfirmationEmail = localStorage.getItem('showConfirmationEmail');
-		const { confirmedEmail } = this.props.router.state ? this.props.router.state : false;
+		const { alertText } = this.props.router.state ? this.props.router.state : false;
 		return (
 			<div className="taskspage flex-container">
-				{(showConfirmationEmail || confirmedEmail) && 
-					<ConfirmEmail confirmed={confirmedEmail} />
+				{(showConfirmationEmail || alertText) && 
+					<ConfirmEmail alertText={alertText} />
 				}
 				<Tasks />
 			</div>
