@@ -5,18 +5,15 @@ import { push } from 'connected-react-router';
 import PasswordForm from '../forms/PasswordForm';
 import { setPassword } from '../../ac/auth'
 
-export class SignupPage extends Component {
+export class PasswordPage extends Component {
 	static propTypes = {
-		signup: PropTypes.func.isRequired,
 		push: PropTypes.func.isRequired,
+		setPassword: PropTypes.func.isRequired,
 	}
 
 	submit = (data) => {
 		return (
 			this.props.setPassword(data)
-				.then(() => this.props.push(
-					'/tasks', { alertText: 'Вы успешно сменили свой пароль на новый!'}
-				))
 		)
 	}
 
@@ -29,4 +26,4 @@ export class SignupPage extends Component {
 	}
 }
 
-export default connect(null, { push, setPassword })(SignupPage)
+export default connect(null, { push, setPassword })(PasswordPage)

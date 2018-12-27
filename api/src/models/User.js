@@ -40,6 +40,10 @@ schema.methods.setPassword = function setPassword(password) {
   this.passwordHash = bcrypt.hashSync(password, 10);
 };
 
+schema.methods.setUserName = function setUserName(name) {
+  this.username = name;
+};
+
 schema.methods.setConfirmationToken = function setConfirmationToken() {
   this.confirmationToken = this.generateJWT()
 };

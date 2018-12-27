@@ -41,5 +41,19 @@ export const confirm = (token) => (dispatch) => {
 export const setPassword = (data) => (dispatch) => {
 	return (
 		api(['/api/profile/setPassword', 'POST'], { data })
+			.then(res => {
+				dispatch(push('/tasks', { alertText: res.text } ))
+			})
+	)
+}
+
+export const setPrivateDate = (data) => (dispatch) => {
+	return (
+		api(['/api/profile/setPrivateDate', 'POST'], { data })
+			.then(res => {
+				localStorage.setItem('todoJWT', res.user.token);
+				dispatch(userLoggedIn(res.user));
+				dispatch(push('/tasks', { alertText: res.text } ))
+			})
 	)
 }

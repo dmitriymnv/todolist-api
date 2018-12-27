@@ -84,10 +84,9 @@ export class Tasks extends Component {
 						.then(({ i }) => {
 							const task = this.state.tasks[i];
 							this.setState({
-								tasks: [
-									...this.state.tasks, 
+								...this.state.tasks [
 									task.title = data.title,
-									task.color = data.color,
+									task.color = data.color
 								],
 								dialog: { open: false },
 								loading: false

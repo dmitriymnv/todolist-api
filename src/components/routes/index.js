@@ -10,6 +10,7 @@ const TasksPage = lazy(() => import('../page/TasksPage'));
 const ConfirmationPage = lazy(() => import('../page/ConfirmationPage'));
 const ProfilePage = lazy(() => import('../page/ProfilePage'));
 const PasswordPage = lazy(() => import('../page/PasswordPage'));
+const PrivateDatePage = lazy(() => import('../page/PrivateDatePage'));
 
 const Routes = () => { 
 	return (
@@ -20,6 +21,7 @@ const Routes = () => {
 				<AuthRoute path="/tasks" to="/signup" user exact component={ TasksPage } />
 				<AuthRoute path="/profile" to="/signup" user exact component={ ProfilePage } />
 				<AuthRoute path="/profile/password" to="/signup" user exact component={ PasswordPage } />
+				<AuthRoute path="/profile/private-date" to="/signup" user exact component={ PrivateDatePage } />
 				<Route path="/confirmation/:token" exact component={ ConfirmationPage } />
 			</Switch>
 		</Suspense>

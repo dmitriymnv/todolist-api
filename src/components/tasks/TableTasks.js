@@ -78,9 +78,8 @@ class TableTasks extends Component {
 												onClick={() => dialogOpen('edit', i)}
 											>
 												<SvgCog 
-													width='16' 
-													height='16'
-													alt="Изменение задачи"
+													width="16"
+													height="16"
 												/>
 											</span>
 										</td>

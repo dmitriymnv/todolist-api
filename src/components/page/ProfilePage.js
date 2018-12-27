@@ -35,7 +35,7 @@ export class Initialpage extends Component {
 						<ListDivider />
 
 						<div className="card-body">
-							<Typography use="headline5" tag="div">
+							<Typography use="headline6" tag="div">
 								Привет, {username}
 							</Typography>
 								
