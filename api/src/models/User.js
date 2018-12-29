@@ -40,8 +40,10 @@ schema.methods.setPassword = function setPassword(password) {
   this.passwordHash = bcrypt.hashSync(password, 10);
 };
 
-schema.methods.setUserName = function setUserName(name) {
-  this.username = name;
+schema.methods.setPrivateDate = function setUserName(data) {
+	const { email, username } = data;
+  if(email) this.email = email;
+  if(username) this.username = username;
 };
 
 schema.methods.setConfirmationToken = function setConfirmationToken() {

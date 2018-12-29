@@ -26,16 +26,15 @@ router.post("/setPassword", (req, res) => {
 router.post("/setPrivateDate", (req, res) => {
 	const { currentUser } = req;
 	const { data } = req.body;
+	
+	currentUser.setPrivateDate(data)
+	currentUser.save()
+		.then(() => res.json({ 
+			user: currentUser.toAuthJSON(), 
+			text: 'Вы успешно изменили свои личные данные!'
+		}))
+		.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
 
-	if(data.username) {
-		currentUser.setUserName(data.username)
-		currentUser.save()
-			.then(() => res.json({ 
-				user: currentUser.toAuthJSON(), 
-				text: 'Вы успешно изменили своё имя пользователя!' 
-			}))
-			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
-	}
 })
 
 module.exports = router;

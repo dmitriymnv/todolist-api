@@ -43,13 +43,16 @@ export class PrivateDateForm extends Component {
 
 	validate = data => {
 		let errors = {};
+		const username = data.username;
 
-		if(data.username.length == 0 && data.email.length == 0) {
+		if(username.length == 0 && data.email.length == 0) {
 			errors.global = "Вы не заполнили не одно поле";
 			return errors;
 		}
 
-		if(data.username.length < 5 || data.username.match(/\s/)) {
+		if(
+			username.length > 0 && username.length < 5 || username.match(/\s/)
+			) {
 			errors.username = "Имя пользователя должно не содержать пробелов и бытне менее пяти знаков";
 			return errors;
 		}
@@ -82,6 +85,7 @@ export class PrivateDateForm extends Component {
 					>
 						Изменение E-mail
 					</Typography>
+					{ParseError(errors.email)}
 
 					<div className="default-form__item">
 						<TextField
@@ -102,6 +106,7 @@ export class PrivateDateForm extends Component {
 					>
 						Изменение имя пользователя
 					</Typography>
+					{ParseError(errors.username)}
 
 					<div className="default-form__item">
 						<TextField
@@ -112,7 +117,6 @@ export class PrivateDateForm extends Component {
 							name="username" 
 							label="Ваше новое имя пользователя"
 						/>
-						{ParseError(errors.username)}
 					</div>
 
 					<div className="default-form__item default-form__button">
