@@ -9,6 +9,7 @@ import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
 import { Icon } from '@rmwc/icon';
+import { Checkbox } from '@rmwc/checkbox';
 
 export class SignupForm extends Component {
 	static propTypes = {
@@ -20,22 +21,30 @@ export class SignupForm extends Component {
 			email: '',
 			username: '',
 			password: '',
-			confirmationPassword: ''
+			confirmationPassword: '',
+			subNews: true
 		},
+		privacyPolicy: false,
 		loading: false,
 		showPassword: false,
 		errors: {}
 	}
 
-	onChange = e => {
-		this.setState({
-			data: { ...this.state.data, [e.target.name]: e.target.value }
-		})
+	onChange = (e, type) => {
+		if(type == 'checked') {
+			this.setState({
+				data: { ...this.state.data, [e.target.name]: e.target.checked }
+			})
+		} else {
+			this.setState({
+				data: { ...this.state.data, [e.target.name]: e.target.value }
+			})
+		}
 	}
 
 	onSubmit = e => {
 		e.preventDefault();
-		const errors = this.validate(this.state.data);
+		const errors = this.validate(this.state.data, this.state.privacyPolicy);
 
 		if(Object.keys(errors).length === 0) {
 			this.setState({ loading: true });
@@ -47,7 +56,7 @@ export class SignupForm extends Component {
 	
 	}
 
-	validate = data => {
+	validate = (data, privacy) => {
 		let errors = {};
 		let password = data.password;
 
@@ -73,11 +82,18 @@ export class SignupForm extends Component {
 			return errors;
 		}
 
+		if(!privacy) {
+			errors.global = "Вы не приняли условия политики конфиденциальности";
+			return errors;
+		}
+
 		return errors;
 	}
 
 	render() {
-		const { data, showPassword, loading, errors } = this.state;
+		const { 
+			data, showPassword, loading, errors, privacyPolicy 
+		} = this.state;
 		return (
 			<Loader loading={loading}>
 				<form onSubmit={this.onSubmit} className="default-form">
@@ -137,6 +153,22 @@ export class SignupForm extends Component {
 							label="Повторите пароль"
 						/>
 						{ParseError(errors.confirmationPassword)}
+					</div>
+
+					<div className="default-form__item privacy__item">
+					<Checkbox
+						checked={privacyPolicy}
+						onChange={e => this.setState({
+							privacyPolicy: e.target.checked
+						})}>
+						Настоящим подтверждаю, что я ознакомлен и согласен с условиями политики конфиденциальности. Узнать больше
+					</Checkbox>
+					<Checkbox
+						checked={data.subNews}
+						name="subNews"
+						onChange={(e) => this.onChange(e, 'checked')}>
+						На указанную электронную почту будут приходить наши новости, акции
+					</Checkbox>
 					</div>
 
 					<div className="default-form__item default-form__button">

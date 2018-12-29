@@ -1,5 +1,6 @@
 @import url(~@material/textfield/dist/mdc.textfield.css)
 @import url(~@material/select/dist/mdc.select.css)
+@import url(~@material/checkbox/dist/mdc.checkbox.css)
 	
 .headline-form
 	color: #303030
@@ -24,7 +25,7 @@
 
 .default-form
 	padding: 48px 40px 36px
-	max-width: 600px
+	max-width: calc(458px + 82px)
 	border: 1px solid #dadce0
 	border-radius: 8px
 	.default-form__button
@@ -37,6 +38,17 @@
 		.mdc-text-field
 			&:nth-child(1)
 				margin-right: 30px
+	.privacy__item
+		.mdc-form-field
+			position: relative
+			display: flex
+			align-items: center
+			&:first-child
+				margin-bottom: 15px
+			// label
+			// 	position: absolute
+			// 	top: 0
+			// 	left: 0
 	&.full-form
 		.mdc-text-field
 			&:nth-child(1)

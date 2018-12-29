@@ -8,6 +8,8 @@ router.post("/", (req, res) => {
 	const { data } = req.body;
 
   User.findOne({ email: data.email }).then(user => {
+		console.log(user);
+		
     if (user && user.isValidPassword(data.password)) {			
       res.json({ user: user.toAuthJSON() });
     } else {

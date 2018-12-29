@@ -17,12 +17,13 @@ const schema = new mongoose.Schema(
 			required: true, 
 			unique: true
 		},
+		passwordHash: { type: String, required: true },
+		confirmed: { type: Boolean, default: false },
+		subNews: { type: Boolean, default: true },
 		tasks: {
 			type: Array
 		},
-		passwordHash: { type: String, required: true },
 		confirmationToken: { type: String },
-    confirmed: { type: Boolean, default: false }
 	},
 	
   { timestamps: true }
@@ -40,7 +41,11 @@ schema.methods.setPassword = function setPassword(password) {
   this.passwordHash = bcrypt.hashSync(password, 10);
 };
 
-schema.methods.setPrivateDate = function setUserName(data) {
+schema.methods.setSubNews = function setSubNews(value) {
+  this.subNews = value; 
+};
+
+schema.methods.setPrivateDate = function setPrivateDate(data) {
 	const { email, username } = data;
   if(email) this.email = email;
   if(username) this.username = username;
