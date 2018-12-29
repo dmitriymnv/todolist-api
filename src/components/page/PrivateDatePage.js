@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+
 import PrivateDateForm from '../forms/PrivateDateForm';
 import { setPrivateDate } from '../../ac/auth'
+import { title } from '../../constans';
 
 export class PrivateDatePage extends Component {
 	static propTypes = {
 		push: PropTypes.func.isRequired,
 		setPrivateDate: PropTypes.func.isRequired,
+	}
+
+	componentWillMount() {
+		document.title = 'Изменение личных данных' + title;
 	}
 
 	submit = (data) => {

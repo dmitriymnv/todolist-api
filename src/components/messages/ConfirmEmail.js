@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import SvgCross from '../../other/img/times-solid';
 
 export class ConfirmEmail extends Component {

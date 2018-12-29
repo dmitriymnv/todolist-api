@@ -1,7 +1,9 @@
 import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
-import './css/taskspage';
 import { connect } from 'react-redux';
+
+import './css/taskspage';
+import { title } from '../../constans';
 import Tasks from '../tasks';
 const ConfirmEmail = lazy(() => import('../messages/ConfirmEmail'));
 
@@ -14,9 +16,14 @@ export class TasksPage extends Component {
 
 	}
 
+	componentWillMount() {
+		document.title = 'Список задач' + title;
+	}
+
 	render() {
 		const showConfirmationEmail = localStorage.getItem('showConfirmationEmail');
 		const { alertText } = this.props.router.state ? this.props.router.state : false;
+		document.title = 'Список задач'
 		return (
 			<div className="taskspage flex-container">
 				{(showConfirmationEmail || alertText) && 

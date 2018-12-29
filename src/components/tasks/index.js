@@ -1,14 +1,15 @@
 import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadingTasks, addTask, successTask, editTask } from '../../ac/tasks';
-import './css/main';
 import { Dialog, DialogContent } from '@rmwc/dialog';
-const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
-const EditTaskForm = lazy(() => import('../forms/EditTaskForm'));
 import { Fab } from '@rmwc/fab';
+
+import './css/main';
+import { loadingTasks, addTask, successTask, editTask } from '../../ac/tasks';
 import SVGplus from '../../other/img/plus.svg';
 import TableTasks from './TableTasks';
+const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
+const EditTaskForm = lazy(() => import('../forms/EditTaskForm'));
 
 export class Tasks extends Component {
 	static propTypes = {

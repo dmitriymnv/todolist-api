@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './css/main';
-import Loader from '../loader';
-import SvgEyeOpen from '../../other/img/eye-solid';
-import SvgEyeClose from '../../other/img/eye-slash-solid';
-import ParseError from '../utils/ParseError';
 import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
 import { Icon } from '@rmwc/icon';
 import { Checkbox } from '@rmwc/checkbox';
+
+import './css/main';
+import Loader from '../loader';
+import SvgEyeOpen from '../../other/img/eye-solid';
+import SvgEyeClose from '../../other/img/eye-slash-solid';
+import ParseError from '../utils/ParseError';
 
 export class SignupForm extends Component {
 	static propTypes = {

@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+
 import PasswordForm from '../forms/PasswordForm';
-import { setPassword } from '../../ac/auth'
+import { setPassword } from '../../ac/auth';
+import { title } from '../../constans';
 
 export class PasswordPage extends Component {
 	static propTypes = {
 		push: PropTypes.func.isRequired,
 		setPassword: PropTypes.func.isRequired,
+	}
+
+	componentWillMount() {
+		document.title = 'Изменение пароля' + title;
 	}
 
 	submit = (data) => {

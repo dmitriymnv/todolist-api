@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
-import Loader from '../loader';
 import { Route } from 'react-router-dom'
-import AuthRoute from './AuthRoute';
 
+import Loader from '../loader';
+import AuthRoute from './AuthRoute';
 const InitialPage = lazy(() => import('../page/InitialPage'));
 const SignupPage = lazy(() => import('../page/SignupPage'));
 const TasksPage = lazy(() => import('../page/TasksPage'));

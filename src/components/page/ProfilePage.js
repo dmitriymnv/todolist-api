@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import './css/profilepage';
 import { Typography } from '@rmwc/typography';
 import { Button } from '@rmwc/button';
 import { 
@@ -10,9 +9,16 @@ import {
 	CardActionButtons } from '@rmwc/card';
 import { ListDivider } from '@rmwc/list';
 
+import './css/profilepage';
+import { title } from '../../constans';
+
 export class Initialpage extends Component {
 	static propTypes = {
 		push: PropTypes.func.isRequired
+	}
+
+	componentWillMount() {
+		document.title = 'Личный кабинет' + title;
 	}
 
 	render() {

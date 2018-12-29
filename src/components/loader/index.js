@@ -1,7 +1,8 @@
-import React from 'react'
-import { CircularProgress } from '@rmwc/circular-progress';
-import './css/main';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { CircularProgress } from '@rmwc/circular-progress';
+
+import './css/main';
 
 const Loader = ({ children, loading = 'false', className = '', size = 72, opacity = 0.25 }) => {
 	return (

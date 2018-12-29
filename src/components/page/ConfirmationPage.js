@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { confirm } from '../../ac/auth'
+
 import Loader from '../loader';
+import { confirm } from '../../ac/auth'
+import { title } from '../../constans';
 
 class ConfirmationPage extends Component {
 	static propTypes = {
@@ -14,6 +16,10 @@ class ConfirmationPage extends Component {
 	state = {
 		loading: true,
 		success: false
+	}
+
+	componentWillMount() {
+		document.title = 'Подтверждение электронной почты' + title;
 	}
 
 	componentDidMount() {

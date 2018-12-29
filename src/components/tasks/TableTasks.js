@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@rmwc/checkbox';
+
 import TaskAdding from '../messages/TaskAdding';
 import SvgCog from '../../other/img/cog-solid';
 import Loader from '../loader';

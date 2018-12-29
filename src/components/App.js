@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { ThemeProvider } from '@rmwc/theme';
+
 import Routes from './routes';
 import TopNavigation from './navigation';
-import { ThemeProvider } from '@rmwc/theme';
 
 const themeOptions = {
 	primary: '#303030',

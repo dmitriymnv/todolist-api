@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './css/main';
-import Loader from '../loader';
-import ParseError from '../utils/ParseError';
 import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield';
 import { Button } from '@rmwc/button';
+
+import './css/main';
+import Loader from '../loader';
+import ParseError from '../utils/ParseError';
 
 export class LoginForm extends Component {
 	static propTypes = {
