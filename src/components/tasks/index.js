@@ -33,9 +33,7 @@ export class Tasks extends Component {
 		this.props.loadingTasks(0)
 			.then(res => {
 				this.setState({ 
-					tasks: res.tasks, 
-					total: res.total, 
-					loaded: 15, 
+					...res, 
 					loading: false })
 			})
 	}

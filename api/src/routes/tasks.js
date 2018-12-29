@@ -10,13 +10,13 @@ router.use(authenticate);
 router.post("/", (req, res) => {
 	const tasks = req.currentUser.tasks;
 
-	if(tasks.length <= 10) {
-		res.json({ tasks, total: tasks.length})
-	} else {
-		const { start } = req.body;
-		const needTasks = tasks.slice(start, start + 15);
-		res.status(200).json({ tasks: needTasks, value: needTasks.length, total: tasks.length });
-	}
+	const { start } = req.body;
+	const needTasks = tasks.slice(start, start + 15);
+	res.status(200).json({ 
+		tasks: needTasks, 
+		total: tasks.length,
+		loaded: needTasks.length, 
+	});
 });
 
 router.post("/add", (req, res) => {
@@ -77,7 +77,7 @@ router.post("/success", (req, res) => {
 		user.markModified('tasks');
 		user.save()
 			.then(() => res.json({ }))
-			.catch((err) => console.log(err))
+			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
  });
 
 });
