@@ -66,61 +66,64 @@ export class PrivateDateForm extends Component {
 		return (
 			<Loader loading={loading}>
 				<form onSubmit={this.onSubmit}
-				 className="default-form full-form private-date-form"
+				 className="form form__single form__private"
 				>
 					<Typography
 						use="headline5" 
 						tag="h1" 
-						className="headline-form"
+						className="form__heading"
 					>
 						Изменение личных данных
 					</Typography>
 
 					{ParseError(errors.global)}
 
-					<ListDivider />
-					<Typography 
-						use="headline6" 
-						tag="div" 
-						className="headline-form"
-					>
-						Изменение E-mail
-					</Typography>
-					{ParseError(errors.email)}
+					<div className="form__item">
+						<ListDivider />
+						<Typography 
+							use="subtitle1" 
+							tag="div" 
+							className="form__heading form__private__heading"
+						>
+							Изменение E-mail
+						</Typography>
+						{ParseError(errors.email)}
 
-					<div className="default-form__item">
 						<TextField
 							value={data.email}
 							onChange={this.onChange}
-							className="default-form__field"
+							className="form__field"
 							type="email"
 							name="email"
 							label="Ваш новый E-mail"
 						/>
 					</div>
 
-					<ListDivider />
-					<Typography 
-						use="headline6" 
-						tag="div" 
-						className="headline-form"
-					>
-						Изменение имя пользователя
-					</Typography>
-					{ParseError(errors.username)}
+					
 
-					<div className="default-form__item">
+					<div className="form__item">
+						<ListDivider />
+						<Typography 
+							use="subtitle1" 
+							tag="div" 
+							className="form__heading form__private__heading"
+						>
+							Изменение имя пользователя
+						</Typography>
+						{ParseError(errors.username)}
+
 						<TextField
 							value={data.username}
 							onChange={this.onChange}
-							className="default-form__field"
+							className="form__field"
 							type="text"
 							name="username" 
 							label="Ваше новое имя пользователя"
 						/>
 					</div>
 
-					<div className="default-form__item default-form__button">
+
+					<div className="form__item form__buttons">
 						<Button raised>Изменить</Button>
 					</div>
 				</form>

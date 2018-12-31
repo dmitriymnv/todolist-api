@@ -1,62 +1,59 @@
 @import url(~@material/textfield/dist/mdc.textfield.css)
 @import url(~@material/select/dist/mdc.select.css)
 @import url(~@material/checkbox/dist/mdc.checkbox.css)
-	
-.headline-form
-	color: #303030
-	margin-bottom: 15px
-	display: block
 
-.mdc-text-field--with-trailing-icon .mdc-text-field__input
-	padding: 20px 45px 6px 16px
-	width: 214px
-
-.inline-form
-	width: 320px
-	.mdc-text-field
-		display: block
-		margin-bottom: 30px
-	.mdc-button
-		display: block
-		margin: 30px auto 0
-
-.mdc-select
-	width: 100%
-
-.default-form
+.form__single
+	max-width: 600px
 	padding: 48px 40px 36px
-	max-width: calc(458px + 82px)
 	border: 1px solid #dadce0
 	border-radius: 8px
-	.default-form__button
-		text-align: right
-	.default-form__item
-		display: block
-		margin-bottom: 30px
-		&:last-child
-			margin-bottom: 0
-		.mdc-text-field
-			&:nth-child(1)
-				margin-right: 30px
-	.privacy__item
-		.mdc-form-field
-			position: relative
-			display: flex
-			align-items: center
-			&:first-child
-				margin-bottom: 15px
-			// label
-			// 	position: absolute
-			// 	top: 0
-			// 	left: 0
-	&.full-form
-		.mdc-text-field
-			&:nth-child(1)
-				margin-right: 0
-				width: 320px
 
-.private-date-form
-	.mdc-typography--headline6
-		font-weight: 400
-		font-size: 18px
-		margin: 15px 0
+.form__heading
+	color: #333333
+
+.form__heading, .form__item
+	margin-bottom: 30px
+	display: block
+
+.form__signup
+	.form__item
+		> .form__field
+			margin-right: 15px
+
+.form__item
+	&:last-child
+		margin-bottom: 0
+
+.form__item_checkbox
+	max-width: calc(214px * 2)
+	.mdc-form-field
+		display: flex
+		align-items: center
+
+.form__signup
+	.form__field
+		width: auto
+	
+.form__field
+	width: 100%
+
+.form__private__heading
+	margin: 15px 0
+
+.form__field_icon
+	input
+		width: 214px
+		padding: 20px 45px 6px 16px
+
+.form__buttons
+	text-align: right
+
+.form__textarea
+	min-width: 320px
+
+.form__select
+	width: 100%
+	
+.form__password
+	.form__field
+		width: 300px

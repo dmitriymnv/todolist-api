@@ -46,51 +46,60 @@ export class EditTaskForm extends Component {
 		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
-				<form className="inline-form" onSubmit={this.onSubmit}>
-					<Typography use="headline5" tag="h1" className="headline-form">
+				<form className="form" onSubmit={this.onSubmit}>
+					<Typography use="headline5" className="form__heading">
 						Изменение задачи
 					</Typography>
 
 					{ParseError(errors.global)}
-					
-					<TextField
-						value={data.title}
-						onChange={this.onChange}
-						type="text"
-						name="title"
-						label="Задача"
-						rows="3"
-						required
-						textarea 
-						fullwidth 
-					/>
 
-					<Select
-						value={data.color}
-						onChange={this.onChange}
-						label="Цвет задачи"
-						name="color"
-						options={[
-							{
-								label: '',
-								value: ''
-							},
-							{
-								label: 'Жёлтый',
-								value: 'yellow'
-							},
-							{
-								label: 'Синий',
-								value: 'blue',
-							},
-							{
-								label: 'Красный',
-								value: 'red'
-							}
-						]}
-					/>
+					<div className="form__item">
+						<TextField
+							value={data.title}
+							onChange={this.onChange}
+							className="form__textarea"
+							type="text"
+							name="title"
+							label="Задача"
+							rows="3"
+							required
+							textarea 
+							fullwidth 
+						/>
+					</div>
 
-					<Button raised>Изменить</Button>
+					<div className="form__item">
+						<Select
+							value={data.color}
+							onChange={this.onChange}
+							className="form__select"
+							label="Цвет задачи"
+							name="color"
+							options={[
+								{
+									label: '',
+									value: ''
+								},
+								{
+									label: 'Жёлтый',
+									value: 'yellow'
+								},
+								{
+									label: 'Синий',
+									value: 'blue',
+								},
+								{
+									label: 'Красный',
+									value: 'red'
+								}
+							]}
+						/>
+					</div>
+
+					<div className="form__item form__buttons">
+						<Button raised>Изменить</Button>
+					</div>
+
 				</form>
 			</Loader>
 		)

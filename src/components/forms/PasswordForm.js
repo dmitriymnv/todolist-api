@@ -65,22 +65,22 @@ export class PasswordForm extends Component {
 		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
-				<form onSubmit={this.onSubmit} className="default-form full-form">
+				<form onSubmit={this.onSubmit} className="form form__single form__password">
 					<Typography 
 						use="headline5" 
 						tag="h1" 
-						className="headline-form"
+						className="form__heading"
 					>
 						Измение пароля
 					</Typography>
 
 					{ParseError(errors.global)}
 
-					<div className="default-form__item">
+					<div className="form__item">
 						<TextField
 							value={data.oldPassword}
 							onChange={this.onChange}
-							className="default-form__field"
+							className="form__field"
 							required
 							type="password"
 							name="oldPassword"
@@ -88,23 +88,23 @@ export class PasswordForm extends Component {
 						/>
 					</div>
 
-					<div className="default-form__item">
+					<div className="form__item">
 						<TextField
 							value={data.newPassword}
 							onChange={this.onChange}
 							required
-							className="default-form__field customfield-icon"
+							className="form__field"
 							type="text"
 							name="newPassword"
 							label="Ваш новый пароль"
 						/>
 					</div>
 
-					<div className="default-form__item">
+					<div className="form__item">
 						<TextField
 							value={data.confirmationPassword}
 							onChange={this.onChange}
-							className="default-form__field"
+							className="form__field"
 							required
 							type="text"
 							name="confirmationPassword" 
@@ -113,9 +113,10 @@ export class PasswordForm extends Component {
 						{ParseError(errors.confirmationPassword)}
 					</div>
 
-					<div className="default-form__item default-form__button">
+					<div className="form__item form__buttons">
 						<Button raised>Изменить пароль</Button>
 					</div>
+
 				</form>
 			</Loader>
 		)

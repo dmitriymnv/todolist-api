@@ -39,29 +39,39 @@ export class LoginForm extends Component {
 		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
-				<form className="inline-form" onSubmit={this.onSubmit}>
-					<Typography use="headline5" className="headline-form">Авторизация</Typography>
+				<form onSubmit={this.onSubmit} className="form">
+					<Typography use="headline5" className="form__heading">Авторизация</Typography>
 
 					{ParseError(errors.global)}
 					
-					<TextField 
-						value={data.email} 
-						onChange={this.onChange}
-						required
-						type="email"
-						name="email" 
-						label="Ваш E-Mail" 
-					/>
+					<div className="form__item">
+						<TextField 
+							value={data.email} 
+							onChange={this.onChange}
+							className="form__field"
+							required
+							type="email"
+							name="email" 
+							label="Ваш E-Mail" 
+						/>
+					</div>
 
-					<TextField 
-						value={data.password}
-						onChange={this.onChange}
-						required
-						type="password"
-						name="password" 
-						label="Ваш пароль" 
-					/>
-					<Button raised>Войти</Button>
+					<div className="form__item">
+						<TextField 
+							value={data.password}
+							onChange={this.onChange}
+							className="form__field"
+							required
+							type="password"
+							name="password" 
+							label="Ваш пароль" 
+						/>
+					</div>
+
+					<div className="form__item form__buttons">
+						<Button raised>Войти</Button>
+					</div>
+
 				</form>
 			</Loader>
 		)

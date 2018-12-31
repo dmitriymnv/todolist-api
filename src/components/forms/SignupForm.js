@@ -97,18 +97,18 @@ export class SignupForm extends Component {
 		} = this.state;
 		return (
 			<Loader loading={loading}>
-				<form onSubmit={this.onSubmit} className="default-form">
-					<Typography use="headline5" tag="h1" className="headline-form">Регистрация</Typography>
+				<form onSubmit={this.onSubmit} className="form form__single form__signup">
+					<Typography use="headline5" tag="h1" className="form__heading">Регистрация</Typography>
 
 					{ParseError(errors.global)}
 					{ParseError(errors.email)}
 					{ParseError(errors.username)}
 
-					<div className="default-form__item">
+					<div className="form__item">
 						<TextField
 							value={data.email}
 							onChange={this.onChange}
-							className="default-form__field"
+							className="form__field"
 							required
 							type="email"
 							name="email"
@@ -125,12 +125,12 @@ export class SignupForm extends Component {
 					
 					</div>
 
-					<div className="default-form__item">
+					<div className="form__item">
 						<TextField
 							value={data.password}
 							onChange={this.onChange}
 							required
-							className="default-form__field customfield-icon"
+							className="form__field form__field_icon"
 							withTrailingIcon={
 								<Icon 
 									onClick={() => this.setState({ showPassword: !this.state.showPassword})}
@@ -147,7 +147,6 @@ export class SignupForm extends Component {
 						<TextField
 							value={data.confirmationPassword}
 							onChange={this.onChange}
-							className="default-form__field"
 							required
 							type={showPassword ? "text" : "password"}
 							name="confirmationPassword" 
@@ -156,23 +155,23 @@ export class SignupForm extends Component {
 						{ParseError(errors.confirmationPassword)}
 					</div>
 
-					<div className="default-form__item privacy__item">
-					<Checkbox
-						checked={privacyPolicy}
-						onChange={e => this.setState({
-							privacyPolicy: e.target.checked
-						})}>
-						Настоящим подтверждаю, что я ознакомлен и согласен с условиями политики конфиденциальности. Узнать больше
-					</Checkbox>
-					<Checkbox
-						checked={data.subNews}
-						name="subNews"
-						onChange={(e) => this.onChange(e, 'checked')}>
-						На указанную электронную почту будут приходить наши новости, акции
-					</Checkbox>
+					<div className="form__item form__item_checkbox">
+						<Checkbox
+							checked={privacyPolicy}
+							onChange={e => this.setState({
+								privacyPolicy: e.target.checked
+							})}>
+							Настоящим подтверждаю, что я ознакомлен и согласен с условиями политики конфиденциальности. Узнать больше
+						</Checkbox>
+						<Checkbox
+							checked={data.subNews}
+							name="subNews"
+							onChange={(e) => this.onChange(e, 'checked')}>
+							На указанную электронную почту будут приходить наши новости, акции
+						</Checkbox>
 					</div>
 
-					<div className="default-form__item default-form__button">
+					<div className="form__item form__buttons">
 						<Button raised>Зарегистрироваться</Button>
 					</div>
 				</form>
