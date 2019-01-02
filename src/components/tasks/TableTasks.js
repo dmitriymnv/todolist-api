@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox } from '@rmwc/checkbox';
 
 import TaskAdding from '../messages/TaskAdding';
-import SvgCog from '../../other/img/cog-solid';
 import Loader from '../loader';
-
-const options = {
-	year: '2-digit',
-	month: '2-digit',
-	day: '2-digit',
-	hour: '2-digit',
-	minute: '2-digit'
-}
+import TableBody from './TableBody';
 
 class TableTasks extends Component {
 	static propTypes = {
@@ -45,7 +36,6 @@ class TableTasks extends Component {
 
 	render() {
 		const { tasks, successTask, dialogOpen, pageLoading } = this.props;
-		const { loading } = this.state;
 		return (
 			<Loader opacity='0' loading={pageLoading}>
 				{tasks.length === 0 ?
@@ -59,49 +49,13 @@ class TableTasks extends Component {
 								<th>Дата выполнения</th>
 							</tr>
 						</thead>
-						<tbody onScroll={e => this.onScrollList(e)}>
-							{tasks.map((task, i) => {
-								return (
-									<tr
-										key={i}
-										className={`${task.success? 'success ' : ''}${task.color}`}
-									>
-										<td className="td-perform">
-											<Checkbox
-												checked={task.success}
-												onChange={() => {
-													successTask(task._id, i);
-												}}
-											/>
-											
-											<span 
-												className="svg-cog"
-												onClick={() => dialogOpen('edit', i)}
-											>
-												<SvgCog 
-													width="16"
-													height="16"
-												/>
-											</span>
-										</td>
-										<td className="task-tables__title">{task.title}</td>
-										<td>
-											{new Date(task.dateCreate).toLocaleString('ru', options)}
-										</td>
-										<td>
-											{task.dateCompletion ? 
-												new Date(task.dateCompletion).toLocaleString('ru', options) : '-'
-											}
-										</td>
-									</tr>
-								)
-							})}
-							{loading &&
-								<tr className="tr-loader">
-									<td><Loader loading size={35} /></td>
-								</tr>
-							}
-						</tbody>
+						<TableBody 
+							onScrollList={this.onScrollList} 
+							tasks={tasks}
+							successTask={successTask}
+							dialogOpen={dialogOpen}
+							loading={this.state.loading}
+						/>
 					</table>
 				}
 			</Loader>

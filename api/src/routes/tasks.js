@@ -68,7 +68,7 @@ router.post("/success", (req, res) => {
 			if(item._id == id) {
 				item.success = !item.success;
 				item.success ? 
-					item.dateCompletion = new Date() : item.dateCompletion = ''
+					item.dateCompletion = new Date() : item.dateCompletion = null
 				return;
 			}
 		});

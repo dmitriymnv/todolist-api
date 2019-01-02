@@ -41,7 +41,7 @@ export class Tasks extends Component {
 
 	success = (id, i) => {
 		const task = this.state.tasks[i];
-		const completion = task.dateCompletion ? '' : new Date();		
+		const completion = task.dateCompletion ? null : new Date();		
 		this.setState({ ...this.state.tasks [
 			task.success = !task.success,
 			task.dateCompletion = completion ]
