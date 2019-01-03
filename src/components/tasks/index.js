@@ -66,11 +66,13 @@ export class Tasks extends Component {
 	}
 
 	onSubmit = (data, purpose) => {
+		const { tags } = this.state;
 		this.setState({
 			loading: true,
 			dialog: { open: false },
 			tags: 
-				this.state.tags.indexOf(data.tag) == -1 && [data.tag, ...this.state.tags]
+				tags.indexOf(data.tag) == -1 ? 
+					[data.tag, ...tags] : tags
 		});
 		
 		switch (purpose) {
