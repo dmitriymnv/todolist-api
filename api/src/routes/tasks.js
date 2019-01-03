@@ -21,12 +21,14 @@ router.post("/", (req, res) => {
 
 router.post("/add", (req, res) => {
 	const { data } = req.body;
+	const tag = data.tag;
 	const user = req.currentUser;
 
 	Task.create({ ...data, dateCreate: new Date() })
 		.then(task => {
-			user.addTask(task)
-			user.save();
+			user.addTask(task);
+			user.addTag(tag);
+			user.save(); 
 			res.json({ task })
 		})
 		.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
@@ -79,6 +81,13 @@ router.post("/success", (req, res) => {
 			.then(() => res.json({ }))
 			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
  });
+
+});
+
+router.post("/tags", (req, res) => {
+	const user = req.currentUser;
+
+	res.json({ tags: user.tags })
 
 });
 

@@ -24,6 +24,7 @@ const schema = new mongoose.Schema(
 			type: Array
 		},
 		confirmationToken: { type: String },
+		tags: { type: Array, default: [] }
 	},
 	
   { timestamps: true }
@@ -35,6 +36,11 @@ schema.methods.isValidPassword = function isValidPassword(password) {
 
 schema.methods.addTask = function addTask(data) {
 	this.tasks.unshift(data);
+};
+
+schema.methods.addTag = function addTask(tag) {
+	let tags = this.tags;
+	if(tags.indexOf(tag)) tags.unshift(tag);
 };
 
 schema.methods.setPassword = function setPassword(password) {

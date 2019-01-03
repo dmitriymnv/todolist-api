@@ -12,6 +12,7 @@ import Loader from '../loader';
 export class AddTaskForm extends Component {
 	static propTypes = {
 		submit: PropTypes.func.isRequired,
+		loadingTags: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -20,26 +21,14 @@ export class AddTaskForm extends Component {
 			color: '',
 			tag: ''
 		},
-		tags: [
-			{
-				label: '',
-				value: ''
-			},
-			{
-				label: 'Жёлтый',
-				value: 'yellow'
-			},
-			{
-				label: 'Синий',
-				value: 'blue',
-			},
-			{
-				label: 'Красный',
-				value: 'red'
-			}
-		],
+		tags: [],
 		loading: false,
 		errors: {}
+	}
+
+	componentDidMount() {
+		this.props.loadingTags()
+			.then(({ tags }) => this.setState({ tags }))
 	}
 
 	onChange = e => {
@@ -80,14 +69,24 @@ export class AddTaskForm extends Component {
 					</div>
 
 					<div className="form__item">
-						<Select
+						<TextField
 							value={data.tag}
 							onChange={this.onChange}
-							className="form__select"
-							label="Тег"
+							list="character"
 							name="tag"
-							options={tags}
+							label="Тег"
+							fullwidth 
 						/>
+						<datalist id="character">
+							{tags.map((tag, i) => {
+								return (
+									<option 
+										key={i}
+										value={tag} 
+									/>
+								)
+							})}
+						</datalist>
 					</div>
 
 					<div className="form__item">

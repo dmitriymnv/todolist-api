@@ -5,7 +5,13 @@ import { Dialog, DialogContent } from '@rmwc/dialog';
 import { Fab } from '@rmwc/fab';
 
 import './css/main';
-import { loadingTasks, addTask, successTask, editTask } from '../../ac/tasks';
+import { 
+	loadingTasks, 
+	addTask, 
+	successTask, 
+	editTask, 
+	loadingTags } 
+from '../../ac/tasks';
 import SVGplus from '../../other/img/plus.svg';
 import TableTasks from './TableTasks';
 const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
@@ -149,7 +155,11 @@ export class Tasks extends Component {
 				>  
 					{dialog.purpose &&
 						<DialogContent>
-							{dialog.purpose == 'add' ? <AddTaskForm submit={this.onSubmit} /> :
+							{dialog.purpose == 'add' ? 
+								<AddTaskForm 
+									submit={this.onSubmit} 
+									loadingTags={this.props.loadingTags}
+								/> :
 								<EditTaskForm
 									task={tasks[dialog.data]}
 									submit={this.onSubmit} 
@@ -164,5 +174,5 @@ export class Tasks extends Component {
 }
 
 export default connect(null, {
-	 loadingTasks, addTask, successTask, editTask 
+	 loadingTasks, addTask, successTask, editTask, loadingTags
 })(Tasks)
