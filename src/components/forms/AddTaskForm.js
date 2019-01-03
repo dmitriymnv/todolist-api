@@ -12,7 +12,7 @@ import Loader from '../loader';
 export class AddTaskForm extends Component {
 	static propTypes = {
 		submit: PropTypes.func.isRequired,
-		loadingTags: PropTypes.func.isRequired,
+		tags: PropTypes.array.isRequired,
 	}
 
 	state = {
@@ -21,14 +21,7 @@ export class AddTaskForm extends Component {
 			color: '',
 			tag: ''
 		},
-		tags: [],
-		loading: false,
-		errors: {}
-	}
-
-	componentDidMount() {
-		this.props.loadingTags()
-			.then(({ tags }) => this.setState({ tags }))
+		loading: false
 	}
 
 	onChange = e => {
@@ -41,17 +34,14 @@ export class AddTaskForm extends Component {
 		e.preventDefault();
 		this.setState({ loading: true });	
 		this.props.submit(this.state.data, 'add')
-			.catch(errors => this.setState({ errors, loading: false }));
 	}
 
 	render() {
-		const { data, loading, tags, errors } = this.state;
+		const { data, loading, errors } = this.state;
 		return (
 			<Loader loading={loading}>
 				<form className="form" onSubmit={this.onSubmit}>
 					<Typography use="headline5" tag="h1" className="form__heading">Добавление задачи</Typography>
-
-					{ParseError(errors.global)}
 
 					<div className="form__item">
 						<TextField
@@ -78,7 +68,7 @@ export class AddTaskForm extends Component {
 							fullwidth 
 						/>
 						<datalist id="character">
-							{tags.map((tag, i) => {
+							{this.props.tags.map((tag, i) => {
 								return (
 									<option 
 										key={i}

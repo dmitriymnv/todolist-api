@@ -23,9 +23,3 @@ export const successTask = (id) => () => {
 		api(['/api/tasks/success', 'POST'], { id })
 	)
 }
-
-export const loadingTags = () => () => {
-	return (
-		api(['/api/tasks/tags', 'POST'])
-	)
-}

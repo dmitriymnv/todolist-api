@@ -13,7 +13,7 @@ const options = {
 	minute: '2-digit'
 }
 
-const TableBody = ({ onScrollList, tasks, successTask, loading }) => {
+const TableBody = ({ onScrollList, tasks, successTask, dialogOpen,  loading }) => {
 	return (
 		<tbody onScroll={e => onScrollList(e)}>
 			{tasks.map((task, i) => {
@@ -75,6 +75,7 @@ TableBody.propTypes = {
 		color: PropTypes.string,
 		tag: PropTypes.string,
 	}).isRequired).isRequired,
+	dialogOpen: PropTypes.func.isRequired,
 	successTask: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired
 }

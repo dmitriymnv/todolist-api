@@ -15,6 +15,7 @@ export class EditTaskForm extends Component {
 		task: PropTypes.shape({
 			title: PropTypes.string.isRequired,
 			color: PropTypes.string.isRequired,
+			tag: PropTypes.string,
 			_id: PropTypes.string.isRequired
 		}).isRequired
 	}
@@ -23,10 +24,11 @@ export class EditTaskForm extends Component {
 		data: {
 			title: this.props.task.title,
 			color: this.props.task.color,
+			tag: this.props.task.tag,
 			id: this.props.task._id
 		},
-		loading: false,
-		errors: {}
+		tags: this.props.tags,
+		loading: false
 	}
 
 	onChange = e => {
@@ -39,19 +41,16 @@ export class EditTaskForm extends Component {
 		e.preventDefault();
 		this.setState({ loading: true });	
 		this.props.submit(this.state.data, 'edit')
-			.catch(errors => this.setState({ errors, loading: false }));
 	}
 
 	render() {
-		const { data, loading, errors } = this.state;
+		const { data, loading, tags, errors } = this.state;
 		return (
 			<Loader loading={loading}>
 				<form className="form" onSubmit={this.onSubmit}>
 					<Typography use="headline5" className="form__heading">
 						Изменение задачи
 					</Typography>
-
-					{ParseError(errors.global)}
 
 					<div className="form__item">
 						<TextField
@@ -66,6 +65,27 @@ export class EditTaskForm extends Component {
 							textarea 
 							fullwidth 
 						/>
+					</div>
+
+					<div className="form__item">
+						<TextField
+							value={data.tag}
+							onChange={this.onChange}
+							list="character"
+							name="tag"
+							label="Тег"
+							fullwidth 
+						/>
+						<datalist id="character">
+							{tags.map((tag, i) => {
+								return (
+									<option 
+										key={i}
+										value={tag} 
+									/>
+								)
+							})}
+						</datalist>
 					</div>
 
 					<div className="form__item">

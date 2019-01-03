@@ -38,7 +38,7 @@ schema.methods.addTask = function addTask(data) {
 	this.tasks.unshift(data);
 };
 
-schema.methods.addTag = function addTask(tag) {
+schema.methods.addTag = function addTag(tag) {
 	let tags = this.tags;
 	if(tags.indexOf(tag)) tags.unshift(tag);
 };

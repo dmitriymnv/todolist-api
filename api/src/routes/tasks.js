@@ -8,14 +8,15 @@ const router = express.Router();
 router.use(authenticate);
 
 router.post("/", (req, res) => {
-	const tasks = req.currentUser.tasks;
+	const { tasks, tags } = req.currentUser;
 
 	const { start } = req.body;
 	const needTasks = tasks.slice(start, start + 15);
 	res.status(200).json({ 
-		tasks: needTasks, 
+		tasks: needTasks,
 		total: tasks.length,
-		loaded: needTasks.length, 
+		loaded: needTasks.length,
+		tags
 	});
 });
 
@@ -39,18 +40,21 @@ router.post("/edit", (req, res) => {
 	const { data } = req.body;
 	const user = req.currentUser;
 	let i;
+
 	User.findOne({ email: user.email }, function(err, user){
 		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
 		
 		user.tasks.forEach(function (item, num) {
 			if(item._id == data.id) {
 				item.title = data.title;
+				item.tag = data.tag;
 				item.color = data.color;
 				i = num;
 				return;
 			}
 		});
 
+		user.addTag(data.tag);
 		user.tasks.success = 'changed';
 		user.markModified('tasks');
 		user.save()
@@ -81,13 +85,6 @@ router.post("/success", (req, res) => {
 			.then(() => res.json({ }))
 			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
  });
-
-});
-
-router.post("/tags", (req, res) => {
-	const user = req.currentUser;
-
-	res.json({ tags: user.tags })
 
 });
 

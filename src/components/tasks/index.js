@@ -9,9 +9,8 @@ import {
 	loadingTasks, 
 	addTask, 
 	successTask, 
-	editTask, 
-	loadingTags } 
-from '../../ac/tasks';
+	editTask
+	} from '../../ac/tasks';
 import SVGplus from '../../other/img/plus.svg';
 import TableTasks from './TableTasks';
 const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
@@ -27,6 +26,7 @@ export class Tasks extends Component {
 
 	state = {
 		tasks: [],
+		tags: [],
 		dialog: {
 			open: false,
 			purpose: undefined
@@ -66,38 +66,39 @@ export class Tasks extends Component {
 	}
 
 	onSubmit = (data, purpose) => {
-		this.setState({ loading: true });
-
+		this.setState({
+			loading: true,
+			dialog: { open: false },
+			tags: 
+				this.state.tags.indexOf(data.tag) == -1 && [data.tag, ...this.state.tags]
+		});
+		
 		switch (purpose) {
 			case 'add':
-				return (
-					this.props.addTask(data)
-						.then(({ task }) => {
-							this.setState({
-								tasks: [task, ...this.state.tasks],
-								total: this.state.total + 1,
-								loaded: this.state.loaded + 1,
-								dialog: { open: false },
-								loading: false
-							})
+				this.props.addTask(data)
+					.then(({ task }) => {
+						this.setState({
+							tasks: [task, ...this.state.tasks],
+							total: this.state.total + 1,
+							loaded: this.state.loaded + 1,
+							loading: false
 						})
-				)
+					})
+				break;
 
 			case 'edit':
-				return (
-					this.props.editTask(data)
-						.then(({ i }) => {
-							const task = this.state.tasks[i];
-							this.setState({
-								...this.state.tasks [
-									task.title = data.title,
-									task.color = data.color
-								],
-								dialog: { open: false },
-								loading: false
-							});
-						})
-				)
+				this.props.editTask(data)
+					.then(({ i }) => {
+						const task = this.state.tasks[i];
+						this.setState({
+							...this.state.tasks [
+								task.title = data.title,
+								task.tag = data.tag,
+								task.color = data.color
+							],
+							loading: false
+						});
+					})
 		
 			default:
 				break;
@@ -123,7 +124,7 @@ export class Tasks extends Component {
 	}
 
 	render() {
-		const { tasks, dialog, loading } = this.state;
+		const { tasks, tags, dialog, loading } = this.state;
 		const date = new Date();
 		return (
 			<div className="flex-container">
@@ -158,10 +159,11 @@ export class Tasks extends Component {
 							{dialog.purpose == 'add' ? 
 								<AddTaskForm 
 									submit={this.onSubmit} 
-									loadingTags={this.props.loadingTags}
+									tags={tags}
 								/> :
 								<EditTaskForm
 									task={tasks[dialog.data]}
+									tags={tags}
 									submit={this.onSubmit} 
 								/>
 							}
@@ -174,5 +176,5 @@ export class Tasks extends Component {
 }
 
 export default connect(null, {
-	 loadingTasks, addTask, successTask, editTask, loadingTags
+	 loadingTasks, addTask, successTask, editTask
 })(Tasks)
