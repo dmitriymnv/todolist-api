@@ -2,7 +2,6 @@ import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Dialog, DialogContent } from '@rmwc/dialog';
-import { Fab } from '@rmwc/fab';
 
 import './css/main';
 import { 
@@ -11,8 +10,8 @@ import {
 	successTask, 
 	editTask
 	} from '../../ac/tasks';
-import SVGplus from '../../other/img/plus.svg';
-import TableTasks from './TableTasks';
+import TableTasks from './table/TableTasks';
+import TaskTitle from './TaskTitle';
 const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
 const EditTaskForm = lazy(() => import('../forms/EditTaskForm'));
 
@@ -25,16 +24,17 @@ export class Tasks extends Component {
 	}
 
 	state = {
-		tasks: {},
+		tasks: { 0: [ {title: 'test'} ]},
 		tags: [],
 		activeTab: 0,
 		dialog: {
 			open: false,
-			purpose: undefined
+			purpose: undefined,
+			data: []
 		},
 		total: 0,
 		loaded: 0,
-		loading: true
+		loading: false
 	}
 
 	componentDidMount() {
@@ -49,22 +49,23 @@ export class Tasks extends Component {
 			})
 	}
 
-	success = (id, i) => {
-		const task = this.state.tasks[i];
-		const completion = task.dateCompletion ? null : new Date();		
-		this.setState({ ...this.state.tasks [
-			task.success = !task.success,
-			task.dateCompletion = completion ]
-		 });
-		this.props.successTask(id)
+	successTask = (id, tabs, i) => {	
+		// const task = this.state.tasks[i];
+		// const completion = task.dateCompletion ? null : new Date();		
+		// this.setState({ ...this.state.tasks [
+		// 	task.success = !task.success,
+		// 	task.dateCompletion = completion ]
+		//  });
+		// this.props.successTask(id)
 	}
 
-	dialogOpen = (purpose, number = undefined) => {
+	dialogOpen = (purpose, i) => {
+
 		this.setState({ 
 			dialog: {
 				open: true,
 				purpose,
-				data: number
+				numberTask: i
 			}
 		});
 	}
@@ -130,54 +131,51 @@ export class Tasks extends Component {
 	}
 
 	render() {
-		const { tasks, tags, dialog, loading } = this.state;
-		const date = new Date();
-		console.log(this.state);
-		
+		const { 
+			tasks, 
+			tags, 
+			dialog: { numberTask, open, purpose }, 
+			loading, 
+			activeTab 
+		} = this.state;
 		return (
 			<div className="flex-container">
-				{/* <span className="task-title">
-					{`${date.toLocaleString('ru', {weekday: 'long'})} , ${date.getDate()}`}
-
-					<Fab
-						onClick={() => this.setState({ dialog: { open: true, purpose: 'add' } })}
-						icon={
-							<SVGplus width="30" height="30" />
-						} 
-					/>	
-
-				</span>
+				<TaskTitle 
+					addTask={() => this.setState({ dialog: { open: true, purpose: 'add' } })}
+				/>
 
 				<TableTasks 
 					tasks={tasks}
-					successTask={this.success}
+					activeTab={activeTab}
+					onActivateTab={(num) => this.setState({ activeTab: num })}
+					successTask={this.successTask}
 					dialogOpen={this.dialogOpen}
 					pageLoading={loading}
 					loadingNewTasks={this.loadingNewTasks}
 				/>
 
 				<Dialog
-					open={dialog.open}
+					open={open}
 					onClose={() => 
 						this.setState({ dialog: { open: false } })
 					}
 				>  
-					{dialog.purpose &&
+					{purpose &&
 						<DialogContent>
-							{dialog.purpose == 'add' ? 
+							{purpose == 'add' ? 
 								<AddTaskForm 
 									submit={this.onSubmit} 
 									tags={tags}
 								/> :
 								<EditTaskForm
-									task={tasks[dialog.data]}
+									task={ tasks[activeTab][numberTask] }
 									tags={tags}
 									submit={this.onSubmit} 
 								/>
 							}
 						</DialogContent>
 					}
-				</Dialog> */}
+				</Dialog>
 			</div>
 		)
 	}

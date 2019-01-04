@@ -7,7 +7,6 @@ import { Button } from '@rmwc/button';
 
 import Loader from '../loader';
 import './css/main';
-import ParseError from '../utils/ParseError';
 
 export class EditTaskForm extends Component {
 	static propTypes = {
@@ -45,6 +44,8 @@ export class EditTaskForm extends Component {
 
 	render() {
 		const { data, loading, tags, errors } = this.state;
+		console.log(this.props);
+		
 		return (
 			<Loader loading={loading}>
 				<form className="form" onSubmit={this.onSubmit}>

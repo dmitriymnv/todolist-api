@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TabBar, Tab } from '@rmwc/tabs';
 
-import './css/tabletasks'
-import TaskAdding from '../messages/TaskAdding';
-import Loader from '../loader';
+import '../css/tabletasks'
+import TaskAdding from '../../messages/TaskAdding';
+import Loader from '../../loader';
 import TableBody from './TableBody';
+import TableHead from './TableHead';
 
 class TableTasks extends Component {
 	static propTypes = {
-		tasks: PropTypes.array.isRequired,
+		tasks: PropTypes.object.isRequired,
 		successTask: PropTypes.func.isRequired,
 		dialogOpen: PropTypes.func.isRequired,
 		loadingNewTasks: PropTypes.func.isRequired,
-		pageLoading: PropTypes.bool.isRequired
+		pageLoading: PropTypes.bool.isRequired,
+		activeTab: PropTypes.number.isRequired,
+		onActivateTab: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -37,35 +39,22 @@ class TableTasks extends Component {
   }
 
 	render() {
-		const { tasks, successTask, dialogOpen, pageLoading } = this.props;
+		const { 
+			tasks, successTask, dialogOpen, pageLoading, activeTab, onActivateTab
+		} = this.props;		
 		return (
 			<Loader opacity='0' loading={pageLoading}>
 				{tasks.length === 0 ?
 					<TaskAdding /> :
 					<table className="task-tables">
-						<thead>
-							<tr>
-								<div>
-									<TabBar
-										activeTabIndex={this.state.activeTab}
-										onActivate={evt => this.setState({activeTab: evt.detail.index})}
-									>
-										<Tab>Личные</Tab>
-										<Tab>Семейные</Tab>
-										<Tab>Друзья</Tab>
-									</TabBar>
-								</div>
-							</tr>
-							<tr>
-								<th>Выполнение</th>
-								<th className="task-tables__title">Задача</th>
-								<th>Дата создания</th>
-								<th>Дата выполнения</th>
-							</tr>
-						</thead>
+						<TableHead 
+							activeTab={activeTab}
+							onActivateTab={onActivateTab}
+						/>
 						<TableBody 
 							onScrollList={this.onScrollList} 
 							tasks={tasks}
+							activeTab={activeTab}
 							successTask={successTask}
 							dialogOpen={dialogOpen}
 							loading={this.state.loading}
