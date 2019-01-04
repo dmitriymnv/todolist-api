@@ -9,14 +9,13 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { tasks, tags } = req.currentUser;
-
-	const { start } = req.body;
-	const needTasks = tasks.slice(start, start + 15);
+	const { loaded, activeTab, loadingTags } = req.body.data;
+	const needTasks = tasks[activeTab].slice(loaded, loaded + 15);
 	res.status(200).json({ 
 		tasks: needTasks,
-		total: tasks.length,
+		total: tasks[activeTab].length,
 		loaded: needTasks.length,
-		tags
+		tags: loadingTags ? tags : null
 	});
 });
 

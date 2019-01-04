@@ -25,8 +25,9 @@ export class Tasks extends Component {
 	}
 
 	state = {
-		tasks: [],
+		tasks: {},
 		tags: [],
+		activeTab: 0,
 		dialog: {
 			open: false,
 			purpose: undefined
@@ -37,11 +38,14 @@ export class Tasks extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadingTasks(0)
-			.then(res => {
-				this.setState({ 
-					...res, 
-					loading: false })
+		const { loaded, activeTab } = this.state;
+		this.props.loadingTasks({ loaded, activeTab, loadingTags: true })
+			.then(({ tasks, ...rest }) => {
+				this.setState({
+					tasks: { ...this.state.tasks, [activeTab]: tasks},
+					...rest,
+					loading: false 
+				})
 			})
 	}
 
@@ -128,9 +132,11 @@ export class Tasks extends Component {
 	render() {
 		const { tasks, tags, dialog, loading } = this.state;
 		const date = new Date();
+		console.log(this.state);
+		
 		return (
 			<div className="flex-container">
-				<span className="task-title">
+				{/* <span className="task-title">
 					{`${date.toLocaleString('ru', {weekday: 'long'})} , ${date.getDate()}`}
 
 					<Fab
@@ -171,7 +177,7 @@ export class Tasks extends Component {
 							}
 						</DialogContent>
 					}
-				</Dialog>
+				</Dialog> */}
 			</div>
 		)
 	}

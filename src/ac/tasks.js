@@ -1,8 +1,8 @@
 import api from './api';
 
-export const loadingTasks = (start) => () => {
+export const loadingTasks = (data) => () => {
 	return (
-		api(['/api/tasks', 'POST'], { start })
+		api(['/api/tasks', 'POST'], { data })
 	)
 }
 

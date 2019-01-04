@@ -20,9 +20,7 @@ const schema = new mongoose.Schema(
 		passwordHash: { type: String, required: true },
 		confirmed: { type: Boolean, default: false },
 		subNews: { type: Boolean, default: true },
-		tasks: {
-			type: Array
-		},
+		tasks: { type: Object, default: { 0: [] } },
 		confirmationToken: { type: String },
 		tags: { type: Array, default: [] }
 	},
@@ -40,7 +38,7 @@ schema.methods.addTask = function addTask(data) {
 
 schema.methods.addTag = function addTag(tag) {
 	let tags = this.tags;
-	if(tags.indexOf(tag)) tags.unshift(tag);
+	if(tags.length > 0 && tags.indexOf(tag)) tags.unshift(tag);
 };
 
 schema.methods.setPassword = function setPassword(password) {

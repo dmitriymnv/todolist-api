@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { TabBar, Tab } from '@rmwc/tabs';
 
+import './css/tabletasks'
 import TaskAdding from '../messages/TaskAdding';
 import Loader from '../loader';
 import TableBody from './TableBody';
@@ -42,6 +44,18 @@ class TableTasks extends Component {
 					<TaskAdding /> :
 					<table className="task-tables">
 						<thead>
+							<tr>
+								<div>
+									<TabBar
+										activeTabIndex={this.state.activeTab}
+										onActivate={evt => this.setState({activeTab: evt.detail.index})}
+									>
+										<Tab>Личные</Tab>
+										<Tab>Семейные</Tab>
+										<Tab>Друзья</Tab>
+									</TabBar>
+								</div>
+							</tr>
 							<tr>
 								<th>Выполнение</th>
 								<th className="task-tables__title">Задача</th>
