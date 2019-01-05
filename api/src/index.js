@@ -9,6 +9,7 @@ const auth = require("./routes/auth");
 const users = require("./routes/users");
 const tasks = require("./routes/tasks");
 const profile = require("./routes/profile");
+const family = require("./routes/family");
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/tasks", tasks);
 app.use("/api/profile", profile);
+app.use("/api/family", family);
 
 
 app.listen(3030, () => console.log("Сервер запущен localhost:3030"));

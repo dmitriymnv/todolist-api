@@ -15,24 +15,22 @@ router.post("/", (req, res) => {
 		tasks: needTasks,
 		total: tasks[activeTab].length,
 		loaded: needTasks.length,
-		tags: loadingTags ? tags : null
+		tags: loadingTags ? tags : undefined
 	});
 });
 
 router.post("/add", (req, res) => {
-	const { data } = req.body;
-	const tag = data.tag;
+	const { task, activeTab } = req.body.data;
 	const user = req.currentUser;
 
-	Task.create({ ...data, dateCreate: new Date() })
+	Task.create({ ...task, dateCreate: new Date() })
 		.then(task => {
-			user.addTask(task);
-			user.addTag(tag);
+			user.addTask(task, activeTab);
+			user.addTag(task.tag);
 			user.save(); 
 			res.json({ task })
 		})
 		.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
-
 });
 
 router.post("/edit", (req, res) => {

@@ -1,7 +1,6 @@
-import React, { Component, lazy } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Dialog, DialogContent } from '@rmwc/dialog';
 
 import './css/main';
 import { 
@@ -10,10 +9,10 @@ import {
 	successTask, 
 	editTask
 	} from '../../ac/tasks';
+import { loadingMemberFamily } from '../../ac/family';
 import TableTasks from './table/TableTasks';
 import TaskTitle from './TaskTitle';
-const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
-const EditTaskForm = lazy(() => import('../forms/EditTaskForm'));
+import TaskDialog from './TaskDialog';
 
 export class Tasks extends Component {
 	static propTypes = {
@@ -21,10 +20,11 @@ export class Tasks extends Component {
 		addTask: PropTypes.func.isRequired,
 		successTask: PropTypes.func.isRequired,
 		editTask: PropTypes.func.isRequired,
+		loadingMemberFamily: PropTypes.func.isRequired,
 	}
 
 	state = {
-		tasks: { 0: [ {title: 'test'} ]},
+		tasks: { 0: [], 1: [] },
 		tags: [],
 		activeTab: 0,
 		dialog: {
@@ -39,14 +39,9 @@ export class Tasks extends Component {
 
 	componentDidMount() {
 		const { loaded, activeTab } = this.state;
-		this.props.loadingTasks({ loaded, activeTab, loadingTags: true })
-			.then(({ tasks, ...rest }) => {
-				this.setState({
-					tasks: { ...this.state.tasks, [activeTab]: tasks},
-					...rest,
-					loading: false 
-				})
-			})
+		const { loadingMemberFamily, loadingTasks } = this.props;
+		loadingMemberFamily();
+		this.loadingTasks(loaded, activeTab, true);
 	}
 
 	successTask = (id, tabs, i) => {	
@@ -60,7 +55,6 @@ export class Tasks extends Component {
 	}
 
 	dialogOpen = (purpose, i) => {
-
 		this.setState({ 
 			dialog: {
 				open: true,
@@ -70,38 +64,40 @@ export class Tasks extends Component {
 		});
 	}
 
-	onSubmit = (data, purpose) => {
-		const { tags } = this.state;
+	onSubmit = (task, purpose) => {
+		const { tasks, tags, activeTab, total, loaded } = this.state;
 		this.setState({
 			loading: true,
 			dialog: { open: false },
 			tags: 
-				tags.indexOf(data.tag) == -1 ? 
-					[data.tag, ...tags] : tags
+				tags.indexOf(task.tag) == -1 ? 
+					[task.tag, ...tags] : tags
 		});
 		
 		switch (purpose) {
 			case 'add':
-				this.props.addTask(data)
+				this.props.addTask({ task, activeTab })
 					.then(({ task }) => {
 						this.setState({
-							tasks: [task, ...this.state.tasks],
-							total: this.state.total + 1,
-							loaded: this.state.loaded + 1,
+							tasks: { 
+								...tasks, [activeTab]: [ task, ...tasks[activeTab] ]
+							},
+							total: total + 1,
+							loaded: loaded + 1,
 							loading: false
 						})
 					})
 				break;
 
 			case 'edit':
-				this.props.editTask(data)
+				this.props.editTask({ task, activeTab })
 					.then(({ i }) => {
-						const task = this.state.tasks[i];
+						const findTask = this.state.tasks[i];
 						this.setState({
 							...this.state.tasks [
-								task.title = data.title,
-								task.tag = data.tag,
-								task.color = data.color
+								findTask.title = task.title,
+								findTask.tag = task.tag,
+								findTask.color = task.color
 							],
 							loading: false
 						});
@@ -112,18 +108,49 @@ export class Tasks extends Component {
 		}
 	}
 
-	loadingNewTasks = () => {
-		return new Promise((resolve, reject) => {
-			const { total, loaded } = this.state;
-			if(total > loaded) {
-				this.props.loadingTasks(this.state.loaded)
-					.then((res) => {
-						this.setState({
-							tasks: [...this.state.tasks, ...res.tasks],
-							loaded: this.state.loaded + res.value
-						})
-						return resolve(false)
+	loadingTasks = (loaded, activeTab, loadingTags = undefined, ajax = false) => {
+		const { tasks } = this.state;
+
+		this.props.loadingTasks({ loaded, activeTab, loadingTags })
+			.then(({ tasks: newTasks, ...rest }) => {
+
+				if(ajax) {
+					this.setState({
+						tasks: { 
+							...tasks, [activeTab]: [ newTasks, ...tasks[activeTab] ]
+						},
+						loaded: loaded + rest.loaded,
+						loading: false 
 					})
+				} else {
+					this.setState({
+						tasks: { 
+							...this.state.tasks, [activeTab]: newTasks
+						},
+						...rest,
+						loading: false 
+					})
+				}
+
+			})
+
+	}
+
+	onActivateTab = (num) => {
+		this.setState({ 
+			activeTab: num, 
+			loading: true
+		});
+		
+		this.loadingTasks(0, num);
+	}
+
+	loadingNewTasks = () => {
+		return new Promise((resolve) => {
+			const { total, loaded, activeTab } = this.state;
+			if(total > loaded) {
+				this.loadingTasks(loaded, activeTab, false, true);
+				return resolve(false)
 			}	else {
 				return resolve(true)
 			}
@@ -134,7 +161,7 @@ export class Tasks extends Component {
 		const { 
 			tasks, 
 			tags, 
-			dialog: { numberTask, open, purpose }, 
+			dialog, 
 			loading, 
 			activeTab 
 		} = this.state;
@@ -147,40 +174,24 @@ export class Tasks extends Component {
 				<TableTasks 
 					tasks={tasks}
 					activeTab={activeTab}
-					onActivateTab={(num) => this.setState({ activeTab: num })}
+					onActivateTab={this.onActivateTab}
 					successTask={this.successTask}
 					dialogOpen={this.dialogOpen}
 					pageLoading={loading}
 					loadingNewTasks={this.loadingNewTasks}
 				/>
 
-				<Dialog
-					open={open}
-					onClose={() => 
-						this.setState({ dialog: { open: false } })
-					}
-				>  
-					{purpose &&
-						<DialogContent>
-							{purpose == 'add' ? 
-								<AddTaskForm 
-									submit={this.onSubmit} 
-									tags={tags}
-								/> :
-								<EditTaskForm
-									task={ tasks[activeTab][numberTask] }
-									tags={tags}
-									submit={this.onSubmit} 
-								/>
-							}
-						</DialogContent>
-					}
-				</Dialog>
+				<TaskDialog 
+					dialog={dialog}
+					tags={tags}
+					onSubmit={this.onSubmit}
+					onClose={ () => this.setState({ dialog: { open: false }}) }
+				/>
 			</div>
 		)
 	}
 }
 
 export default connect(null, {
-	 loadingTasks, addTask, successTask, editTask
+	 loadingTasks, addTask, successTask, editTask, loadingMemberFamily
 })(Tasks)

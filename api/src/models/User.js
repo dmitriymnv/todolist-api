@@ -20,9 +20,13 @@ const schema = new mongoose.Schema(
 		passwordHash: { type: String, required: true },
 		confirmed: { type: Boolean, default: false },
 		subNews: { type: Boolean, default: true },
-		tasks: { type: Object, default: { 0: [] } },
+		tasks: { 
+			0: {type: Array, default: []},
+			1: {type: Array, default: []}
+		},
 		confirmationToken: { type: String },
-		tags: { type: Array, default: [] }
+		tags: { type: Array, default: [] },
+		family: { type: Array, default: [] }
 	},
 	
   { timestamps: true }
@@ -32,13 +36,17 @@ schema.methods.isValidPassword = function isValidPassword(password) {
   return bcrypt.compareSync(password, this.passwordHash);
 };
 
-schema.methods.addTask = function addTask(data) {
-	this.tasks.unshift(data);
+schema.methods.addTask = function addTask(task, activeTab) {
+	this.tasks[activeTab].unshift(task);
 };
 
 schema.methods.addTag = function addTag(tag) {
 	let tags = this.tags;
-	if(tags.length > 0 && tags.indexOf(tag)) tags.unshift(tag);
+	if(tag.length > 0 && tags.indexOf(tag) == -1) tags.unshift(tag);
+};
+
+schema.methods.addFamilyMember = function addFamilyMember(username) {
+	this.family.push(username)
 };
 
 schema.methods.setPassword = function setPassword(password) {

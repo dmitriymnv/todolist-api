@@ -1,6 +1,7 @@
+import { push } from "connected-react-router";
+
 import api from "./api";
 import { userLoggedIn } from "./auth";
-import { push } from "connected-react-router";
 
 export const signup = (data) => (dispatch) => {
 	return (
