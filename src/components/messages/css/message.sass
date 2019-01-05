@@ -1,0 +1,25 @@
+.message
+	position: relative
+	display: block
+	padding: 20px 50px 20px 30px
+	margin-bottom: 30px
+	border: 1px solid rgba(0, 0, 0, 0.20)
+	border-radius: 5px
+	font-weight: 500
+	user-select: none
+
+.message__icon
+	position: absolute
+	top: 0
+	right: 0
+	padding: 6px 6px 15px 15px
+	cursor: pointer
+	&:hover
+		.message__icon-svg
+			path
+				fill: rgba(0, 0, 0, 0.9)
+
+.message__icon-svg
+	path
+		fill: rgba(0, 0, 0, 0.7)
+		transition: all .2s

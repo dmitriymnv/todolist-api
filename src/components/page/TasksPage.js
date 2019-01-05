@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import './css/taskspage';
 import { title } from '../../constans';
 import Tasks from '../tasks';
-const ConfirmEmail = lazy(() => import('../messages/ConfirmEmail'));
+const Message = lazy(() => import('../messages/Message'));
 
 export class TasksPage extends Component {
 	static propTypes = {
@@ -25,9 +25,9 @@ export class TasksPage extends Component {
 		const { alertText } = this.props.router.state ? this.props.router.state : false;
 		document.title = 'Список задач'
 		return (
-			<div className="taskspage flex-container">
+			<div className="tasks-page flex-container">
 				{(showConfirmationEmail || alertText) && 
-					<ConfirmEmail alertText={alertText} />
+					<CommonMessage alertText={alertText} />
 				}
 				<Tasks />
 			</div>

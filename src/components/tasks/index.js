@@ -39,7 +39,7 @@ export class Tasks extends Component {
 
 	componentDidMount() {
 		const { loaded, activeTab } = this.state;
-		const { loadingMemberFamily, loadingTasks } = this.props;
+		const { loadingMemberFamily } = this.props;
 		loadingMemberFamily();
 		this.loadingTasks(loaded, activeTab, true);
 	}
@@ -110,7 +110,6 @@ export class Tasks extends Component {
 
 	loadingTasks = (loaded, activeTab, loadingTags = undefined, ajax = false) => {
 		const { tasks } = this.state;
-
 		this.props.loadingTasks({ loaded, activeTab, loadingTags })
 			.then(({ tasks: newTasks, ...rest }) => {
 

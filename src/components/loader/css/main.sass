@@ -1,11 +1,15 @@
 @import url(~@rmwc/circular-progress/circular-progress.css)
 
 .loader
-	display: block
+	position: relative
+
+.loader__circular
+	margin: 0
 	position: absolute
 	top: 50%
 	left: 50%
-	transform: translate(calc(-72px / 2), calc(-72px / 2))
+	transform: translate(-50%, -50%)
 
-.loader-enabled
+.loader_active
 	pointer-events: none
+	user-select: none

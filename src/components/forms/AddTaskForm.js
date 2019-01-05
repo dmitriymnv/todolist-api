@@ -6,7 +6,6 @@ import { Select } from '@rmwc/select';
 import { Button } from '@rmwc/button';
 
 import './css/main';
-import ParseError from '../utils/ParseError';
 import Loader from '../loader';
 
 export class AddTaskForm extends Component {

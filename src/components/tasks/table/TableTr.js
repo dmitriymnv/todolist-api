@@ -9,7 +9,7 @@ const TableTrPrivate = ({ task, options, successTask, dialogOpen }) => {
 		<tr
 			className={`${task.success? 'success ' : ''}${task.color}`}
 		>
-			<td className="td-perform">
+			<td className="task-table__task-checkbox">
 				<Checkbox
 					checked={task.success}
 					onChange={successTask}
@@ -25,9 +25,9 @@ const TableTrPrivate = ({ task, options, successTask, dialogOpen }) => {
 					/>
 				</span>
 			</td>
-			<td className="task-tables__title">
+			<td className="task-table__task-name">
 				<div>{task.title}</div>
-				{task.tag && <span className="tag">Тег: {task.tag}</span>}
+				{task.tag && <span className="task-table__task-tag">Тег: {task.tag}</span>}
 			</td>
 			<td>
 				{new Date(task.dateCreate).toLocaleString('ru', options)}

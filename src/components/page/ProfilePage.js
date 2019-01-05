@@ -24,63 +24,39 @@ export class Initialpage extends Component {
 	render() {
 		const { username, push } = this.props;
 		return (
-			<>
+			<div className="profile-page">
 				<Typography
+					tag="h1"
 					use="headline5"
-					tag='h1'
 				>
 					Личный кабинет
 				</Typography>
 
-				<div className="profile-card personal">
-					<Card outlined>
-						<Typography className="title" use="subtitle1" tag="div">
-							Личные данные
+				
+				<Card className="card card_personal" outlined>
+					<Typography className="card__title" use="subtitle1" tag="div">
+						Личные данные
+					</Typography>
+
+					<ListDivider />
+
+					<div className="card__body">
+						<Typography use="headline6" tag="div">
+							Привет, {username}
 						</Typography>
-
-						<ListDivider />
-
-						<div className="card-body">
-							<Typography use="headline6" tag="div">
-								Привет, {username}
-							</Typography>
-								
 							
-							<CardActionButtons className="buttons">
-								<Button onClick={() => push('/profile/private-date')}>Изменение личных данных</Button>
-								<Button onClick={() => push('/profile/password')}>Измение пароля</Button>
-							</CardActionButtons>
-								
+						
+						<CardActionButtons className="card__buttons">
+							<Button onClick={() => push('/profile/private-date')}>Изменение личных данных</Button>
+							<Button onClick={() => push('/profile/password')}>Измение пароля</Button>
+						</CardActionButtons>
 							
-						</div>
-					</Card>
-				</div>
+						
+					</div>
 
-				{/* <div className="profile-card personal">
-					<Card outlined>
-						<Typography className="title" use="subtitle1" tag="div">
-							Рассылки
-						</Typography>
+				</Card>
 
-						<ListDivider />
-
-						<div className="card-body">
-							<Typography use="headline5" tag="div">
-								Привет, {username}
-							</Typography>
-								
-							
-							<CardActionButtons className="buttons">
-								<Button onClick={() => push('/profile/private-date')}>Изменение личных данных</Button>
-								<Button onClick={() => push('/profile/password')}>Измения пароля</Button>
-							</CardActionButtons>
-								
-							
-						</div>
-					</Card>
-				</div> */}
-
-			</>
+			</div>
 		)
 	}
 }

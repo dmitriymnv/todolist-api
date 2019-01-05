@@ -13,10 +13,10 @@ const options = {
 }
 
 const TableBody = ({ 
-	onScrollList, tasks, successTask, dialogOpen,  loading, activeTab
+	onScrollList, tasks, successTask, dialogOpen, loading, activeTab
 	}) => {
 	return (
-		<tbody onScroll={e => onScrollList(e)}>
+		<tbody className="task-table__body" onScroll={e => onScrollList(e)}>
 			{tasks[activeTab].map((task, i) => {
 				return (
 					<TableTr 
@@ -29,7 +29,7 @@ const TableBody = ({
 				)
 			})}
 			{loading &&
-				<tr className="tr-loader">
+				<tr className="task-table__live-loading">
 					<td><Loader loading size={35} /></td>
 				</tr>
 			}

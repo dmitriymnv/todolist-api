@@ -2,13 +2,13 @@
 @import url(~@material/checkbox/dist/mdc.checkbox.css)
 @import url(~@material/fab/dist/mdc.fab.css)
 
-.tasks-zero
+.tasks-page__zero
 	border: 1px solid rgba(0, 0, 0, 0.12)
 	font-weight: 300
 	padding: 15px 30px
 	font-size: 20px
 
-.task-title
+.tasks-page__title
 	width: 100%
 	margin: 0 0 40px
 	display: flex
@@ -17,86 +17,6 @@
 	font-family: 'Pacifico', cursive
 	font-size: 60px
 	text-transform: capitalize
-	button
+
+.tasks-page__title-button
 		margin-top: 17px
-
-.task-tables
-	max-width: 800px
-	border: 1px solid rgba(0, 0, 0, 0.12)
-	border-collapse: collapse
-	text-align: left
-	thead, tbody
-		tr
-			display: table
-			width: 100%
-			table-layout: fixed
-			border-bottom: 1px solid rgba(0, 0, 0, 0.12)
-			border-collapse: collapse
-			animation: appear 1s
-			th, td
-				padding: 12px 15px
-		.task-tables__title
-			width: 400px
-			position: relative
-			.tag
-				display: block
-				font-size: 13px
-				color: rgba(0, 0, 0, 0.6)
-				margin-top: 13px
-	thead
-		th
-			color: darken(#fff, 50%)
-			line-height: 12px
-			font-size: 12px
-			font-weight: 400
-			&:last-child
-				padding-right: 2rem
-	tbody
-		display: block
-		max-height:	600px
-		overflow: auto
-		.td-perform
-			display: flex
-			align-items: center
-			span.svg-cog
-				padding: 0 40px 0 10px
-				height: 16px
-				cursor: pointer
-				opacity: 0
-				transition: all .25s
-				&:hover
-					opacity: .8
-		// Цвета задач
-		tr
-			&.yellow
-				background-color: rgba(yellow, .15)
-				border-color: rgba(black, .15)
-			&.blue
-				background-color: rgba(blue, .15)
-				border-color: rgba(blue, .15)
-			&.red
-				background-color: rgba(red, .15)
-				border-color: rgba(red, .15)
-			&.success
-				background-color: rgba(black, .13)
-				border-color: rgba(black, .13)
-			&:hover
-				transition: all .25s
-				background-color: rgba(black, .1)
-				border-color: rgba(black, .1)
-				span.svg-cog
-					opacity: .5
-			&:last-child
-				border: none
-
-.tr-loader
-	position: relative
-	pointer-events: none
-	svg
-		margin-top: 30px
-
-@keyframes appear
-	0%
-		opacity: 0
-	100%
-		opacity: 1

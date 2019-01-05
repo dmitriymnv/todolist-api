@@ -43,10 +43,10 @@ class TableTasks extends Component {
 			tasks, successTask, dialogOpen, pageLoading, activeTab, onActivateTab
 		} = this.props;		
 		return (
-			<Loader opacity='0' loading={pageLoading}>
+			<Loader loading={pageLoading}>
 				{tasks.length === 0 ?
 					<TaskAdding /> :
-					<table className="task-tables">
+					<table className="task-table">
 						<TableHead 
 							activeTab={activeTab}
 							onActivateTab={onActivateTab}

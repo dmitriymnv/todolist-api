@@ -2,3 +2,100 @@
 @import url(~@material/tab/dist/mdc.tab.css)
 @import url(~@material/tab-indicator/dist/mdc.tab-indicator.css)
 @import url(~@material/tab-scroller/dist/mdc.tab-scroller.css)
+
+// .task-tables__tabBar
+// 	padding: 0
+
+.task-table
+	position: relative
+	max-width: 800px
+	border: 1px solid rgba(0, 0, 0, 0.12)
+	border-collapse: collapse
+	text-align: left
+
+.task-table__head, .task-table__body
+	tr
+		display: table
+		width: 100%
+		table-layout: fixed
+		border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+		border-collapse: collapse
+		animation: appear 1s
+
+.task-table__head
+	th
+		color: darken(#fff, 50%)
+		line-height: 12px
+		font-size: 12px
+		font-weight: 400
+		padding: 12px 15px
+		&:last-child
+			padding-right: 2rem
+	.task-table__select-tab
+		width: 100%
+		padding: 0
+		&:last-child
+			padding-right: 0
+
+.task-table__body
+	display: block
+	max-height:	600px
+	overflow: auto
+	// Цвета задач
+	tr
+		&.yellow
+			background-color: rgba(yellow, .15)
+			border-color: rgba(black, .15)
+		&.blue
+			background-color: rgba(blue, .15)
+			border-color: rgba(blue, .15)
+		&.red
+			background-color: rgba(red, .15)
+			border-color: rgba(red, .15)
+		&.success
+			background-color: rgba(black, .13)
+			border-color: rgba(black, .13)
+		&:hover
+			transition: all .25s
+			background-color: rgba(black, .1)
+			border-color: rgba(black, .1)
+			.svg-cog
+				opacity: .5
+		&:last-child
+			border: none
+	td
+		padding: 12px 15px
+
+.task-table__task-name
+	width: 400px
+	position: relative
+
+.task-table__task-tag
+	display: block
+	font-size: 13px
+	color: rgba(0, 0, 0, 0.6)
+	margin-top: 13px
+
+.task-table__task-checkbox
+	display: flex
+	align-items: center
+
+.svg-cog
+	padding: 0 40px 0 10px
+	height: 17px
+	cursor: pointer
+	opacity: 0
+	transition: all .25s
+	&:hover
+		opacity: .8
+
+.task-table__live-loading
+	position: relative
+	svg
+		margin-top: calc(35px / 2) // размер круга
+
+@keyframes appear
+	0%
+		opacity: 0
+	100%
+		opacity: 1
