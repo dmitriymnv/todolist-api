@@ -12,36 +12,22 @@ class TableTasks extends Component {
 		tasks: PropTypes.object.isRequired,
 		successTask: PropTypes.func.isRequired,
 		dialogOpen: PropTypes.func.isRequired,
-		loadingNewTasks: PropTypes.func.isRequired,
 		pageLoading: PropTypes.bool.isRequired,
 		activeTab: PropTypes.number.isRequired,
 		onActivateTab: PropTypes.func.isRequired,
+		onScrollList: PropTypes.func.isRequired,
 	}
 
 	state = {
-		loading: false,
-		loaded: false
+		loading: false
 	}
-
-	onScrollList = (e) => {
-		const { scrollTop, offsetHeight, scrollHeight } = e.target;
-		const { loading, loaded } = this.state
-		const isCilentAtBottom = 200 + scrollTop + 
-			offsetHeight >= scrollHeight;
-
-		if(isCilentAtBottom && !loading && !loaded) {
-			this.setState({ loading: true });
-			this.props.loadingNewTasks()
-				.then((res) => {
-					this.setState({ loading: false, loaded: res })
-				})
-		}
-  }
 
 	render() {
 		const { 
-			tasks, successTask, dialogOpen, pageLoading, activeTab, onActivateTab
-		} = this.props;		
+			tasks, successTask, dialogOpen, pageLoading, 
+			activeTab, onActivateTab, onScrollList
+		} = this.props;	
+		
 		return (
 			<Loader loading={pageLoading}>
 				{tasks.length === 0 ?
@@ -52,12 +38,12 @@ class TableTasks extends Component {
 							onActivateTab={onActivateTab}
 						/>
 						<TableBody 
-							onScrollList={this.onScrollList} 
 							tasks={tasks}
 							activeTab={activeTab}
 							successTask={successTask}
 							dialogOpen={dialogOpen}
 							loading={this.state.loading}
+							onScrollList={onScrollList}
 						/>
 					</table>
 				}

@@ -4,14 +4,21 @@ import { Checkbox } from '@rmwc/checkbox';
 
 import SvgCog from '../../../other/img/cog-solid';
 
-const TableTrPrivate = ({ task, options, successTask, dialogOpen }) => {
+const TableTr = ({ 
+	task: { 
+		success, color, title, tag, author, editAuthor,
+		successAuthor, dateCompletion, dateCreate
+	}, 
+	options, 
+	successTask, 
+	dialogOpen }) => {
 	return (
 		<tr
-			className={`${task.success? 'success ' : ''}${task.color}`}
+			className={`${success? 'success ' : ''}${color}`}
 		>
 			<td className="task-table__task-checkbox">
 				<Checkbox
-					checked={task.success}
+					checked={success}
 					onChange={successTask}
 				/>
 				
@@ -26,22 +33,28 @@ const TableTrPrivate = ({ task, options, successTask, dialogOpen }) => {
 				</span>
 			</td>
 			<td className="task-table__task-name">
-				<div>{task.title}</div>
-				{task.tag && <span className="task-table__task-tag">Тег: {task.tag}</span>}
+				<div>{title}</div>
+
+				<div className="task-details task-table__task-details">
+					{tag && <span className="task-details__item">Тег: {tag}</span>}
+					{author && <span className="task-details__item">Автор: {author}</span>}
+					{editAuthor && <span className="task-details__item">Последние изменение задачи от: {editAuthor}</span>}
+					{successAuthor && <span className="task-details__item">Задачу выполнил: {successAuthor}</span>}
+				</div>
+
 			</td>
 			<td>
-				{new Date(task.dateCreate).toLocaleString('ru', options)}
+				{new Date(dateCreate).toLocaleString('ru', options)}
 			</td>
 			<td>
-				{task.dateCompletion ? 
-					new Date(task.dateCompletion).toLocaleString('ru', options) : '-'
+				{dateCompletion ? 
+					new Date(dateCompletion).toLocaleString('ru', options) : '-'
 				}
 			</td>
 		</tr>
 	)
 }
-
-TableTrPrivate.propTypes = {
+TableTr.propTypes = {
 	task: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		success: PropTypes.bool.isRequired,
@@ -50,10 +63,13 @@ TableTrPrivate.propTypes = {
 		dateCompletion: PropTypes.String,
 		color: PropTypes.string,
 		tag: PropTypes.string,
+		author: PropTypes.string,
+		editAuthor: PropTypes.string,
+		successAuthor: PropTypes.string,
 	}).isRequired,
 	options: PropTypes.object.isRequired,
 	successTask: PropTypes.func.isRequired,
 	dialogOpen: PropTypes.func.isRequired,
 }
 
-export default TableTrPrivate
+export default TableTr

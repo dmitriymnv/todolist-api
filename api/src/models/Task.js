@@ -6,7 +6,10 @@ const schema = new mongoose.Schema({
 	success: { type: Boolean, default: false },
 	dateCreate: { type: Date, required: true },
 	dateCompletion: { type: Date },
-	tag: { type: String }
+	tag: { type: String },
+	author: { type: String },
+	editAuthor: { type: String },
+	successAuthor: { type: String },
 })
 
 module.exports = mongoose.model("Book", schema)

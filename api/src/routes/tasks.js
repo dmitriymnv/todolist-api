@@ -23,8 +23,11 @@ router.post("/add", (req, res) => {
 	const { task, activeTab } = req.body.data;
 	const user = req.currentUser;
 
-	Task.create({ ...task, dateCreate: new Date() })
-		.then(task => {
+	Task.create({ 
+		...task, 
+		dateCreate: new Date(), 
+		author: activeTab == 1 ? user.username : undefined 
+	}).then(task => {
 			user.addTask(task, activeTab);
 			user.addTag(task.tag);
 			user.save(); 

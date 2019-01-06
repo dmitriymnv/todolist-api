@@ -109,30 +109,37 @@ export class Tasks extends Component {
 	}
 
 	loadingTasks = (loaded, activeTab, loadingTags = undefined, ajax = false) => {
-		const { tasks } = this.state;
-		this.props.loadingTasks({ loaded, activeTab, loadingTags })
-			.then(({ tasks: newTasks, ...rest }) => {
+		const { tasks, total } = this.state;
 
-				if(ajax) {
-					this.setState({
-						tasks: { 
-							...tasks, [activeTab]: [ newTasks, ...tasks[activeTab] ]
-						},
-						loaded: loaded + rest.loaded,
-						loading: false 
-					})
-				} else {
-					this.setState({
-						tasks: { 
-							...this.state.tasks, [activeTab]: newTasks
-						},
-						...rest,
-						loading: false 
-					})
-				}
+		return (
+			this.props.loadingTasks({ loaded, activeTab, loadingTags })
+				.then(({ tasks: newTasks, ...rest }) => {
 
-			})
+					if(ajax) {
 
+						this.setState({
+							tasks: { 
+								...tasks, [activeTab]: [ ...tasks[activeTab], ...newTasks ]
+							},
+							loaded: loaded + rest.loaded,
+							loading: false 
+						})
+
+						return loaded == total ? false : true;
+					} else {
+
+						this.setState({
+							tasks: { 
+								...this.state.tasks, [activeTab]: newTasks
+							},
+							...rest,
+							loading: false 
+						})
+						
+					}
+
+				})
+		)
 	}
 
 	onActivateTab = (num) => {
@@ -144,21 +151,10 @@ export class Tasks extends Component {
 		this.loadingTasks(0, num);
 	}
 
-	loadingNewTasks = () => {
-		return new Promise((resolve) => {
-			const { total, loaded, activeTab } = this.state;
-			if(total > loaded) {
-				this.loadingTasks(loaded, activeTab, false, true);
-				return resolve(false)
-			}	else {
-				return resolve(true)
-			}
-		})
-	}
-
 	render() {
 		const { 
-			tasks, 
+			tasks,
+			loaded,
 			tags, 
 			dialog, 
 			loading, 
@@ -177,7 +173,7 @@ export class Tasks extends Component {
 					successTask={this.successTask}
 					dialogOpen={this.dialogOpen}
 					pageLoading={loading}
-					loadingNewTasks={this.loadingNewTasks}
+					onScrollList={() => this.loadingTasks(loaded, activeTab, false, true)}
 				/>
 
 				<TaskDialog 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from '../../loader';
@@ -10,40 +10,68 @@ const options = {
 	day: '2-digit',
 	hour: '2-digit',
 	minute: '2-digit'
-}
+};
 
-const TableBody = ({ 
-	onScrollList, tasks, successTask, dialogOpen, loading, activeTab
-	}) => {
-	return (
-		<tbody className="task-table__body" onScroll={e => onScrollList(e)}>
-			{tasks[activeTab].map((task, i) => {
-				return (
-					<TableTr 
-						task={task}
-						key={i}
-						successTask={() => successTask(task._id, i)}
-						dialogOpen={() => dialogOpen('edit', i)}
-						options={options}
-					/>
-				)
-			})}
-			{loading &&
-				<tr className="task-table__live-loading">
-					<td><Loader loading size={35} /></td>
-				</tr>
+export class TableBody extends Component {
+	static propTypes = {
+		tasks: PropTypes.object.isRequired,
+		dialogOpen: PropTypes.func.isRequired,
+		successTask: PropTypes.func.isRequired,
+		loading: PropTypes.bool.isRequired,
+		activeTab: PropTypes.number.isRequired,
+		onScrollList: PropTypes.func.isRequired,
+	}
+
+	state = {
+		loading: false,
+		loaded: false
+	}
+
+	componentWillReceiveProps({ activeTab }) {
+		this.state.loaded != activeTab && this.setState({ loaded: false })
+	}
+
+	onScrollList = (e) => {
+		const { loading, loaded } = this.state;
+
+		if(!loading && !loaded) {
+			const { scrollTop, offsetHeight, scrollHeight } = e.target;
+	
+			if(200 + scrollTop + offsetHeight >= scrollHeight) {
+				this.setState({ loading: true });
+				this.props.onScrollList()
+					.then((res) => {
+						this.setState({ loading: false, loaded: res})
+				})
 			}
-		</tbody>
-	)
-}
+				
+		}
+	}
 
-TableBody.propTypes = {
-	onScrollList: PropTypes.func.isRequired,
-	tasks: PropTypes.object.isRequired,
-	dialogOpen: PropTypes.func.isRequired,
-	successTask: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	activeTab: PropTypes.number.isRequired,
+	render() {
+		const { tasks, activeTab } = this.props;	
+		return (
+			<tbody className="task-table__body" onScroll={e => this.onScrollList(e)}>
+				{tasks[activeTab] && tasks[activeTab].map((task, i) => {
+					return (
+						<TableTr 
+							task={task}
+							key={i}
+							successTask={() => successTask(task._id, i)}
+							dialogOpen={() => dialogOpen('edit', i)}
+							options={options}
+						/>
+					)
+				})}
+				{this.state.loading &&
+					<tr className="task-table__live-loading">
+						<td><Loader loading size={35} /></td>
+					</tr>
+				}
+			</tbody>
+		)
+	}
 }
 
 export default TableBody
+

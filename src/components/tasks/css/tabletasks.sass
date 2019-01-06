@@ -3,9 +3,6 @@
 @import url(~@material/tab-indicator/dist/mdc.tab-indicator.css)
 @import url(~@material/tab-scroller/dist/mdc.tab-scroller.css)
 
-// .task-tables__tabBar
-// 	padding: 0
-
 .task-table
 	position: relative
 	max-width: 800px
@@ -70,11 +67,17 @@
 	width: 400px
 	position: relative
 
-.task-table__task-tag
-	display: block
+.task-table__task-details
+	margin-top: 15px
+
+.task-details__item
 	font-size: 13px
 	color: rgba(0, 0, 0, 0.6)
-	margin-top: 13px
+	&::after
+		content: ', '
+	&:last-child
+		&::after
+			content: ''
 
 .task-table__task-checkbox
 	display: flex
