@@ -18,8 +18,8 @@ export const editTask = (data) => () => {
 	)
 }
 
-export const successTask = (id) => () => {
+export const successTask = (data) => () => {
 	return (
-		api(['/api/tasks/success', 'POST'], { id })
+		api(['/api/tasks/success', 'POST'], { data })
 	)
 }

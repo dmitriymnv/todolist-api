@@ -44,14 +44,23 @@ export class Tasks extends Component {
 		this.loadingTasks(loaded, activeTab, true);
 	}
 
-	successTask = (id, tabs, i) => {	
-		// const task = this.state.tasks[i];
-		// const completion = task.dateCompletion ? null : new Date();		
-		// this.setState({ ...this.state.tasks [
-		// 	task.success = !task.success,
-		// 	task.dateCompletion = completion ]
-		//  });
-		// this.props.successTask(id)
+	successTask = (id) => {
+		const { tasks, activeTab } = this.state;
+		const newTasks = tasks[activeTab].map((task) => {
+			if(task._id == id) {
+				task.success = !task.success;
+				task.dateCompletion ? null : new Date();
+			}
+			return task
+		})
+		
+		this.setState({ 
+			tasks: { 
+				...tasks, [activeTab]: [ ...newTasks ]
+			}
+		 });
+
+		this.props.successTask({ id, activeTab })
 	}
 
 	dialogOpen = (purpose, i) => {
@@ -127,19 +136,18 @@ export class Tasks extends Component {
 
 						return loaded == total ? false : true;
 					} else {
-
 						this.setState({
 							tasks: { 
-								...this.state.tasks, [activeTab]: newTasks
+								...tasks, [activeTab]: newTasks
 							},
 							...rest,
 							loading: false 
 						})
 						
 					}
-
 				})
 		)
+
 	}
 
 	onActivateTab = (num) => {
@@ -147,8 +155,12 @@ export class Tasks extends Component {
 			activeTab: num, 
 			loading: true
 		});
-		
-		this.loadingTasks(0, num);
+
+		if(Object.keys(this.state.tasks[num]).length == 0) {
+			this.loadingTasks(0, num); 
+		} else {
+			this.setState({ loading: false });
+		}
 	}
 
 	render() {
@@ -160,6 +172,7 @@ export class Tasks extends Component {
 			loading, 
 			activeTab 
 		} = this.state;
+		console.log(this.state.tasks)
 		return (
 			<div className="flex-container">
 				<TaskTitle 

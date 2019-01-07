@@ -49,7 +49,7 @@ export class TableBody extends Component {
 	}
 
 	render() {
-		const { tasks, activeTab } = this.props;	
+		const { tasks, activeTab, successTask } = this.props;	
 		return (
 			<tbody className="task-table__body" onScroll={e => this.onScrollList(e)}>
 				{tasks[activeTab] && tasks[activeTab].map((task, i) => {
@@ -57,7 +57,7 @@ export class TableBody extends Component {
 						<TableTr 
 							task={task}
 							key={i}
-							successTask={() => successTask(task._id, i)}
+							successTask={() => successTask(task._id)}
 							dialogOpen={() => dialogOpen('edit', i)}
 							options={options}
 						/>

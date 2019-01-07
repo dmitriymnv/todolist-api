@@ -11,6 +11,7 @@ router.post("/", (req, res) => {
 	const { tasks, tags } = req.currentUser;
 	const { loaded, activeTab, loadingTags } = req.body.data;
 	const needTasks = tasks[activeTab].slice(loaded, loaded + 15);
+
 	res.status(200).json({ 
 		tasks: needTasks,
 		total: tasks[activeTab].length,
@@ -64,13 +65,14 @@ router.post("/edit", (req, res) => {
 });
 
 router.post("/success", (req, res) => {
-	const { id } = req.body;
+	const { id, activeTab } = req.body.data;
 	const user = req.currentUser;
+
 
 	User.findOne({ email: user.email }, function(err, user){
 		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
-		
-		user.tasks.forEach(function (item) {
+
+		user.tasks[activeTab].forEach(function (item) {
 			if(item._id == id) {
 				item.success = !item.success;
 				item.success ? 

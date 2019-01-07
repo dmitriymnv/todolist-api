@@ -27,7 +27,7 @@ export class TasksPage extends Component {
 		return (
 			<div className="tasks-page flex-container">
 				{(showConfirmationEmail || alertText) && 
-					<CommonMessage alertText={alertText} />
+					<Message alertText={alertText} />
 				}
 				<Tasks />
 			</div>
