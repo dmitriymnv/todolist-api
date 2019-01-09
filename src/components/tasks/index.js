@@ -34,7 +34,7 @@ export class Tasks extends Component {
 		},
 		total: 0,
 		loaded: 0,
-		loading: false
+		loading: true
 	}
 
 	componentDidMount() {
@@ -172,7 +172,6 @@ export class Tasks extends Component {
 			loading, 
 			activeTab 
 		} = this.state;
-		console.log(this.state.tasks)
 		return (
 			<div className="flex-container">
 				<TaskTitle 
@@ -185,7 +184,7 @@ export class Tasks extends Component {
 					onActivateTab={this.onActivateTab}
 					successTask={this.successTask}
 					dialogOpen={this.dialogOpen}
-					pageLoading={loading}
+					loading={loading}
 					onScrollList={() => this.loadingTasks(loaded, activeTab, false, true)}
 				/>
 
@@ -201,5 +200,6 @@ export class Tasks extends Component {
 }
 
 export default connect(null, {
-	 loadingTasks, addTask, successTask, editTask, loadingMemberFamily
+	 loadingTasks, addTask, successTask, 
+	 editTask, loadingMemberFamily
 })(Tasks)

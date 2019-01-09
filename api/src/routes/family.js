@@ -7,8 +7,7 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { family } = req.currentUser;
-	res.json(['dmitriymnv', 'mam'])
-	
+	res.json(family);
 });
 
 module.exports = router;

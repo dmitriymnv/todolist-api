@@ -17,9 +17,8 @@ export class TableBody extends Component {
 		tasks: PropTypes.object.isRequired,
 		dialogOpen: PropTypes.func.isRequired,
 		successTask: PropTypes.func.isRequired,
-		loading: PropTypes.bool.isRequired,
 		activeTab: PropTypes.number.isRequired,
-		onScrollList: PropTypes.func.isRequired,
+		onScrollList: PropTypes.func.isRequired
 	}
 
 	state = {
@@ -49,20 +48,24 @@ export class TableBody extends Component {
 	}
 
 	render() {
-		const { tasks, activeTab, successTask } = this.props;	
+		const { tasks, activeTab, successTask } = this.props;
 		return (
 			<tbody className="task-table__body" onScroll={e => this.onScrollList(e)}>
-				{tasks[activeTab] && tasks[activeTab].map((task, i) => {
-					return (
-						<TableTr 
-							task={task}
-							key={i}
-							successTask={() => successTask(task._id)}
-							dialogOpen={() => dialogOpen('edit', i)}
-							options={options}
-						/>
-					)
-				})}
+				{Object.keys(tasks[activeTab]).length > 0 ? 
+					tasks[activeTab] && tasks[activeTab].map((task, i) => {
+						return (
+							<TableTr 
+								task={task}
+								key={i}
+								successTask={() => successTask(task._id)}
+								dialogOpen={() => dialogOpen('edit', i)}
+								options={options}
+							/>
+						)})
+						:
+					activeTab == 0 && <tr><td>У вас ещё нет личных задач!</td></tr>
+				}
+
 				{this.state.loading &&
 					<tr className="task-table__live-loading">
 						<td><Loader loading size={35} /></td>

@@ -12,24 +12,19 @@ class TableTasks extends Component {
 		tasks: PropTypes.object.isRequired,
 		successTask: PropTypes.func.isRequired,
 		dialogOpen: PropTypes.func.isRequired,
-		pageLoading: PropTypes.bool.isRequired,
+		loading: PropTypes.bool.isRequired,
 		activeTab: PropTypes.number.isRequired,
 		onActivateTab: PropTypes.func.isRequired,
 		onScrollList: PropTypes.func.isRequired,
 	}
 
-	state = {
-		loading: false
-	}
-
 	render() {
 		const { 
-			tasks, successTask, dialogOpen, pageLoading, 
+			tasks, successTask, dialogOpen, loading, 
 			activeTab, onActivateTab, onScrollList
 		} = this.props;	
-		
 		return (
-			<Loader loading={pageLoading}>
+			<Loader opacity={0} loading={loading}>
 				{tasks.length === 0 ?
 					<TaskAdding /> :
 					<table className="task-table">
@@ -42,7 +37,6 @@ class TableTasks extends Component {
 							activeTab={activeTab}
 							successTask={successTask}
 							dialogOpen={dialogOpen}
-							loading={this.state.loading}
 							onScrollList={onScrollList}
 						/>
 					</table>
