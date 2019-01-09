@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { push } from 'connected-react-router';
-import { connect } from 'react-redux';
 import { Typography } from '@rmwc/typography';
-import { Button } from '@rmwc/button';
-import { 
-	Card, 
-	CardActionButtons } from '@rmwc/card';
-import { ListDivider } from '@rmwc/list';
 
-import './css/profilepage';
 import { title } from '../../constans';
+import Profile from '../profile';
 
 export class Initialpage extends Component {
 	static propTypes = {
@@ -33,38 +26,11 @@ export class Initialpage extends Component {
 				</Typography>
 
 				
-				<Card className="card card_personal" outlined>
-					<Typography className="card__title" use="subtitle1" tag="div">
-						Личные данные
-					</Typography>
-
-					<ListDivider />
-
-					<div className="card__body">
-						<Typography use="headline6" tag="div">
-							Привет, {username}
-						</Typography>
-							
-						
-						<CardActionButtons className="card__buttons">
-							<Button onClick={() => push('/profile/private-date')}>Изменение личных данных</Button>
-							<Button onClick={() => push('/profile/password')}>Измение пароля</Button>
-						</CardActionButtons>
-							
-						
-					</div>
-
-				</Card>
+				<Profile />
 
 			</div>
 		)
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		username: state.user.username
-	}
-}
-
-export default connect(mapStateToProps, { push })(Initialpage)
+export default Initialpage

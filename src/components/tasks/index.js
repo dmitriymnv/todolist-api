@@ -9,7 +9,7 @@ import {
 	successTask, 
 	editTask
 	} from '../../ac/tasks';
-import { loadingMemberFamily } from '../../ac/family';
+import { loadingFamily } from '../../ac/family';
 import TableTasks from './table/TableTasks';
 import TaskTitle from './TaskTitle';
 import TaskDialog from './TaskDialog';
@@ -20,7 +20,7 @@ export class Tasks extends Component {
 		addTask: PropTypes.func.isRequired,
 		successTask: PropTypes.func.isRequired,
 		editTask: PropTypes.func.isRequired,
-		loadingMemberFamily: PropTypes.func.isRequired,
+		loadingFamily: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -39,8 +39,6 @@ export class Tasks extends Component {
 
 	componentDidMount() {
 		const { loaded, activeTab } = this.state;
-		const { loadingMemberFamily } = this.props;
-		loadingMemberFamily();
 		this.loadingTasks(loaded, activeTab, true);
 	}
 
@@ -201,5 +199,5 @@ export class Tasks extends Component {
 
 export default connect(null, {
 	 loadingTasks, addTask, successTask, 
-	 editTask, loadingMemberFamily
+	 editTask, loadingFamily
 })(Tasks)

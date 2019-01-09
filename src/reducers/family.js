@@ -1,12 +1,15 @@
-import { ADD_MEMBER_FAMILY } from '../constans';
+import { USER_LOADED_FAMILY } from '../constans';
 
-const initialState = []
+const initialState = {
+	admin: false,
+	list: []
+}
 
 export default (state = initialState, { type, payload }) => {
 	switch (type) {
 
-	case ADD_MEMBER_FAMILY:
-		return [ ...payload, ...state ]
+	case USER_LOADED_FAMILY:
+		return { ...state, ...payload }
 
 	default:
 		return state
