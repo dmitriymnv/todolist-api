@@ -7,7 +7,7 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { family } = req.currentUser;
-	res.json({ admin: false, list: ['dmitriymnv', 'vanya_legyn']});
+	res.json( family );
 });
 
 module.exports = router;

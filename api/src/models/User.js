@@ -26,7 +26,10 @@ const schema = new mongoose.Schema(
 		},
 		confirmationToken: { type: String },
 		tags: { type: Array, default: [] },
-		family: { type: Array, default: [] }
+		family: { 
+			admin: { type: Boolean, default: false },
+			list: { type: Array, default: [] }
+		}
 	},
 	
   { timestamps: true }

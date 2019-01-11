@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from '@rmwc/button';
 import { CardActionButtons } from '@rmwc/card';
 import { ListDivider } from '@rmwc/list';
 import { Typography } from '@rmwc/typography';
 
-const FamilyNew = () => {
+const FamilyNew = ({ dialogOpen }) => {
 	return (
 		<>
 			<Typography className="card__item__title" use="subtitle1" tag="div">
@@ -20,12 +21,16 @@ const FamilyNew = () => {
 					
 				
 				<CardActionButtons className="card__item__buttons">
-					<Button onClick={() => push('/profile/private-date')}>Создать группу</Button>
+					<Button onClick={dialogOpen}>Создать группу</Button>
 				</CardActionButtons>
 					
 			</div>
 		</>
 	)
+}
+
+FamilyNew.propTypes = {
+	dialogOpen: PropTypes.func.isRequired,
 }
 
 export default FamilyNew

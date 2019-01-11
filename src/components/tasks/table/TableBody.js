@@ -63,7 +63,8 @@ export class TableBody extends Component {
 							/>
 						)})
 						:
-					activeTab == 0 && <tr><td>У вас ещё нет личных задач!</td></tr>
+					activeTab == 0 ? 
+						<tr><td>У вас ещё нет личных задач!</td></tr> : <tr><td>У вас ещё нет семейных задач!</td></tr>
 				}
 
 				{this.state.loading &&

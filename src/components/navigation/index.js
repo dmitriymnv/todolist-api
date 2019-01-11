@@ -40,7 +40,9 @@ export class TopNavigation extends Component {
 					open={this.state.dialogLoginOpen}
 					onClose={() => this.setState({ dialogLoginOpen: false })}
 				>   
-					<DialogContent><LoginForm submit={this.submit}/></DialogContent>
+					<DialogContent>
+						<LoginForm submit={this.submit}/>
+					</DialogContent>
 				</Dialog>
 			</Suspense>
 		)

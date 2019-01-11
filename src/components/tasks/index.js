@@ -163,12 +163,8 @@ export class Tasks extends Component {
 
 	render() {
 		const { 
-			tasks,
-			loaded,
-			tags, 
-			dialog, 
-			loading, 
-			activeTab 
+			tasks, loaded, tags, 
+			dialog, loading, activeTab 
 		} = this.state;
 		return (
 			<div className="flex-container">
