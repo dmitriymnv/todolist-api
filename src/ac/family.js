@@ -18,9 +18,9 @@ export const loadingFamily = () => (dispatch) => {
 	)
 }
 
-export const addNewFamilyMembers = (data) => (dispatch) => {
+export const addNewFamilyMembers = (family) => (dispatch) => {
 	return (
-		api(['/api/family/add', 'POST'], { data })
+		api(['/api/family/add', 'POST'], { family })
 			.then(members => dispatch(userAddMembersFamily(members)))
 	)
 }

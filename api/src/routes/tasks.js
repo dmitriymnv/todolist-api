@@ -1,4 +1,5 @@
 const express = require("express");
+
 const Task = require('../models/Task');
 const User = require('../models/User');
 const authenticate = require('../middlewares/authenticate');
@@ -42,7 +43,7 @@ router.post("/edit", (req, res) => {
 	const user = req.currentUser;
 	let i;
 
-	User.findOne({ email: user.email }, function(err, user){
+	User.findOne({ email: user.email }, (err, user) => {
 		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
 		
 		user.tasks.forEach(function (item, num) {

@@ -64,7 +64,13 @@ export class AddTaskForm extends Component {
 				<form className="form" onSubmit={this.onSubmit}>
 					<Typography use="headline5" tag="h1" className="form__heading">Добавление пользователей в группу</Typography>
 
-					{ParseError(errors.global)}
+					{
+						typeof errors.global == 'array' ?
+							errors.global.map((error, i) => {
+								ParseError(error)
+							}) : 
+							ParseError(errors.global)
+					}
 
 					<div className="form__item">
 						<Typography

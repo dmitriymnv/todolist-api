@@ -26,7 +26,8 @@ const schema = new mongoose.Schema(
 		},
 		confirmationToken: { type: String },
 		tags: { type: Array, default: [] },
-		family: { 
+		family: {
+			invite: { type: String },
 			admin: { type: Boolean, default: false },
 			list: { type: Array, default: [] }
 		}
