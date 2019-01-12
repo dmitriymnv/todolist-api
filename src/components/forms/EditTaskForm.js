@@ -43,8 +43,7 @@ export class EditTaskForm extends Component {
 	}
 
 	render() {
-		const { data, loading, tags, errors } = this.state;
-		console.log(this.props);
+		const { data, loading, tags } = this.state;
 		
 		return (
 			<Loader loading={loading}>

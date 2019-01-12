@@ -56,7 +56,7 @@ export class Tasks extends Component {
 			tasks: { 
 				...tasks, [activeTab]: [ ...newTasks ]
 			}
-		 });
+		});
 
 		this.props.successTask({ id, activeTab })
 	}
@@ -71,48 +71,59 @@ export class Tasks extends Component {
 		});
 	}
 
-	onSubmit = (task, purpose) => {
+	onSubmit = (modifiedTask, purpose) => {
 		const { tasks, tags, activeTab, total, loaded } = this.state;
-		this.setState({
-			loading: true,
-			dialog: { open: false },
-			tags: 
-				tags.indexOf(task.tag) == -1 ? 
-					[task.tag, ...tags] : tags
-		});
+		const { addTask, editTask } = this.props;
+		
+		this.setState({ loading: true });
 		
 		switch (purpose) {
 			case 'add':
-				this.props.addTask({ task, activeTab })
+				addTask({ task: modifiedTask, activeTab })
 					.then(({ task }) => {
 						this.setState({
 							tasks: { 
 								...tasks, [activeTab]: [ task, ...tasks[activeTab] ]
 							},
 							total: total + 1,
-							loaded: loaded + 1,
-							loading: false
+							loaded: loaded + 1
 						})
 					})
+					
 				break;
 
 			case 'edit':
-				this.props.editTask({ task, activeTab })
-					.then(({ i }) => {
-						const findTask = this.state.tasks[i];
-						this.setState({
-							...this.state.tasks [
-								findTask.title = task.title,
-								findTask.tag = task.tag,
-								findTask.color = task.color
-							],
-							loading: false
-						});
-					})
-		
+				editTask({ task: modifiedTask, activeTab });
+
+				const newTasks = tasks[activeTab].map((oldTask) => {
+					if(oldTask._id == modifiedTask.id) {
+						oldTask.title = modifiedTask.title,
+						oldTask.tag = modifiedTask.tag,
+						oldTask.color = modifiedTask.color
+					}
+					return oldTask;
+				});
+
+				this.setState({ 
+					tasks: { 
+						...tasks, [activeTab]: [ ...newTasks ]
+					}
+				});
+
+				break;
+				
 			default:
 				break;
+
 		}
+
+		this.setState({ 
+			loading: false,
+			dialog: { open: false },
+			tags: 
+				tags.indexOf(editTask.tag) == -1 ? 
+					[editTask.tag, ...tags] : tags
+		})
 	}
 
 	loadingTasks = (loaded, activeTab, loadingTags = undefined, ajax = false) => {
@@ -164,7 +175,7 @@ export class Tasks extends Component {
 	render() {
 		const { 
 			tasks, loaded, tags, 
-			dialog, loading, activeTab 
+			dialog: { open, purpose, numberTask}, loading, activeTab 
 		} = this.state;
 		return (
 			<div className="flex-container">
@@ -183,10 +194,15 @@ export class Tasks extends Component {
 				/>
 
 				<TaskDialog 
-					dialog={dialog}
+					task={
+						purpose == 'edit' ?
+						tasks[activeTab][numberTask] : 
+						undefined
+					}
+					dialogOpen={open}
 					tags={tags}
 					onSubmit={this.onSubmit}
-					onClose={ () => this.setState({ dialog: { open: false }}) }
+					onClose={() => this.setState({ dialog: { open: false }})}
 				/>
 			</div>
 		)

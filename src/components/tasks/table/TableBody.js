@@ -48,7 +48,7 @@ export class TableBody extends Component {
 	}
 
 	render() {
-		const { tasks, activeTab, successTask } = this.props;
+		const { tasks, activeTab, successTask, dialogOpen } = this.props;
 		return (
 			<tbody className="task-table__body" onScroll={e => this.onScrollList(e)}>
 				{Object.keys(tasks[activeTab]).length > 0 ? 

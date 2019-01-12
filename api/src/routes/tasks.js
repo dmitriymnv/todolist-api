@@ -39,25 +39,24 @@ router.post("/add", (req, res) => {
 });
 
 router.post("/edit", (req, res) => {
-	const { data } = req.body;
+	const { data: { task, activeTab } } = req.body;
 	const user = req.currentUser;
 	let i;
 
 	User.findOne({ email: user.email }, (err, user) => {
 		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
 		
-		user.tasks.forEach(function (item, num) {
-			if(item._id == data.id) {
-				item.title = data.title;
-				item.tag = data.tag;
-				item.color = data.color;
+		user.tasks[activeTab].forEach(function (item, num) {
+			if(item._id == task.id) {
+				item.title = task.title;
+				item.tag = task.tag;
+				item.color = task.color;
 				i = num;
 				return;
 			}
 		});
 
-		user.addTag(data.tag);
-		user.tasks.success = 'changed';
+		user.addTag(task.tag);
 		user.markModified('tasks');
 		user.save()
 			.then(() => res.json({ i }))
