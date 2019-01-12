@@ -27,6 +27,7 @@ export class Family extends Component {
 	submit = (data) => {
 		return (
 			this.props.addNewFamilyMembers(data)
+				.then(() => this.setState({ dialogOpen: false }))
 		)
 	}
 
@@ -47,10 +48,12 @@ export class Family extends Component {
 				onClose={() => this.setState({ dialogOpen: false })}
 			>   
 				<DialogContent>
-					<AddFamilyForm
-						dialogOpen={dialogOpen}
-						submit={this.submit}
-					/>
+					{dialogOpen &&
+						<AddFamilyForm
+							dialogOpen={dialogOpen}
+							submit={this.submit}
+						/>
+					}
 				</DialogContent>
 			</Dialog>
 		</Card>

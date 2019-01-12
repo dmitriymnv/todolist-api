@@ -42,7 +42,7 @@ router.post("/add", (req, res) => {
 	setTimeout(() => {
 
 		if(Object.keys(errors).length === 0) {
-			res.json();
+			res.json({});
 		} else {
 			res.status(400).json({ errors: { global: errors } })
 		}

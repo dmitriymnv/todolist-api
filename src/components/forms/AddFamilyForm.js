@@ -65,10 +65,12 @@ export class AddTaskForm extends Component {
 					<Typography use="headline5" tag="h1" className="form__heading">Добавление пользователей в группу</Typography>
 
 					{
-						typeof errors.global == 'array' ?
+						typeof errors.global == 'object' ?
 							errors.global.map((error, i) => {
-								ParseError(error)
-							}) : 
+								return (
+									ParseError(error, i)
+								)
+							}) :
 							ParseError(errors.global)
 					}
 

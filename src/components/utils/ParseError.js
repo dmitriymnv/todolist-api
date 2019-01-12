@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ParseError = error => {
+const ParseError = (error, i = undefined) => {
 	if(error) {
 		return (
-			<div className="error">{error}</div>
+			<div key={i} className="error">{error}</div>
 		)
 	}
 	
