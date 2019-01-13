@@ -7,13 +7,21 @@ const schema = new mongoose.Schema(
 	{
 		admin: { type: String, required: true },
 		listUsers: { type: Array, default: [] },
+		inviteUsers: { type: Array, default: [] },
 		tasks: { type: Array, default: [] }
 	},
   { timestamps: true }
 );
 
 schema.methods.addUser = function addUser(username) {
-	this.listUsers.push(username);
+	const type = typeof username;
+	if(type == 'string') {
+		this.listUsers.push(username);
+	} else if(type == 'array') {
+		username.forEach(username => {
+			this.listUsers.push(username);
+		});
+	}
 };
 
 module.exports = mongoose.model("Family", schema);

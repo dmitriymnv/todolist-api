@@ -15,10 +15,7 @@ import Loader from '../../loader';
 export class Family extends Component {
 	static propTypes = {
 		family: PropTypes.shape({
-			admin: PropTypes.bool.isRequired,
-			list: PropTypes.arrayOf(
-				PropTypes.string.isRequired,
-			).isRequired,
+			admin: PropTypes.string,
 			invite: PropTypes.string,
 		}).isRequired,
 		addNewFamilyMembers: PropTypes.func.isRequired,
@@ -37,7 +34,7 @@ export class Family extends Component {
 	}
 
 	render() {
-		const { family: {admin, list, invite} } = this.props;
+		const { family: { adminFamily, invite } } = this.props;
 		const { dialogOpen, loading } = this.state;
 		return (
 			<Loader loading={loading}>
@@ -49,13 +46,14 @@ export class Family extends Component {
 
 					<ListDivider />
 
-					{list.length == 0 ?
+					{adminFamily ?
+						<FamilyExist />
+						 :
 						<FamilyNew
 							dialogOpen={() => this.setState({ dialogOpen: true })}
 							loaderPage={(loading) => this.setState({ loading })}
 							invite={invite}
-						/> :
-					<FamilyExist />
+						/>
 					}
 
 					<Dialog

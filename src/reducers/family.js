@@ -1,8 +1,7 @@
 import { USER_LOADED_FAMILY } from '../constans';
 
 const initialState = {
-	admin: false,
-	list: []
+	
 }
 
 export default (state = initialState, { type, payload }) => {

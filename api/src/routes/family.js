@@ -16,93 +16,87 @@ router.post("/add", (req, res) => {
 	const { family, username: currentUsername } = req.currentUser;
 	const { list } = req.body;
 	let errors = [];
+	let inviteUsers = [];
 
-	if(family.adminFamily == currentUsername) {
+	list.forEach(username => {
 		
-		Family.findOne({ admin: currentUsername }, (err, dbFamily) => {
-
-			list.forEach(username => {
+		User.findOne({ username }, (err, user) => {
 				
-				User.findOne({ username }, (err, user) => {
-				
-					if(user === null) {
-						errors.push(`Пользователь ${username} не найден`);
-						return;
-					}
-	
-					if(user.family.invite) {
-						errors.push(`В данный момент нельзя пригласить ${username} в соместную группу`);
-						return;
-					}
-	
-					user.addInviteFamily(currentUsername);
-					user.save();
+			if(user === null) {
+				errors.push(`Пользователь ${username} не найден`);
+				return;
+			}
 
-					dbFamily.addUser(user);
-					
-				})
+			if(user.family.adminFamily || user.family.invite) {
+				errors.push(`В данный момент нельзя пригласить ${username} в соместную группу`);
+				return;
+			}
 
-			});
+			user.addInviteFamily(currentUsername);
+			user.save();
 
-			setTimeout(() => {
-				user.markModified('listUsers');
-				user.save()
-					.then(() => res.json({ errors }))
-					.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
-			}, 1500);
-
-		})
-
-	} else if(family.adminFamily == '') {
-		let createFamily;
-
-		list.forEach(username => {
-			
-			User.findOne({ username }, (err, user) => {
-				
-				if(user === null) {
-					errors.push(`Пользователь ${username} не найден`);
-					return;
-				}
-
-				if(user.family.invite) {
-					errors.push(`В данный момент нельзя пригласить ${username} в соместную группу`);
-					return;
-				}
-
-				if(!createFamily) {
-					createFamily = new Family({ admin: currentUsername });
-				}
-
-				user.addInviteFamily(currentUsername);
-				user.save();
-
-				createFamily.addUser(user.username);
-				
-			})
+			inviteUsers.push(username);
 
 		});
 
-		setTimeout(() => {
-			if(createFamily) {
-				createFamily.markModified('listUsers');
-				createFamily.save()
-			};
+	});
 
-			res.json({ errors })
-		}, 1500);
+	Family.findOne({ admin: currentUsername }, (err, family) => {
+		if(family) {
+			family.addUser(inviteUsers);
+		}
+	})
 
-	}
+	setTimeout(() => {
+		if(Object.keys(errors).length == 0) {
+			res.json({})
+		} else {
+			res.status(404).json({ errors: { global: errors } })
+		}
+	}, 2000);
 
 });
 
-// router.post("/joinfamily", (req, res) => {
-// 	const user = req.currentUser;
-// 	const { entry } = req.body;
+router.post("/joinfamily", (req, res) => {
+	const user = req.currentUser;
+	const { family: { invite }, username } = user;
+	const { entry } = req.body;
 	
-// 	Family.create()
-// 		.then(family => family.save())
+	if(entry) {
+		user.addFamilyAdmin(invite);
+
+		Family.findOne({ admin: invite }, (err, family) => {
+
+			if(family) {
+				family.addUser(username);
+			} else {
+				const newFamily = new Family({ admin: invite })
+				newFamily.addUser(username);
+				newFamily.save();
+
+				User.findOne({ username: invite }, (err, user) => {
+					if(user) {
+						user.addFamilyAdmin(invite);
+						user.markModified('family');
+						user.save()
+					}
+				})
+
+			}
+		})
+	} else {
+		user.addInviteFamily('');
+		user.addFamilyAdmin('');
+	}
+
+	user.markModified('family');
+	user.save()
+		.then(() => {
+			setTimeout(() => {
+				res.json(user.family);
+			}, 1500);
+		})
 	
-// });
+});
 
 module.exports = router;

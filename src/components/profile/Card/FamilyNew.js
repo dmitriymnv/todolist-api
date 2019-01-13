@@ -12,7 +12,8 @@ import ParseError from '../../utils/ParseError';
 class FamilyNew extends Component {
 
 	state = {
-		errors: {}
+		errors: {},
+		
 	}
 
 	inviteFamily = (res) => {
