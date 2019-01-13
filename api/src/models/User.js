@@ -27,9 +27,8 @@ const schema = new mongoose.Schema(
 		confirmationToken: { type: String },
 		tags: { type: Array, default: [] },
 		family: {
-			invite: { type: String },
-			admin: { type: Boolean, default: false },
-			list: { type: Array, default: [] }
+			adminFamily: { type: String, default: '' },
+			invite: { type: String, default: '' }
 		}
 	},
 	
@@ -38,6 +37,10 @@ const schema = new mongoose.Schema(
 
 schema.methods.isValidPassword = function isValidPassword(password) {
   return bcrypt.compareSync(password, this.passwordHash);
+};
+
+schema.methods.addFamilyAdmin = function addFamilyAdmin(username) {
+	this.family.adminFamily = username;
 };
 
 schema.methods.addTask = function addTask(task, activeTab) {
@@ -49,8 +52,8 @@ schema.methods.addTag = function addTag(tag) {
 	if(tag.length > 0 && tags.indexOf(tag) == -1) tags.unshift(tag);
 };
 
-schema.methods.addFamilyMember = function addFamilyMember(username) {
-	this.family.push(username)
+schema.methods.addInviteFamily = function addInviteFamily(username) {
+	this.family.invite = username;
 };
 
 schema.methods.setPassword = function setPassword(password) {
