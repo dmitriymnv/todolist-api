@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card } from '@rmwc/card';
 import { Dialog, DialogContent } from '@rmwc/dialog';
+import { Typography } from '@rmwc/typography';
+import { ListDivider } from '@rmwc/list';
 
 const FamilyNew = lazy(() => import('./FamilyNew'));
 const FamilyExist = lazy(() => import('./FamilyExist'));
 const AddFamilyForm = lazy(() => import('../../forms/AddFamilyForm'));
 import { addNewFamilyMembers } from '../../../ac/family';
+import Loader from '../../loader';
 
 export class Family extends Component {
 	static propTypes = {
@@ -16,12 +19,14 @@ export class Family extends Component {
 			list: PropTypes.arrayOf(
 				PropTypes.string.isRequired,
 			).isRequired,
+			invite: PropTypes.string,
 		}).isRequired,
 		addNewFamilyMembers: PropTypes.func.isRequired,
 	}
 
 	state = {
-		dialogOpen: false
+		dialogOpen: false,
+		loading: false
 	}
 
 	submit = (data) => {
@@ -32,31 +37,42 @@ export class Family extends Component {
 	}
 
 	render() {
-		const { family: {admin, list} } = this.props;
-		const { dialogOpen } = this.state;
+		const { family: {admin, list, invite} } = this.props;
+		const { dialogOpen, loading } = this.state;
 		return (
-			<Card className="card__item card__item_family" outlined>
-				{list.length == 0 ?
-					<FamilyNew
-						dialogOpen={() => this.setState({ dialogOpen: true })}
-					/> :
-				 <FamilyExist />
-				}
+			<Loader loading={loading}>
+				<Card className="card__item card__item_family" outlined>
 
-			<Dialog
-				open={this.state.dialogOpen}
-				onClose={() => this.setState({ dialogOpen: false })}
-			>   
-				<DialogContent>
-					{dialogOpen &&
-						<AddFamilyForm
-							dialogOpen={dialogOpen}
-							submit={this.submit}
-						/>
+					<Typography className="card__item__title" use="subtitle1" tag="div">
+						Семейные задачи
+					</Typography>
+
+					<ListDivider />
+
+					{list.length == 0 ?
+						<FamilyNew
+							dialogOpen={() => this.setState({ dialogOpen: true })}
+							loaderPage={(loading) => this.setState({ loading })}
+							invite={invite}
+						/> :
+					<FamilyExist />
 					}
-				</DialogContent>
-			</Dialog>
-		</Card>
+
+					<Dialog
+						open={this.state.dialogOpen}
+						onClose={() => this.setState({ dialogOpen: false })}
+					>   
+						<DialogContent>
+							{dialogOpen &&
+								<AddFamilyForm
+									dialogOpen={dialogOpen}
+									submit={this.submit}
+								/>
+							}
+						</DialogContent>
+					</Dialog>
+				</Card>
+			</Loader>
 		)
 	}
 }
@@ -67,4 +83,6 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { addNewFamilyMembers })(Family)
+export default connect(mapStateToProps, {
+	addNewFamilyMembers
+})(Family)

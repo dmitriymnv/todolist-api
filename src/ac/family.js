@@ -23,3 +23,9 @@ export const addNewFamilyMembers = (family) => (dispatch) => {
 		api(['/api/family/add', 'POST'], { family })
 	)
 }
+
+export const responseJoinFamily = (entry) => (dispatch) => {
+	return (
+		api(['/api/family/joinfamily', 'POST'], { entry })
+	)
+}
