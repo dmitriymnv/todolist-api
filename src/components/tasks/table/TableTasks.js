@@ -28,8 +28,7 @@ class TableTasks extends Component {
 		} = this.props;
 		return (
 			<Loader opacity={0} loading={loading}>
-				{family && tasks[activeTab].length === 0 ?
-					<TaskAdding /> :
+				{family || tasks[activeTab].length > 0 ?
 					<table className="task-table">
 						<TableHead
 							family={family}
@@ -43,7 +42,8 @@ class TableTasks extends Component {
 							dialogOpen={dialogOpen}
 							onScrollList={onScrollList}
 						/>
-					</table>
+					</table> :
+					<TaskAdding />
 				}
 			</Loader>
 		)

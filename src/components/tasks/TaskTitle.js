@@ -7,12 +7,12 @@ import SVGplus from '../../other/img/plus.svg';
 const TaskTitle = ({ addTask }) => {
 	const date = new Date();
 	return (
-		<div className="tasks-page__title">
+		<div className="task-title tasks-page__task-title">
 			{`${date.toLocaleString('ru', {weekday: 'long'})} , ${date.getDate()}`}
 
 			<Fab
 				onClick={addTask}
-				className="tasks-page__title-button"
+				className="task-title__button"
 				icon={
 					<SVGplus width="30" height="30" />
 				} 
