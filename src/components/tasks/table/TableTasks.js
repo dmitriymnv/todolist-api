@@ -17,21 +17,22 @@ class TableTasks extends Component {
 		activeTab: PropTypes.number.isRequired,
 		onActivateTab: PropTypes.func.isRequired,
 		onScrollList: PropTypes.func.isRequired,
-		familyList: PropTypes.array.isRequired,
+		family: PropTypes.string,
 	}
 
 	render() {
 		const { 
 			tasks, successTask, dialogOpen, loading, 
 			activeTab, onActivateTab, onScrollList,
-			familyList
+			family
 		} = this.props;
 		return (
 			<Loader opacity={0} loading={loading}>
-				{familyList.length === 0 && tasks[activeTab].length === 0 ?
+				{family && tasks[activeTab].length === 0 ?
 					<TaskAdding /> :
 					<table className="task-table">
-						<TableHead 
+						<TableHead
+							family={family}
 							activeTab={activeTab}
 							onActivateTab={onActivateTab}
 						/>
@@ -51,7 +52,7 @@ class TableTasks extends Component {
 
 function mapStateToProps(state) {
 	return {
-		familyList: state.family.list
+		family: state.family.adminFamily
 	}
 }
 

@@ -1,20 +1,20 @@
 const express = require("express");
+
 const User = require('../models/User');
 const Family = require('../models/Family');
 const authenticate = require('../middlewares/authenticate');
-const parseErrors = require('../utils/ParseError');
 
 const router = express.Router();
 router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { family } = req.currentUser;
-	res.json( family );
+	res.json(family);
 });
 
 router.post("/add", (req, res) => {
-	const { family, username: currentUsername } = req.currentUser;
-	const { list } = req.body;
+	const { username: currentUsername } = req.currentUser;
+	const list = req.body;
 	let errors = [];
 	let inviteUsers = [];
 
@@ -60,7 +60,7 @@ router.post("/add", (req, res) => {
 router.post("/joinfamily", (req, res) => {
 	const user = req.currentUser;
 	const { family: { invite }, username } = user;
-	const { entry } = req.body;
+	const entry = req.body;
 	
 	if(entry) {
 		user.addFamilyAdmin(invite);

@@ -10,7 +10,7 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { tasks, tags } = req.currentUser;
-	const { loaded, activeTab, loadingTags } = req.body.data;
+	const { loaded, activeTab, loadingTags } = req.body;
 	const needTasks = tasks[activeTab].slice(loaded, loaded + 15);
 
 	res.status(200).json({ 
@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-	const { task, activeTab } = req.body.data;
+	const { task, activeTab } = req.body;
 	const user = req.currentUser;
 
 	Task.create({ 
@@ -39,8 +39,9 @@ router.post("/add", (req, res) => {
 });
 
 router.post("/edit", (req, res) => {
-	const { data: { task, activeTab } } = req.body;
+	const { task, activeTab } = req.body;
 	const user = req.currentUser;
+
 	let i;
 
 	User.findOne({ email: user.email }, (err, user) => {
@@ -65,9 +66,8 @@ router.post("/edit", (req, res) => {
 });
 
 router.post("/success", (req, res) => {
-	const { id, activeTab } = req.body.data;
+	const { id, activeTab } = req.body;
 	const user = req.currentUser;
-
 
 	User.findOne({ email: user.email }, function(err, user){
 		if(err) res.status(200).json({ errors: parseErrors(err.errors) });

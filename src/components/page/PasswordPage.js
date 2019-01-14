@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import PasswordForm from '../forms/PasswordForm';
-import { setPassword } from '../../ac/auth';
+import { setPassword } from '../../ac/user';
 import { title } from '../../constans';
 
 export class PasswordPage extends Component {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import PrivateDateForm from '../forms/PrivateDateForm';
-import { setPrivateDate } from '../../ac/auth'
+import { setPrivateDate } from '../../ac/user';
 import { title } from '../../constans';
 
 export class PrivateDatePage extends Component {

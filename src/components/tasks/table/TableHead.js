@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { TabBar, Tab } from '@rmwc/tabs';
 
-const TableHead = ({ activeTab, onActivateTab, familyList }) => {
+const TableHead = ({ activeTab, onActivateTab, family }) => {
 	return (
 		<thead className="task-table__head">
-			{familyList &&
+			{family &&
 				<tr>
 					<th className="task-table__select-tab">
 						<TabBar
@@ -32,13 +31,7 @@ const TableHead = ({ activeTab, onActivateTab, familyList }) => {
 TableHead.propTypes = {
 	activeTab: PropTypes.number.isRequired,
 	onActivateTab: PropTypes.func.isRequired,
-	familyList: PropTypes.bool.isRequired,
+	family: PropTypes.string,
 }
 
-function mapStateToProps(state) {
-	return {
-		familyList: !!state.family.list[0]
-	}
-}
-
-export default connect(mapStateToProps)(TableHead)
+export default TableHead

@@ -1,16 +1,14 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
+
 const User = require("../models/User");
 
 const router = express.Router();
 
 router.post("/", (req, res) => {
-	const { data } = req.body;
+	const { email, password } = req.body;
 
-  User.findOne({ email: data.email }).then(user => {
-		console.log(user);
-		
-    if (user && user.isValidPassword(data.password)) {			
+  User.findOne({ email }).then(user => {
+    if (user && user.isValidPassword(password)) {			
       res.json({ user: user.toAuthJSON() });
     } else {
       res.status(400).json({ errors: { global: "Неправильный пароль или аккаунта не существует" } });
@@ -19,7 +17,7 @@ router.post("/", (req, res) => {
 });
 
 router.post("/confirmation", (req, res) => {
-	const { token } = req.body;
+	const token = req.body;
 
 	User.findOneAndUpdate(
 		{ confirmationToken: token, confirmed: false }, 

@@ -1,4 +1,5 @@
 const express = require("express");
+
 const User = require('../models/User');
 const parseErrors = require('../utils/ParseError');
 const { sendConfirmationEmail } = require('../mailer');

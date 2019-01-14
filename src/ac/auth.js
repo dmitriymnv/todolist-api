@@ -14,7 +14,7 @@ export const userLoggedOut = () => ({
 
 export const login = (data) => (dispatch) => {
 	return (
-		api(['/api/auth', 'POST'], { data }).then(({ user }) => {
+		api(['/api/auth', 'POST'], data).then(({ user }) => {
 			localStorage.setItem('todoJWT', user.token);
 			if(user.confirmed === false) localStorage.setItem('showConfirmationEmail', true);
 			dispatch(userLoggedIn(user));
@@ -29,32 +29,12 @@ export const logout = () => (dispatch) => {
 	dispatch(push('/'));
 }
 
-export const confirm = (token) => (dispatch) => {
+export const confirm = (token) => () => {
 	return (
-		api(['/api/auth/confirmation', 'POST'], { token }).then(({ user }) => {
+		api(['/api/auth/confirmation', 'POST'], token).then(({ user }) => {
 			localStorage.todoJWT = user.token;
 			localStorage.removeItem('showConfirmationEmail');
 			dispatch(userLoggedIn(user));
 		})
-	)
-}
-
-export const setPassword = (data) => (dispatch) => {
-	return (
-		api(['/api/profile/setPassword', 'POST'], { data })
-			.then(res => {
-				dispatch(push('/tasks', { alertText: res.text } ))
-			})
-	)
-}
-
-export const setPrivateDate = (data) => (dispatch) => {
-	return (
-		api(['/api/profile/setPrivateDate', 'POST'], { data })
-			.then(res => {
-				localStorage.setItem('todoJWT', res.user.token);
-				dispatch(userLoggedIn(res.user));
-				dispatch(push('/tasks', { alertText: res.text } ))
-			})
 	)
 }
