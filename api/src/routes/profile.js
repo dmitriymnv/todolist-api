@@ -29,7 +29,7 @@ router.post("/setPrivateDate", (req, res) => {
 	user.setPrivateDate(data)
 	user.save()
 		.then(() => res.json({ 
-			user: currentUser.toAuthJSON(), 
+			user: user.toAuthJSON(), 
 			text: 'Вы успешно изменили свои личные данные!'
 		}))
 		.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));

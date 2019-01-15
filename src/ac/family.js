@@ -26,7 +26,7 @@ export const addNewFamilyMembers = (list) => () => {
 
 export const responseJoinFamily = (entry) => (dispatch) => {
 	return (
-		api(['/api/family/joinfamily', 'POST'], entry)
+		api(['/api/family/joinfamily', 'POST'], { entry })
 			.then((res) => dispatch( userLoadedFamily(res) ))
 	)
 }

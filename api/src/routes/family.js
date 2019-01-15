@@ -8,8 +8,16 @@ const router = express.Router();
 router.use(authenticate);
 
 router.post("/", (req, res) => {
-	const { family } = req.currentUser;
-	res.json(family);
+	const { family: familyUser } = req.currentUser;
+	Family.findOne({ admin: familyUser.adminFamily }, (err, family) => {
+		res.json({
+			admin: family.admin,
+			inviteUsers: family.inviteUsers,
+			listUsers: family.listUsers,
+			admin: family.admin,
+			invite: familyUser.invite
+		})
+	})
 });
 
 router.post("/add", (req, res) => {
@@ -60,7 +68,7 @@ router.post("/add", (req, res) => {
 router.post("/joinfamily", (req, res) => {
 	const user = req.currentUser;
 	const { family: { invite }, username } = user;
-	const entry = req.body;
+	const { entry } = req.body;
 	
 	if(entry) {
 		user.addFamilyAdmin(invite);
