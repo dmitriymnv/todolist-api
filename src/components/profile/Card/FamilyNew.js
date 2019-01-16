@@ -28,11 +28,12 @@ class FamilyNew extends Component {
 	}
 
 	render() {
-		const { dialogOpen, invite } = this.props;
+		const { dialogOpen, invite = 'dmirti' } = this.props;
 		const { errors } = this.state;
 		return (
-			<>
-				<div className="card__item__body">
+			<div className="card__item__body">
+			
+				<div className="card__item__list">
 					<Typography use="headline6" tag="div">
 						Вы не состоите в семейной группе
 					</Typography>
@@ -46,7 +47,7 @@ class FamilyNew extends Component {
 				{invite &&
 					<>
 						<ListDivider />
-						<div className="card__item__alert card__alert">
+						<div className="card__item__list">
 
 							{ParseError(errors.inviteFamily)}
 
@@ -58,7 +59,7 @@ class FamilyNew extends Component {
 								Приглашение на вступление в группу от {invite}
 							</Typography>
 
-							<CardActionButtons className="card__item__buttons card__alert__buttons">
+							<CardActionButtons className="card__item__buttons item__buttons">
 								<Button onClick={() => this.inviteFamily(true)}>Вступить</Button>
 								<Button onClick={() => this.inviteFamily(false)}>Отклонить</Button>
 							</CardActionButtons>
@@ -66,7 +67,7 @@ class FamilyNew extends Component {
 					</>
 				}
 				
-			</>
+			</div>
 		)
 	}
 }

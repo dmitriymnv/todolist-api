@@ -19,17 +19,17 @@ const Personal = ({ username, push }) => {
 			<ListDivider />
 
 			<div className="card__item__body">
-				<Typography use="headline6" tag="div">
-					Привет, {username}
-				</Typography>
+				<div className="card__item__list">
+					<Typography use="subtitle1" tag="div">
+						Привет, <strong>{username}</strong> 
+					</Typography>
+						
 					
-				
-				<CardActionButtons className="card__item__buttons">
-					<Button onClick={() => push('/profile/private-date')}>Изменение личных данных</Button>
-					<Button onClick={() => push('/profile/password')}>Измение пароля</Button>
-				</CardActionButtons>
-					
-				
+					<CardActionButtons className="card__item__buttons">
+						<Button onClick={() => push('/profile/private-date')}>Изменение личных данных</Button>
+						<Button onClick={() => push('/profile/password')}>Измение пароля</Button>
+					</CardActionButtons>
+				</div>
 			</div>
 
 		</Card>

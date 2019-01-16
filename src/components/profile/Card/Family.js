@@ -35,25 +35,28 @@ export class Family extends Component {
 	}
 
 	render() {
-		const { family: {admin, invite}, username } = this.props;
+		const { family, username } = this.props;
 		const { dialogOpen, loading } = this.state;
 		return (
 			<Loader loading={loading}>
 				<Card className="card__item card__item_family" outlined>
 
 					<Typography className="card__item__title" use="subtitle1" tag="div">
-						Семейные задачи ({admin == username ? 'Администратор' : 'Участник'})
+						Семейные задачи ({family.admin == username ? 'Администратор' : 'Участник'})
 					</Typography>
 
 					<ListDivider />
 
-					{admin ?
-						<FamilyExist />
+					{family.admin ?
+						<FamilyExist
+							family={family}
+							username={username}
+						/>
 						 :
 						<FamilyNew
 							dialogOpen={() => this.setState({ dialogOpen: true })}
 							loaderPage={(loading) => this.setState({ loading })}
-							invite={invite}
+							invite={family.invite}
 						/>
 					}
 

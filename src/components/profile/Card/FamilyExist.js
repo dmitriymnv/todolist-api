@@ -16,14 +16,18 @@ class FamilyExist extends Component {
 		}).isRequired,
 	}
 
+	state = {
+		isAdmin: this.props.family.admin == this.props.username
+	}
+
 	render() {
-		const { family: {admin, listUsers} } = this.props;
+		const { family } = this.props;
 		return (
 			<div className="card__item__body">
 
-				<div className="family-list card__item__list">
+				<div className="card__item__list">
+
 					<Typography
-						className="family-list__title"
 						use="subtitle1"
 						tag="div"
 					>
@@ -31,13 +35,10 @@ class FamilyExist extends Component {
 					</Typography>
 
 					<div className="family-list__body">
-						<ListItem>{admin}</ListItem>
-					</div>	
-				</div>
+						<ListItem>{family.admin}</ListItem>
+					</div>
 
-				<div className="family-list card__item__list">
 					<Typography
-						className="family-list__title"
 						use="subtitle1"
 						tag="div"
 					>
@@ -45,11 +46,11 @@ class FamilyExist extends Component {
 					</Typography>
 
 					<div className="family-list__body">
-						{listUsers.map((username, i) => {
+						{family.listUsers.map((username, i) => {
 							return <ListItem key={i}>{username}</ListItem>
 						})}
-					</div>	
-
+					</div>
+						
 				</div>
 
 			</div>
@@ -63,4 +64,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(FamilyExist)
+export default connect()(FamilyExist)
