@@ -1,14 +1,16 @@
 import { push } from "connected-react-router";
 
 import api from './api';
+import decode from 'jwt-decode';
 import { userLoggedIn } from './auth';
 
 export const signup = (data) => (dispatch) => {
 	return (
-		api(['/api/user', 'POST'], { data }).then(({ user }) => {
-			localStorage.todoJWT = user.token;
+		api(['/api/user', 'POST'], { data }).then(({ token }) => {
+			const payload = decode(token);
+			localStorage.setItem('todoJWT', token);
 			localStorage.showConfirmationEmail = true;
-			dispatch(userLoggedIn(user));
+			dispatch(userLoggedIn(payload));
 			dispatch(push('/tasks'));
 		})
 	)
@@ -27,8 +29,9 @@ export const setPrivateDate = (data) => (dispatch) => {
 	return (
 		api(['/api/profile/setPrivateDate', 'POST'], data)
 			.then(res => {
-				localStorage.setItem('todoJWT', res.user.token);
-				dispatch(userLoggedIn(res.user));
+				const payload = decode(res.token);
+				localStorage.setItem('todoJWT', res.token);
+				dispatch(userLoggedIn(payload));
 				dispatch(push('/tasks', { alertText: res.text } ))
 			})
 	)

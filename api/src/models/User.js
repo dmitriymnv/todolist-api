@@ -27,7 +27,7 @@ const schema = new mongoose.Schema(
 		confirmationToken: { type: String },
 		tags: { type: Array, default: [] },
 		family: {
-			adminFamily: { type: String, default: '' },
+			admin: { type: String, default: '' },
 			invite: { type: String, default: '' }
 		}
 	},
@@ -40,7 +40,7 @@ schema.methods.isValidPassword = function isValidPassword(password) {
 };
 
 schema.methods.addFamilyAdmin = function addFamilyAdmin(username) {
-	this.family.adminFamily = username;
+	this.family.admin = username;
 };
 
 schema.methods.addTask = function addTask(task, activeTab) {
@@ -86,12 +86,15 @@ schema.methods.fieldCheck = function fieldCheck(field) {
 }
 
 schema.methods.toAuthJSON = function toAuthJSON() {
-  return {
-    email: this.email,
-		username: this.username,
-		confirmed: this.fieldCheck(this.confirmed),
-    token: this.generateJWT()
-  };
+	return jwt.sign(
+    {
+			email: this.email,
+			username: this.username,
+			confirmed: this.fieldCheck(this.confirmed),
+			family: this.family
+    },
+		process.env.JWT_SECRET
+  );
 };
 
 schema.methods.generateResetPasswordLink = function generateResetPasswordLink() {

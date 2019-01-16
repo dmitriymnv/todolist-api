@@ -21,7 +21,7 @@ QuestRoute.propTypes = {
 
 function mapStateToProps(state) {
 	return {
-		auth: !!state.user.token
+		auth: !!state.user.username
 	}
 }
 

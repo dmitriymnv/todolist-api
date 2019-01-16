@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Typography } from '@rmwc/typography';
-import { ListDivider } from '@rmwc/list';
+// import { ListDivider } from '@rmwc/list';
 import { ListItem } from '@rmwc/list';
+import { Dialog, DialogContent } from '@rmwc/dialog';
+
+import EditMemberFamily from '../../forms/EditMemberFamily';
 
 class FamilyExist extends Component {
 
@@ -17,11 +20,24 @@ class FamilyExist extends Component {
 	}
 
 	state = {
-		isAdmin: this.props.family.admin == this.props.username
+		dialog: {
+			open: false,
+			purpose: undefined
+		}
+	}
+
+	clickMember = (e) => {
+		this.setState({
+			dialog: {
+				open: true,
+				purpose: e.target.textContent
+			}
+		})
 	}
 
 	render() {
 		const { family } = this.props;
+		const { dialog: {open, purpose} } = this.state;
 		return (
 			<div className="card__item__body">
 
@@ -34,9 +50,7 @@ class FamilyExist extends Component {
 						Администратор группы:
 					</Typography>
 
-					<div className="family-list__body">
-						<ListItem>{family.admin}</ListItem>
-					</div>
+					<ListItem>{family.admin}</ListItem>
 
 					<Typography
 						use="subtitle1"
@@ -45,13 +59,27 @@ class FamilyExist extends Component {
 						Участники группы:
 					</Typography>
 
-					<div className="family-list__body">
-						{family.listUsers.map((username, i) => {
-							return <ListItem key={i}>{username}</ListItem>
-						})}
-					</div>
+					{family.listUsers.map((username, i) => {
+						return (
+							<ListItem
+							 key={i}
+							 onClick={this.clickMember}
+							>
+								{username}
+							</ListItem>
+						)
+					})}
 						
 				</div>
+
+				<Dialog
+					open={open}
+					onClose={() => this.setState({ dialog: { open: false } })}
+				>   
+					<DialogContent>
+						<EditMemberFamily user={purpose} />
+					</DialogContent>
+				</Dialog>
 
 			</div>
 		)

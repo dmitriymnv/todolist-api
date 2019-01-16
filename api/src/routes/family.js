@@ -9,15 +9,23 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { family: familyUser } = req.currentUser;
-	Family.findOne({ admin: familyUser.adminFamily }, (err, family) => {
-		res.json({
-			admin: family.admin,
-			inviteUsers: family.inviteUsers,
-			listUsers: family.listUsers,
-			admin: family.admin,
-			invite: familyUser.invite
+
+	if(!familyUser.admin && familyUser.invite) {
+		res.json({ invite: familyUser.invite })
+	} else if(familyUser.admin) {
+		Family.findOne({ admin: familyUser.admin }, (err, family) => {
+			res.json({
+				admin: family.admin,
+				inviteUsers: family.inviteUsers,
+				listUsers: family.listUsers,
+				admin: family.admin,
+				invite: familyUser.invite
+			})
 		})
-	})
+	} else {
+		res.json({})
+	}
+	
 });
 
 router.post("/add", (req, res) => {
@@ -51,7 +59,7 @@ router.post("/add", (req, res) => {
 
 	Family.findOne({ admin: currentUsername }, (err, family) => {
 		if(family) {
-			family.addUser(inviteUsers);
+			family.addInvite(inviteUsers);
 		}
 	})
 
@@ -69,6 +77,7 @@ router.post("/joinfamily", (req, res) => {
 	const user = req.currentUser;
 	const { family: { invite }, username } = user;
 	const { entry } = req.body;
+	let resFamily;
 	
 	if(entry) {
 		user.addFamilyAdmin(invite);
@@ -77,6 +86,8 @@ router.post("/joinfamily", (req, res) => {
 
 			if(family) {
 				family.addUser(username);
+				family.save();
+				resFamily = family;
 			} else {
 				const newFamily = new Family({ admin: invite })
 				newFamily.addUser(username);
@@ -90,6 +101,8 @@ router.post("/joinfamily", (req, res) => {
 					}
 				})
 
+				resFamily = newFamily;
+
 			}
 		})
 	} else {
@@ -101,7 +114,7 @@ router.post("/joinfamily", (req, res) => {
 	user.save()
 		.then(() => {
 			setTimeout(() => {
-				res.json(user.family);
+				res.json(resFamily ? resFamily : user.family);
 			}, 1500);
 		})
 	

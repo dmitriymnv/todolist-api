@@ -9,7 +9,7 @@ import { ListDivider } from '@rmwc/list';
 const FamilyNew = lazy(() => import('./FamilyNew'));
 const FamilyExist = lazy(() => import('./FamilyExist'));
 const AddFamilyForm = lazy(() => import('../../forms/AddFamilyForm'));
-import { addNewFamilyMembers } from '../../../ac/family';
+import { addNewFamilyMembers, loadingFamily } from '../../../ac/family';
 import Loader from '../../loader';
 
 export class Family extends Component {
@@ -27,6 +27,11 @@ export class Family extends Component {
 		loading: false
 	}
 
+	componentDidMount() {
+		const { loadingFamily } = this.props;
+		loadingFamily()
+	}
+
 	submit = (data) => {
 		return (
 			this.props.addNewFamilyMembers(data)
@@ -42,7 +47,7 @@ export class Family extends Component {
 				<Card className="card__item card__item_family" outlined>
 
 					<Typography className="card__item__title" use="subtitle1" tag="div">
-						Семейные задачи ({family.admin == username ? 'Администратор' : 'Участник'})
+						Семейные задачи {family.admin && (family.admin == username ? 'Администратор' : 'Участник')}
 					</Typography>
 
 					<ListDivider />
@@ -87,5 +92,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-	addNewFamilyMembers
+	addNewFamilyMembers, loadingFamily
 })(Family)

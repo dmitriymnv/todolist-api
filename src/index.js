@@ -15,11 +15,8 @@ const token = localStorage.getItem('todoJWT');
 
 if(token) {
 	const payload = decode(token);
-	const user = { 
-		token,
-		email: payload.email, 
-		username: payload.username, 
-		confirmed: payload.confirmed 
+	const user = {
+		...payload
 	};
 	store.dispatch(userLoggedIn(user));
 };

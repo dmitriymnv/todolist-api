@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router';
 
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../constans";
+import decode from 'jwt-decode';
 import api from './api';
 
 export const userLoggedIn = (user) => ({
@@ -14,10 +15,11 @@ export const userLoggedOut = () => ({
 
 export const login = (data) => (dispatch) => {
 	return (
-		api(['/api/auth', 'POST'], data).then(({ user }) => {
-			localStorage.setItem('todoJWT', user.token);
-			if(user.confirmed === false) localStorage.setItem('showConfirmationEmail', true);
-			dispatch(userLoggedIn(user));
+		api(['/api/auth', 'POST'], data).then(({ token }) => {
+			const payload = decode(token);
+			localStorage.setItem('todoJWT', token);
+			if(payload.confirmed === false) localStorage.setItem('showConfirmationEmail', true);
+			dispatch(userLoggedIn(payload));
 			dispatch(push('/tasks'));
 		})
 	)

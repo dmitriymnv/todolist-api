@@ -5,10 +5,12 @@ import thunk from 'redux-thunk';
 
 import createRootReducer from '../reducers';
 import history from './history';
+import family from './middlewares/family';
 
 const enhancer = applyMiddleware(
 	thunk,
-	routerMiddleware(history)
+	routerMiddleware(history),
+	family
 )
 
 export default createStore(

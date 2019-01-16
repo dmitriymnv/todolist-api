@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const uniqueValidator = require("mongoose-unique-validator");
 
+const MemberFamily = require('../models/MemberFamily');
+
 const schema = new mongoose.Schema(
 	{
 		admin: { type: String, required: true },
@@ -14,14 +16,11 @@ const schema = new mongoose.Schema(
 );
 
 schema.methods.addUser = function addUser(username) {
-	const type = typeof username;
-	if(type == 'string') {
-		this.listUsers.push(username);
-	} else if(type == 'array') {
-		username.forEach(username => {
-			this.listUsers.push(username);
-		});
-	}
+	this.listUsers.unshift(username);
+};
+
+schema.methods.addInvite = function addInvite(username) {
+	this.inviteUsers.unshift(username)
 };
 
 module.exports = mongoose.model("Family", schema);

@@ -9,7 +9,7 @@ router.post("/", (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (user && user.isValidPassword(password)) {			
-      res.json({ user: user.toAuthJSON() });
+      res.json({ token: user.toAuthJSON() });
     } else {
       res.status(400).json({ errors: { global: "Неправильный пароль или аккаунта не существует" } });
     }

@@ -28,7 +28,7 @@ class FamilyNew extends Component {
 	}
 
 	render() {
-		const { dialogOpen, invite = 'dmirti' } = this.props;
+		const { dialogOpen, invite } = this.props;
 		const { errors } = this.state;
 		return (
 			<div className="card__item__body">
