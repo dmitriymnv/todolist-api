@@ -2,7 +2,6 @@ import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Typography } from '@rmwc/typography';
-// import { ListDivider } from '@rmwc/list';
 import { ListItem } from '@rmwc/list';
 import { Dialog, DialogContent } from '@rmwc/dialog';
 
@@ -14,7 +13,11 @@ class FamilyExist extends Component {
 		family: PropTypes.shape({
 			admin: PropTypes.string.isRequired,
 			listUsers: PropTypes.arrayOf(
-				PropTypes.string.isRequired,
+				PropTypes.shape({
+					username: PropTypes.string.isRequired,
+					numberTasks: PropTypes.number.isRequired,
+					inviteDate: PropTypes.node.isRequired,
+				}).isRequired,
 			).isRequired,
 		}).isRequired,
 	}
@@ -36,7 +39,7 @@ class FamilyExist extends Component {
 	}
 
 	render() {
-		const { family } = this.props;
+		const { family: { admin, listUsers } } = this.props;
 		const { dialog: {open, purpose} } = this.state;
 		return (
 			<div className="card__item__body">
@@ -49,7 +52,7 @@ class FamilyExist extends Component {
 						Администратор группы:
 					</Typography>
 
-					<ListItem>{family.admin}</ListItem>
+					<ListItem>{admin}</ListItem>
 
 					<Typography
 						use="subtitle1"
@@ -58,13 +61,13 @@ class FamilyExist extends Component {
 						Участники группы:
 					</Typography>
 
-					{family.listUsers.map((username, i) => {
+					{listUsers.map((member, i) => {
 						return (
 							<ListItem
 							 key={i}
 							 onClick={this.clickMember}
 							>
-								{username}
+								{member.username}
 							</ListItem>
 						)
 					})}

@@ -9,16 +9,20 @@ const router = express.Router();
 router.use(authenticate);
 
 router.post("/", (req, res) => {
-	const { tasks, tags } = req.currentUser;
+	const { tasks, tags, family: {admin} } = req.currentUser;
 	const { loaded, activeTab, loadingTags } = req.body;
-	const needTasks = tasks[activeTab].slice(loaded, loaded + 15);
+	if(activeTab == 0) {
+		const needTasks = tasks.slice(loaded, loaded + 15);
+		res.status(200).json({ 
+			tasks: needTasks,
+			total: tasks.length,
+			loaded: needTasks.length,
+			tags: loadingTags ? tags : undefined
+		});
+	} else if(activeTab == 1) {
 
-	res.status(200).json({ 
-		tasks: needTasks,
-		total: tasks[activeTab].length,
-		loaded: needTasks.length,
-		tags: loadingTags ? tags : undefined
-	});
+	}
+	
 });
 
 router.post("/add", (req, res) => {

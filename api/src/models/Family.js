@@ -1,9 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const uniqueValidator = require("mongoose-unique-validator");
-
-const MemberFamily = require('../models/MemberFamily');
 
 const schema = new mongoose.Schema(
 	{
@@ -15,8 +10,8 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-schema.methods.addUser = function addUser(username) {
-	this.listUsers.unshift(username);
+schema.methods.addUser = function addUser(user) {
+	this.listUsers.unshift(user)
 };
 
 schema.methods.addInvite = function addInvite(username) {

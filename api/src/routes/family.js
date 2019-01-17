@@ -2,6 +2,7 @@ const express = require("express");
 
 const User = require('../models/User');
 const Family = require('../models/Family');
+const MemberFamily = require('../models/MemberFamily');
 const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
@@ -9,7 +10,6 @@ router.use(authenticate);
 
 router.post("/", (req, res) => {
 	const { family: familyUser } = req.currentUser;
-
 	if(!familyUser.admin && familyUser.invite) {
 		res.json({ invite: familyUser.invite })
 	} else if(familyUser.admin) {
@@ -85,16 +85,23 @@ router.post("/joinfamily", (req, res) => {
 		Family.findOne({ admin: invite }, (err, family) => {
 
 			if(family) {
-				family.addUser(username);
-				family.save();
+				MemberFamily.create({ username, inviteDate: new Date()})
+					.then((user) => {
+						family.addUser(user);
+						family.markModified('listUsers');
+						family.save();
+					})
 				resFamily = family;
 			} else {
 				const newFamily = new Family({ admin: invite })
-				newFamily.addUser(username);
-				newFamily.save();
-
+				MemberFamily.create({ username, inviteDate: new Date()})
+					.then((user) => {
+						newFamily.addUser(user)
+						newFamily.markModified('listUsers');
+						newFamily.save();
+					})
 				User.findOne({ username: invite }, (err, user) => {
-					if(user) {
+					if(user) {	
 						user.addFamilyAdmin(invite);
 						user.markModified('family');
 						user.save()

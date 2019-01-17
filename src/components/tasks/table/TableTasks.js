@@ -52,7 +52,7 @@ class TableTasks extends Component {
 
 function mapStateToProps(state) {
 	return {
-		family: state.family.adminFamily
+		family: state.family.admin
 	}
 }
 

@@ -20,10 +20,7 @@ const schema = new mongoose.Schema(
 		passwordHash: { type: String, required: true },
 		confirmed: { type: Boolean, default: false },
 		subNews: { type: Boolean, default: true },
-		tasks: { 
-			0: {type: Array, default: []},
-			1: {type: Array, default: []}
-		},
+		tasks: { type: Array, default: [] },
 		confirmationToken: { type: String },
 		tags: { type: Array, default: [] },
 		family: {
