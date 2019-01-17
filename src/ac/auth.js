@@ -4,9 +4,10 @@ import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../constans";
 
 import api from './api';
 
-export const userLoggedIn = (token) => ({
+export const userLoggedIn = (token, confirmed = true) => ({
 	type: USER_LOGGED_IN,
-	payload: token
+	payload: token,
+	confirmed
 })
 
 export const userLoggedOut = () => ({

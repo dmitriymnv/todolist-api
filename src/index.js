@@ -14,7 +14,7 @@ import { userLoggedIn } from './ac/auth';
 const token = localStorage.getItem('todoJWT');
 
 if(token) {
-	store.dispatch(userLoggedIn(token));
+	store.dispatch(userLoggedIn(token, false));
 };
 
 const renderDOM = (() => 
