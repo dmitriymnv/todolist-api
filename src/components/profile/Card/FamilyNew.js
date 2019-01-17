@@ -13,7 +13,6 @@ class FamilyNew extends Component {
 
 	state = {
 		errors: {},
-		
 	}
 
 	inviteFamily = (res) => {
@@ -66,7 +65,6 @@ class FamilyNew extends Component {
 						</div>
 					</>
 				}
-				
 			</div>
 		)
 	}

@@ -34,7 +34,7 @@ class ConfirmationPage extends Component {
 		const { loading, success } = this.state;
 		return (
 			<Loader loading={loading}>
-				{!loading && !success && <div>Ошибка, невалидный токен!</div>}
+				{!loading && !success ? <div>Ошибка, невалидный токен!</div> : <></>}
 			</Loader>
 		)
 	}

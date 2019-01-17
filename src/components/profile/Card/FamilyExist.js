@@ -42,7 +42,6 @@ class FamilyExist extends Component {
 			<div className="card__item__body">
 
 				<div className="card__item__list">
-
 					<Typography
 						use="subtitle1"
 						tag="div"
@@ -69,7 +68,6 @@ class FamilyExist extends Component {
 							</ListItem>
 						)
 					})}
-						
 				</div>
 
 				<Dialog

@@ -8,7 +8,7 @@ export default (store) => (next) => (action) => {
 	if(type == USER_LOGGED_IN) {
 		next({
 			type: USER_LOADED_FAMILY,
-			payload: payload.user.family
+			payload: payload.family
 		})
-	};
+	}
 }

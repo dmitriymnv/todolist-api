@@ -78,6 +78,7 @@ export class Family extends Component {
 							}
 						</DialogContent>
 					</Dialog>
+					
 				</Card>
 			</Loader>
 		)

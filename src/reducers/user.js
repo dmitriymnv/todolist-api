@@ -6,7 +6,7 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
 	switch (type) {
 		case USER_LOGGED_IN:
-			return { ...payload.user };
+			return { ...payload };
 		
 		case USER_LOGGED_OUT:
 			return { ...initialState };

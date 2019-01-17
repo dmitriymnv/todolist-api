@@ -6,10 +6,12 @@ import thunk from 'redux-thunk';
 import createRootReducer from '../reducers';
 import history from './history';
 import family from './middlewares/family';
+import token from './middlewares/token';
 
 const enhancer = applyMiddleware(
 	thunk,
 	routerMiddleware(history),
+	token,
 	family
 )
 

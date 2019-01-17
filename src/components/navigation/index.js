@@ -51,7 +51,7 @@ export class TopNavigation extends Component {
 	submit = (data) => {
 		return (
 			this.props.login(data)
-			.then(() => this.setState({ dialogLoginOpen: false }))
+				.then(() => this.setState({ dialogLoginOpen: false }))
 		)
 	}
 

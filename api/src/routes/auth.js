@@ -17,14 +17,14 @@ router.post("/", (req, res) => {
 });
 
 router.post("/confirmation", (req, res) => {
-	const token = req.body;
+	const { token } = req.body;
 
 	User.findOneAndUpdate(
 		{ confirmationToken: token, confirmed: false }, 
 		{ confirmationToken: "", confirmed: true }, 
 		{ new: true }
 	).then(user => 
-		user ? res.json({ user: user.toAuthJSON() }) : res.status(400).json({})
+		user ? res.json({ token: user.toAuthJSON() }) : res.status(400).json({})
 	)
 
 })
