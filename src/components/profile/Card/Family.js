@@ -47,7 +47,7 @@ export class Family extends Component {
 				<Card className="card__item card__item_family" outlined>
 
 					<Typography className="card__item__title" use="subtitle1" tag="div">
-						Семейные задачи {family.admin && (family.admin == username ? 'Администратор' : 'Участник')}
+						Семейные задачи {family.admin && family.admin == username ? '(Администратор)' : '(Участник)'}
 					</Typography>
 
 					<ListDivider />

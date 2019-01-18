@@ -95,24 +95,23 @@ router.post("/success", (req, res) => {
 	const { id, activeTab } = req.body;
 	const user = req.currentUser;
 
-	User.findOne({ email: user.email }, function(err, user){
-		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
-
-		user.tasks[activeTab].forEach(function (item) {
-			if(item._id == id) {
-				item.success = !item.success;
-				item.success ? 
-					item.dateCompletion = new Date() : item.dateCompletion = null
-				return;
-			}
-		});
-
-		user.tasks.success = 'changed';
+	if(activeTab == 0) {
+		user.successTask(id);
 		user.markModified('tasks');
 		user.save()
 			.then(() => res.json({ }))
 			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
- });
+	} else if(activeTab == 1) {
+		Family.findOne({ admin: user.family.admin }, (err, family) => {
+			if(family) {
+				family.successTask(id, user.username)
+				family.markModified('tasks');
+				family.save()
+					.then(() => res.json({ }))
+					.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+			}
+		})
+	}
 
 });
 

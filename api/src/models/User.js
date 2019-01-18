@@ -44,6 +44,16 @@ schema.methods.addTask = function addTask(task) {
 	this.tasks.unshift(task);
 };
 
+schema.methods.successTask = function addTask(id) {
+	this.tasks = this.tasks.map(task => {
+		if(task._id == id) {
+			task.success = !task.success;
+			task.dateCompletion = task.dateCompletion ? undefined : new Date();
+		}
+		return task;
+	})
+};
+
 schema.methods.addTag = function addTag(tag) {
 	let tags = this.tags;
 	if(tag.length > 0 && tags.indexOf(tag) == -1) tags.unshift(tag);

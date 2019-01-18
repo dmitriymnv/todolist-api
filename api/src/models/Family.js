@@ -29,4 +29,15 @@ schema.methods.addTask = function addInvite(task) {
 	})
 };
 
+schema.methods.successTask = function successTask(id, successAuthor) {
+	this.tasks = this.tasks.map(task => {
+		if(task._id == id) {
+			task.success = !task.success;
+			task.dateCompletion = task.dateCompletion ? undefined : new Date();
+			task.successAuthor = task.successAuthor ? '' : successAuthor;
+		}
+		return task;
+	})
+};
+
 module.exports = mongoose.model("Family", schema);

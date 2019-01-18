@@ -21,6 +21,7 @@ export class Tasks extends Component {
 		successTask: PropTypes.func.isRequired,
 		editTask: PropTypes.func.isRequired,
 		loadingFamily: PropTypes.func.isRequired,
+		username: PropTypes.string.isRequired,
 	}
 
 	state = {
@@ -44,14 +45,17 @@ export class Tasks extends Component {
 
 	successTask = (id) => {
 		const { tasks, activeTab } = this.state;
-		const newTasks = tasks[activeTab].map((task) => {
+		const newTasks = tasks[activeTab].map(task => {
 			if(task._id == id) {
 				task.success = !task.success;
-				task.dateCompletion ? null : new Date();
+				task.dateCompletion = task.dateCompletion ? undefined : new Date();
+				if(activeTab == 1) {
+					task.successAuthor = task.successAuthor ? undefined : this.props.username
+				};
 			}
-			return task
-		})
-		
+			return task;
+		});
+
 		this.setState({ 
 			tasks: { 
 				...tasks, [activeTab]: [ ...newTasks ]
@@ -209,7 +213,13 @@ export class Tasks extends Component {
 	}
 }
 
-export default connect(null, {
+function mapStateToProps(state) {
+	return {
+		username: state.user.username
+	}
+}
+
+export default connect(mapStateToProps, {
 	 loadingTasks, addTask, successTask, 
 	 editTask, loadingFamily
 })(Tasks)
