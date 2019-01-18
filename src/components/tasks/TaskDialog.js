@@ -5,21 +5,22 @@ import { Dialog, DialogContent } from '@rmwc/dialog';
 const AddTaskForm = lazy(() => import('../forms/AddTaskForm'));
 const EditTaskForm = lazy(() => import('../forms/EditTaskForm'));
 
-const TaskDialog = ({ task, dialogOpen, tags, onSubmit, onClose }) => {
+const TaskDialog = ({ task, dialog: { open, purpose }, tags, onSubmit, onClose }) => {
 	return (
 		<Dialog
-			open={dialogOpen}
+			open={open}
 			onClose={onClose}
 		>  
 			
 				<DialogContent>
-					{task ? 
+					{purpose === 'edit' && 
 						<EditTaskForm
 							task={task}
 							tags={tags}
 							submit={onSubmit} 
 						/>
-						 :
+					}
+					{purpose === 'add' &&
 						<AddTaskForm 
 							submit={onSubmit} 
 							tags={tags}
@@ -32,13 +33,16 @@ const TaskDialog = ({ task, dialogOpen, tags, onSubmit, onClose }) => {
 }
 
 TaskDialog.propTypes = {
-	// dialog: PropTypes.shape({
-	// 	open: PropTypes.bool.isRequired,
-	// 	purpose: PropTypes.string
-	// }).isRequired,
-	// tags: PropTypes.array.isRequired,
-	// onSubmit: PropTypes.func.isRequired,
-	// onClose: PropTypes.func.isRequired,
+	task: PropTypes.object,
+	dialog: PropTypes.shape({
+		open: PropTypes.bool.isRequired,
+		purpose: PropTypes.string,
+	}).isRequired,
+	tags: PropTypes.arrayOf(
+		PropTypes.string
+	).isRequired,
+	onSubmit: PropTypes.func.isRequired,
+	onClose: PropTypes.func.isRequired,
 }
 
 export default TaskDialog

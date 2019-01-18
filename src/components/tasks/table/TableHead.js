@@ -5,7 +5,7 @@ import { TabBar, Tab } from '@rmwc/tabs';
 const TableHead = ({ activeTab, onActivateTab, family }) => {
 	return (
 		<thead className="task-table__head">
-			{family &&
+			{family ?
 				<tr>
 					<th className="task-table__select-tab">
 						<TabBar
@@ -16,7 +16,7 @@ const TableHead = ({ activeTab, onActivateTab, family }) => {
 							<Tab>Семейные</Tab>
 						</TabBar>
 					</th>
-				</tr>
+				</tr> : null
 			}
 			<tr>
 				<th>Выполнение</th>

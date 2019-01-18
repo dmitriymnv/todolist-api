@@ -175,7 +175,7 @@ export class Tasks extends Component {
 	render() {
 		const { 
 			tasks, loaded, tags, 
-			dialog: { open, purpose, numberTask}, loading, activeTab 
+			dialog, loading, activeTab 
 		} = this.state;
 		return (
 			<div className="flex-container">
@@ -195,11 +195,11 @@ export class Tasks extends Component {
 
 				<TaskDialog 
 					task={
-						purpose == 'edit' ?
+						dialog.purpose == 'edit' ?
 						tasks[activeTab][numberTask] : 
 						undefined
 					}
-					dialogOpen={open}
+					dialog={dialog}
 					tags={tags}
 					onSubmit={this.onSubmit}
 					onClose={() => this.setState({ dialog: { open: false }})}

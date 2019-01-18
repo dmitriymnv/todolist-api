@@ -18,4 +18,15 @@ schema.methods.addInvite = function addInvite(username) {
 	this.inviteUsers.unshift(username)
 };
 
+schema.methods.addTask = function addInvite(task) {
+	this.tasks.unshift(task)
+
+	this.listUsers = this.listUsers.map(user => {
+		if(user.username == task.author) {
+			user.numberTasks = user.numberTasks + 1
+		}
+		return user;
+	})
+};
+
 module.exports = mongoose.model("Family", schema);

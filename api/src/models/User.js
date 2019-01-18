@@ -40,8 +40,8 @@ schema.methods.addFamilyAdmin = function addFamilyAdmin(username) {
 	this.family.admin = username;
 };
 
-schema.methods.addTask = function addTask(task, activeTab) {
-	this.tasks[activeTab].unshift(task);
+schema.methods.addTask = function addTask(task) {
+	this.tasks.unshift(task);
 };
 
 schema.methods.addTag = function addTag(tag) {
