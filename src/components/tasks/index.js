@@ -77,7 +77,7 @@ export class Tasks extends Component {
 
 	onSubmit = (modifiedTask, purpose) => {
 		const { tasks, tags, activeTab, total, loaded } = this.state;
-		const { addTask, editTask } = this.props;
+		const { addTask, editTask, username } = this.props;
 		
 		this.setState({ loading: true });
 		
@@ -103,7 +103,8 @@ export class Tasks extends Component {
 					if(oldTask._id == modifiedTask.id) {
 						oldTask.title = modifiedTask.title,
 						oldTask.tag = modifiedTask.tag,
-						oldTask.color = modifiedTask.color
+						oldTask.color = modifiedTask.color;
+						if(activeTab == 1) oldTask.editAuthor = username
 					}
 					return oldTask;
 				});
@@ -200,7 +201,7 @@ export class Tasks extends Component {
 				<TaskDialog 
 					task={
 						dialog.purpose == 'edit' ?
-						tasks[activeTab][numberTask] : 
+						tasks[activeTab][dialog.numberTask] : 
 						undefined
 					}
 					dialog={dialog}

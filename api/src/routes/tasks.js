@@ -15,6 +15,7 @@ router.post("/", (req, res) => {
 
 	let needTasks;
 	let lengthTasks;
+
 	if(activeTab == 0) {
 		needTasks = tasks.slice(loaded, loaded + 15);
 		lengthTasks = tasks.length;
@@ -70,25 +71,41 @@ router.post("/edit", (req, res) => {
 
 	let i;
 
-	User.findOne({ email: user.email }, (err, user) => {
-		if(err) res.status(200).json({ errors: parseErrors(err.errors) });
-		
-		user.tasks[activeTab].forEach(function (item, num) {
-			if(item._id == task.id) {
-				item.title = task.title;
-				item.tag = task.tag;
-				item.color = task.color;
-				i = num;
-				return;
+	let success;
+
+	if(activeTab == 0) {
+		user.editTask(task);
+		user.markModified('tasks');
+		user.save((error, success) => {
+			if(success) {
+				success = true;
+			} else {
+				success = false;
 			}
 		});
+	} else if(activeTab == 1) {
+		Family.findOne({ admin: user.family.admin }, (err, family) => {
+			if(family) {
+				family.editTask(task, user.username);
+				family.markModified('tasks');
+				family.save((error, success) => {
+					if(success) {
+						success = true;
+					} else {
+						success = false;
+					}
+				});
+			}
+		})
+	}
 
-		user.addTag(task.tag);
-		user.markModified('tasks');
-		user.save()
-			.then(() => res.json({ i }))
-			.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
- 	});
+	setTimeout(() => {
+		if(success) {
+			res.json({ })
+		} else {
+			res.status(400).json({ })
+		}
+	}, 1500);
 });
 
 router.post("/success", (req, res) => {

@@ -10,6 +10,18 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
+schema.methods.editTask = function editTask(editTask, editAuthor) {
+  this.tasks = this.tasks.map(task => {
+		if(task._id == editTask.id) {
+			task.title = editTask.title;
+			task.color = editTask.color;
+			task.tag = editTask.tag;
+			task.editAuthor = editAuthor;
+		}
+		return task;
+	})
+};
+
 schema.methods.addUser = function addUser(user) {
 	this.listUsers.unshift(user)
 };

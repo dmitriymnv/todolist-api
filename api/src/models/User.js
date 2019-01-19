@@ -32,6 +32,17 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
+schema.methods.editTask = function editTask(editTask) {
+  this.tasks = this.tasks.map(task => {
+		if(task._id == editTask.id) {
+			task.title = editTask.title;
+			task.color = editTask.color;
+			task.tag = editTask.tag;
+		}
+		return task;
+	})
+};
+
 schema.methods.isValidPassword = function isValidPassword(password) {
   return bcrypt.compareSync(password, this.passwordHash);
 };
