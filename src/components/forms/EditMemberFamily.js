@@ -11,8 +11,7 @@ import ParseError from '../utils/ParseError';
 
 export class AddTaskForm extends Component {
 	static propTypes = {
-		// dialogOpen: PropTypes.bool.isRequired,
-		// submit: PropTypes.func.isRequired
+		submit: PropTypes.func.isRequired
 	}
 
 	state = {

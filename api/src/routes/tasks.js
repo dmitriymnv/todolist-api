@@ -50,6 +50,7 @@ router.post("/add", (req, res) => {
 	}).then(task => {
 			if(activeTab == 0) {
 				currentUser.addTask(task);
+				currentUser.addTag(task.tag);
 				currentUser.save();
 			} else if(activeTab == 1) {
 				Family.findOne({ admin: currentUser.family.admin }, (err, family) => {
@@ -57,6 +58,9 @@ router.post("/add", (req, res) => {
 						family.addTask(task);
 						family.markModified('listUsers');
 						family.save();
+
+						currentUser.addTag(task.tag);
+						currentUser.save();
 					}
 				})
 			}
@@ -71,39 +75,27 @@ router.post("/edit", (req, res) => {
 
 	let i;
 
-	let success;
+	let reply;
 
 	if(activeTab == 0) {
 		user.editTask(task);
 		user.markModified('tasks');
-		user.save((error, success) => {
-			if(success) {
-				success = true;
-			} else {
-				success = false;
-			}
-		});
+		user.save((error) => reply = error);
 	} else if(activeTab == 1) {
 		Family.findOne({ admin: user.family.admin }, (err, family) => {
 			if(family) {
 				family.editTask(task, user.username);
 				family.markModified('tasks');
-				family.save((error, success) => {
-					if(success) {
-						success = true;
-					} else {
-						success = false;
-					}
-				});
+				family.save((error) => reply = error);
 			}
 		})
 	}
 
 	setTimeout(() => {
-		if(success) {
-			res.json({ })
-		} else {
+		if(reply) {
 			res.status(400).json({ })
+		} else {
+			res.json({ })
 		}
 	}, 1500);
 });

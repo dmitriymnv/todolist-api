@@ -75,7 +75,7 @@ export class Tasks extends Component {
 		});
 	}
 
-	onSubmit = (modifiedTask, purpose) => {
+	onSubmit = (task, purpose) => {
 		const { tasks, tags, activeTab, total, loaded } = this.state;
 		const { addTask, editTask, username } = this.props;
 		
@@ -83,7 +83,7 @@ export class Tasks extends Component {
 		
 		switch (purpose) {
 			case 'add':
-				addTask({ task: modifiedTask, activeTab })
+				addTask({ task, activeTab })
 					.then(({ task }) => {
 						this.setState({
 							tasks: { 
@@ -96,17 +96,17 @@ export class Tasks extends Component {
 					
 				break;
 
-			case 'edit':
-				editTask({ task: modifiedTask, activeTab });
+			case 'edit':	
+				editTask({ task, activeTab });
 
-				const newTasks = tasks[activeTab].map((oldTask) => {
-					if(oldTask._id == modifiedTask.id) {
-						oldTask.title = modifiedTask.title,
-						oldTask.tag = modifiedTask.tag,
-						oldTask.color = modifiedTask.color;
-						if(activeTab == 1) oldTask.editAuthor = username
+				const newTasks = tasks[activeTab].map((iterativeTask) => {
+					if(iterativeTask._id == task.id) {
+						iterativeTask.title = task.title,
+						iterativeTask.tag = task.tag,
+						iterativeTask.color = task.color;
+						if(activeTab == 1) iterativeTask.editAuthor = username
 					}
-					return oldTask;
+					return iterativeTask;
 				});
 
 				this.setState({ 
@@ -126,8 +126,8 @@ export class Tasks extends Component {
 			loading: false,
 			dialog: { open: false },
 			tags: 
-				tags.indexOf(editTask.tag) == -1 ? 
-					[editTask.tag, ...tags] : tags
+				tags.indexOf(task.tag) == -1 ? 
+					[task.tag, ...tags] : tags
 		})
 	}
 
@@ -170,11 +170,7 @@ export class Tasks extends Component {
 			loading: true
 		});
 
-		if(Object.keys(this.state.tasks[num]).length == 0) {
-			this.loadingTasks(0, num); 
-		} else {
-			this.setState({ loading: false });
-		}
+		this.loadingTasks(0, num);
 	}
 
 	render() {
