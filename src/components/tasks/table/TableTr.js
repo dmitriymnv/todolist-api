@@ -9,7 +9,7 @@ const TableTr = ({
 		success, color, title, tag, author, editAuthor,
 		successAuthor, dateCompletion, dateCreate
 	}, 
-	options, 
+	optionsDate, 
 	successTask, 
 	dialogOpen }) => {
 	return (
@@ -44,11 +44,11 @@ const TableTr = ({
 
 			</td>
 			<td>
-				{new Date(dateCreate).toLocaleString('ru', options)}
+				{new Date(dateCreate).toLocaleString('ru', optionsDate)}
 			</td>
 			<td>
 				{dateCompletion ? 
-					new Date(dateCompletion).toLocaleString('ru', options) : '-'
+					new Date(dateCompletion).toLocaleString('ru', optionsDate) : '-'
 				}
 			</td>
 		</tr>
@@ -67,7 +67,7 @@ TableTr.propTypes = {
 		editAuthor: PropTypes.string,
 		successAuthor: PropTypes.string,
 	}).isRequired,
-	options: PropTypes.object.isRequired,
+	optionsDate: PropTypes.object.isRequired,
 	successTask: PropTypes.func.isRequired,
 	dialogOpen: PropTypes.func.isRequired,
 }

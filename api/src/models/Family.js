@@ -50,6 +50,13 @@ schema.methods.successTask = function successTask(id, successAuthor) {
 		}
 		return task;
 	})
+
+	this.listUsers = this.listUsers.map(user => {
+		if(user.username == successAuthor) {
+			user.successTasks = user.successTasks + 1;
+		}
+		return user;
+	})
 };
 
 module.exports = mongoose.model("Family", schema);

@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { Typography } from '@rmwc/typography';
 import { ListItem } from '@rmwc/list';
 import { Dialog, DialogContent } from '@rmwc/dialog';
+import { Button } from '@rmwc/button';
+import { CardActionButtons } from '@rmwc/card';
 
-import EditMemberFamily from '../../forms/EditMemberFamily';
+import MemberFamily from './MemberFamily';
 
 class FamilyExist extends Component {
 
@@ -16,10 +18,11 @@ class FamilyExist extends Component {
 				PropTypes.shape({
 					username: PropTypes.string.isRequired,
 					numberTasks: PropTypes.number.isRequired,
-					inviteDate: PropTypes.node.isRequired,
+					createdAt: PropTypes.node.isRequired,
 				}).isRequired,
 			).isRequired,
 		}).isRequired,
+		username: PropTypes.string.isRequired,
 	}
 
 	state = {
@@ -39,10 +42,11 @@ class FamilyExist extends Component {
 	}
 
 	render() {
-		const { family: { admin, listUsers } } = this.props;
+		const { family: { admin, listUsers }, username, dialogOpen } = this.props;
 		const { dialog: {open, purpose} } = this.state;
+		const isAdmin = admin == username;
 		return (
-			<div className="card__item__body">
+			<div className="card__item__body family-exist">
 
 				<div className="card__item__list">
 					<Typography
@@ -73,24 +77,41 @@ class FamilyExist extends Component {
 					})}
 				</div>
 
-				<Dialog
-					open={open}
-					onClose={() => this.setState({ dialog: { open: false } })}
-				>   
-					<DialogContent>
-						<EditMemberFamily user={purpose} />
-					</DialogContent>
-				</Dialog>
+				{(isAdmin && listUsers.length < 6) &&
+					<div className="card__item__list family-exist__adding">
+						<CardActionButtons className="card__item__buttons family-exist__adding__buttons">
+							<Button onClick={dialogOpen} raised>Добавить пользователя</Button>
+						</CardActionButtons>
+					</div>
+				}
+
+				{open &&
+					<Dialog
+						open={open}
+						onClose={() => this.setState({ dialog: { open: false } })}
+					>   
+						<DialogContent>
+							<MemberFamily
+								user={listUsers.filter(user => {
+									if(user.username == purpose) {
+										return user;
+									}
+								})[0]}
+							/>
+						</DialogContent>
+					</Dialog>
+				}
 
 			</div>
 		)
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		family: state.family
-	}
-}
+// function mapStateToProps(state) {
+// 	return {
+// 		username: state.user.username,
+// 		family: state.family
+// 	}
+// }
 
 export default connect()(FamilyExist)

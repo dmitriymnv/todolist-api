@@ -7,3 +7,11 @@ export const USER_LOADED_FAMILY = 'USER_LOADED_FAMILY';
 export const ADD_NEW_FAMILY_MEMBERS = 'ADD_NEW_FAMILY_MEMBERS';
 
 export const TASKS_FETCHED = 'TASKS_FETCHED';
+
+export const OPTIONS_DATE = {
+	year: '2-digit',
+	month: '2-digit',
+	day: '2-digit',
+	hour: '2-digit',
+	minute: '2-digit'
+};

@@ -94,7 +94,7 @@ router.post("/joinfamily", (req, res) => {
 				resFamily = family;
 			} else {
 				const newFamily = new Family({ admin: invite })
-				MemberFamily.create({ username, inviteDate: new Date()})
+				MemberFamily.create({ username })
 					.then((user) => {
 						newFamily.addUser(user)
 						newFamily.markModified('listUsers');

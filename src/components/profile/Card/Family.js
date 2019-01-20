@@ -55,6 +55,7 @@ export class Family extends Component {
 					{family.admin ?
 						<FamilyExist
 							family={family}
+							dialogOpen={() => this.setState({ dialogOpen: true })}
 							username={username}
 						/>
 						 :

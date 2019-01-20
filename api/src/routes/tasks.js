@@ -115,6 +115,7 @@ router.post("/success", (req, res) => {
 			if(family) {
 				family.successTask(id, user.username)
 				family.markModified('tasks');
+				family.markModified('listUsers');
 				family.save()
 					.then(() => res.json({ }))
 					.catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));

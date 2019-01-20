@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 
 import Loader from '../../loader';
 import TableTr from './TableTr';
-
-const options = {
-	year: '2-digit',
-	month: '2-digit',
-	day: '2-digit',
-	hour: '2-digit',
-	minute: '2-digit'
-};
+import { OPTIONS_DATE } from '../../../constans';
 
 export class TableBody extends Component {
 	static propTypes = {
@@ -59,7 +52,7 @@ export class TableBody extends Component {
 								key={i}
 								successTask={() => successTask(task._id)}
 								dialogOpen={() => dialogOpen('edit', i)}
-								options={options}
+								optionsDate={OPTIONS_DATE}
 							/>
 						)})
 						:
