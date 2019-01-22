@@ -14,6 +14,12 @@ export const signup = (data) => (dispatch) => {
 	)
 }
 
+export const loadingProfile = () => () => {
+	return (
+		api(['/api/profile', 'POST'])
+	)
+}
+
 export const setPassword = (data) => (dispatch) => {
 	return (
 		api(['/api/profile/setPassword', 'POST'], data)

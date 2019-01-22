@@ -18,7 +18,6 @@ export class Family extends Component {
 			admin: PropTypes.string,
 			invite: PropTypes.string,
 		}).isRequired,
-		addNewFamilyMembers: PropTypes.func.isRequired,
 		username: PropTypes.string.isRequired,
 	}
 
@@ -29,7 +28,7 @@ export class Family extends Component {
 
 	componentDidMount() {
 		const { loadingFamily } = this.props;
-		loadingFamily()
+		// loadingFamily()
 	}
 
 	submit = (data) => {
@@ -47,7 +46,7 @@ export class Family extends Component {
 				<Card className="card__item card__item_family" outlined>
 
 					<Typography className="card__item__title" use="subtitle1" tag="div">
-						Семейные задачи {family.admin && family.admin == username ? '(Администратор)' : '(Участник)'}
+						Семейная группа {family.admin && family.admin == username ? '(Администратор)' : '(Участник)'}
 					</Typography>
 
 					<ListDivider />
@@ -88,11 +87,8 @@ export class Family extends Component {
 
 function mapStateToProps(state) {
 	return {
-		family: state.family,
 		username: state.user.username
 	}
 }
 
-export default connect(mapStateToProps, {
-	addNewFamilyMembers, loadingFamily
-})(Family)
+export default connect(mapStateToProps)(Family)
