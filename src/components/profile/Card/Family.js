@@ -9,7 +9,7 @@ import { ListDivider } from '@rmwc/list';
 const FamilyNew = lazy(() => import('./FamilyNew'));
 const FamilyExist = lazy(() => import('./FamilyExist'));
 const AddFamilyForm = lazy(() => import('../../forms/AddFamilyForm'));
-import { addNewFamilyMembers, loadingFamily } from '../../../ac/family';
+import { addNewFamilyMembers, responseJoinFamily } from '../../../ac/family';
 import Loader from '../../loader';
 
 export class Family extends Component {
@@ -17,6 +17,15 @@ export class Family extends Component {
 		family: PropTypes.shape({
 			admin: PropTypes.string,
 			invite: PropTypes.string,
+			inviteUsers: PropTypes.arrayOf(PropTypes.string.isRequired),
+			listUsers: PropTypes.arrayOf(
+				PropTypes.shape({
+					createdAt: PropTypes.node.isRequired,
+					createdAt: PropTypes.node.isRequired,
+					numberTasks: PropTypes.number.isRequired,
+					username: PropTypes.string.isRequired,
+				}).isRequired,
+			),
 		}).isRequired,
 		username: PropTypes.string.isRequired,
 	}
@@ -26,27 +35,34 @@ export class Family extends Component {
 		loading: false
 	}
 
-	componentDidMount() {
-		const { loadingFamily } = this.props;
-		// loadingFamily()
-	}
+	submit = (data, join = false) => {
 
-	submit = (data) => {
-		return (
-			this.props.addNewFamilyMembers(data)
-				.then(() => this.setState({ dialogOpen: false }))
-		)
+		this.setState({ loading: true })
+
+		if(join) {
+			this.props.responseJoinFamily(data)
+				.then((res) => {
+					this.props.JoinMemberFamily(res)
+					this.setState({ loading: false })
+				})
+		} else {
+			return (
+				this.props.addNewFamilyMembers(data)
+					.then(() => this.setState({ dialogOpen: false, loading: false }))
+			)
+		}
 	}
 
 	render() {
 		const { family, username } = this.props;
 		const { dialogOpen, loading } = this.state;
+		console.log(family)
 		return (
 			<Loader loading={loading}>
 				<Card className="card__item card__item_family" outlined>
 
 					<Typography className="card__item__title" use="subtitle1" tag="div">
-						Семейная группа {family.admin && family.admin == username ? '(Администратор)' : '(Участник)'}
+						Семейная группа {family.admin && (family.admin == username ? '(Администратор)' : '(Участник)')}
 					</Typography>
 
 					<ListDivider />
@@ -60,6 +76,7 @@ export class Family extends Component {
 						 :
 						<FamilyNew
 							dialogOpen={() => this.setState({ dialogOpen: true })}
+							JoinMemberFamily={(res) => this.submit(res, true)}
 							loaderPage={(loading) => this.setState({ loading })}
 							invite={family.invite}
 						/>
@@ -91,4 +108,6 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(Family)
+export default connect(mapStateToProps, { 
+	addNewFamilyMembers, responseJoinFamily
+})(Family)

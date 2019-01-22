@@ -121,7 +121,10 @@ router.post("/joinfamily", (req, res) => {
 	user.save()
 		.then(() => {
 			setTimeout(() => {
-				res.json(resFamily ? resFamily : user.family);
+				res.json({
+					family: resFamily ? resFamily : user.family,
+					token: user.toAuthJSON()
+				})
 			}, 1500);
 		})
 	

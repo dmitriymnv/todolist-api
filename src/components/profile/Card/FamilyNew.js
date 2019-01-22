@@ -7,28 +7,10 @@ import { ListDivider } from '@rmwc/list';
 import { Typography } from '@rmwc/typography';
 
 import { responseJoinFamily } from '../../../ac/family';
-import ParseError from '../../utils/ParseError';
 
 class FamilyNew extends Component {
-
-	state = {
-		errors: {},
-	}
-
-	inviteFamily = (res) => {
-		const { loaderPage, responseJoinFamily } = this.props;
-		loaderPage(true);
-		responseJoinFamily(res)
-			.then(() => loaderPage(false))
-			.catch((errors) => {
-				this.setState({ errors });
-				loaderPage(false)
-			})
-	}
-
 	render() {
-		const { dialogOpen, invite } = this.props;
-		const { errors } = this.state;
+		const { dialogOpen, invite, JoinMemberFamily } = this.props;
 		return (
 			<div className="card__item__body">
 			
@@ -48,8 +30,6 @@ class FamilyNew extends Component {
 						<ListDivider />
 						<div className="card__item__list">
 
-							{ParseError(errors.inviteFamily)}
-
 							<Typography
 								className="form__item__title"
 								use="subtitle2"
@@ -59,8 +39,8 @@ class FamilyNew extends Component {
 							</Typography>
 
 							<CardActionButtons className="card__item__buttons item__buttons">
-								<Button onClick={() => this.inviteFamily(true)}>Вступить</Button>
-								<Button onClick={() => this.inviteFamily(false)}>Отклонить</Button>
+								<Button onClick={() => JoinMemberFamily(true)}>Вступить</Button>
+								<Button onClick={() => JoinMemberFamily(false)}>Отклонить</Button>
 							</CardActionButtons>
 						</div>
 					</>
@@ -74,6 +54,7 @@ FamilyNew.propTypes = {
 	dialogOpen: PropTypes.func.isRequired,
 	responseJoinFamily: PropTypes.func.isRequired,
 	loaderPage: PropTypes.func.isRequired,
+	JoinMemberFamily: PropTypes.func.isRequired,
 	invite: PropTypes.string
 }
 

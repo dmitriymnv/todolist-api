@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TabBar, Tab } from '@rmwc/tabs';
 
-const TableHead = ({ activeTab, onActivateTab, family }) => {
+const TableHead = ({ activeTab, onActivateTab, isFamily }) => {
 	return (
 		<thead className="task-table__head">
-			{family ?
+			{isFamily ?
 				<tr>
 					<th className="task-table__select-tab">
 						<TabBar
@@ -31,7 +31,7 @@ const TableHead = ({ activeTab, onActivateTab, family }) => {
 TableHead.propTypes = {
 	activeTab: PropTypes.number.isRequired,
 	onActivateTab: PropTypes.func.isRequired,
-	family: PropTypes.string,
+	isFamily: PropTypes.bool.isRequired
 }
 
 export default TableHead

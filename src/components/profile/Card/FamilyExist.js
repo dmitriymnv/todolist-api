@@ -1,6 +1,5 @@
-import React, { Component, lazy } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Typography } from '@rmwc/typography';
 import { ListItem } from '@rmwc/list';
 import { Dialog, DialogContent } from '@rmwc/dialog';
@@ -77,7 +76,7 @@ class FamilyExist extends Component {
 					})}
 				</div>
 
-				{(isAdmin && listUsers.length < 6) &&
+				{(isAdmin && listUsers.length < 20) &&
 					<div className="card__item__list family-exist__adding">
 						<CardActionButtons className="card__item__buttons family-exist__adding__buttons">
 							<Button onClick={dialogOpen} raised>Добавить пользователя</Button>
@@ -107,11 +106,4 @@ class FamilyExist extends Component {
 	}
 }
 
-// function mapStateToProps(state) {
-// 	return {
-// 		username: state.user.username,
-// 		family: state.family
-// 	}
-// }
-
-export default connect()(FamilyExist)
+export default FamilyExist

@@ -14,7 +14,10 @@ class Profile extends Component {
 	state = {
 		data: {
 			user: {},
-			family: {}
+			family: {
+				admin: '',
+				invite: ''
+			}
 		},
 		loading: true
 	}
@@ -22,17 +25,20 @@ class Profile extends Component {
 	componentDidMount() {
 		this.props.loadingProfile()
 			.then((res) => {
-				this.setState({ data: { ...res }, loading: false })
+				this.setState({ data: { ...this.state.data, ...res }, loading: false })
 			})
 	}
 
 	render() {
 		const { data: { user, family }, loading } = this.state;
 		return (
-			<Loader loading={loading} opacity='0'>
+			<Loader loading={loading} opacity={0}>
 				<div className="card">
 					<Personal />
-					<Family family={family} />
+					<Family
+						family={family}
+						JoinMemberFamily={(res) => this.setState({ data: { ...this.state.data, family: res } })}
+					/>
 					<Statistics tasks={user.tasks} />
 				</div>
 			</Loader>

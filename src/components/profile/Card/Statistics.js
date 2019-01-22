@@ -37,8 +37,10 @@ const Statistics = ({ tasks = {} }) => {
 }
 
 Statistics.propTypes = {
-	tasks: PropTypes.object.isRequired
+	tasks: PropTypes.shape({
+		length: PropTypes.number.isRequired,
+		success: PropTypes.number.isRequired,
+	})
 }
-
 
 export default connect()(Statistics)

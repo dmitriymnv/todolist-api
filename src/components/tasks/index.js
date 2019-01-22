@@ -9,7 +9,6 @@ import {
 	successTask, 
 	editTask
 	} from '../../ac/tasks';
-import { loadingFamily } from '../../ac/family';
 import TableTasks from './table/TableTasks';
 import TaskTitle from './TaskTitle';
 import TaskDialog from './TaskDialog';
@@ -20,7 +19,6 @@ export class Tasks extends Component {
 		addTask: PropTypes.func.isRequired,
 		successTask: PropTypes.func.isRequired,
 		editTask: PropTypes.func.isRequired,
-		loadingFamily: PropTypes.func.isRequired,
 		username: PropTypes.string.isRequired,
 	}
 
@@ -218,5 +216,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
 	 loadingTasks, addTask, successTask, 
-	 editTask, loadingFamily
+	 editTask
 })(Tasks)
