@@ -56,7 +56,6 @@ export class Family extends Component {
 	render() {
 		const { family, username } = this.props;
 		const { dialogOpen, loading } = this.state;
-		console.log(family)
 		return (
 			<Loader loading={loading}>
 				<Card className="card__item card__item_family" outlined>

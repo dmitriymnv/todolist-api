@@ -8,26 +8,6 @@ const authenticate = require('../middlewares/authenticate');
 const router = express.Router();
 router.use(authenticate);
 
-// router.post("/", (req, res) => {
-// 	const { family: familyUser } = req.currentUser;
-// 	if(!familyUser.admin && familyUser.invite) {
-// 		res.json({ invite: familyUser.invite })
-// 	} else if(familyUser.admin) {
-// 		Family.findOne({ admin: familyUser.admin }, (err, family) => {
-// 			res.json({
-// 				admin: family.admin,
-// 				inviteUsers: family.inviteUsers,
-// 				listUsers: family.listUsers,
-// 				admin: family.admin,
-// 				invite: familyUser.invite
-// 			})
-// 		})
-// 	} else {
-// 		res.json({})
-// 	}
-	
-// });
-
 router.post("/add", (req, res) => {
 	const { username: currentUsername } = req.currentUser;
 	const list = req.body;

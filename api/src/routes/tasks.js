@@ -1,7 +1,6 @@
 const express = require("express");
 
 const Task = require('../models/Task');
-const User = require('../models/User');
 const Family = require('../models/Family');
 const authenticate = require('../middlewares/authenticate');
 const parseErrors = require('../utils/ParseError');
